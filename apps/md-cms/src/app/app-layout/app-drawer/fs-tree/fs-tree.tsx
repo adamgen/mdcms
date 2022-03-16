@@ -11,6 +11,7 @@ export function FsTree() {
       defaultCollapseIcon={<ExpandMoreIcon />}
       defaultExpandIcon={<ChevronRightIcon />}
       sx={{ height: 240, flexGrow: 1, maxWidth: 400, overflowY: 'auto' }}
+      data-testid="fs-tree"
     >
       <TreeItem nodeId="1" label="Applications">
         <TreeItem nodeId="2" label="Calendar" />

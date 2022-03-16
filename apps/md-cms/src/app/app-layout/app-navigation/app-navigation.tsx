@@ -59,6 +59,7 @@ export const AppNavigation = () => {
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
               color="inherit"
+              data-testid="drawer-toggler"
             >
               <MenuIcon />
             </IconButton>
