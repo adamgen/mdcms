@@ -3,21 +3,16 @@ import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import { FsTree } from './fs-tree/fs-tree';
+import { useSelector } from 'react-redux';
+import { drawerActions, getDrawerState } from './drawer.slice';
 
-type Anchor = 'left';
 const drawerWidth = 240;
 
 export default function AppDrawer() {
-  const [state, setState] = React.useState({
-    top: false,
-    left: false,
-    bottom: false,
-    right: false,
-  });
+  const { isOpen } = useSelector(getDrawerState);
 
   const toggleDrawer =
-    (anchor: Anchor, open: boolean) =>
-    (event: React.KeyboardEvent | React.MouseEvent) => {
+    (isOpen: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
       if (
         event.type === 'keydown' &&
         ((event as React.KeyboardEvent).key === 'Tab' ||
@@ -25,14 +20,19 @@ export default function AppDrawer() {
       ) {
         return;
       }
+      // if (isOpen) {
+      //   drawerActions.open();
+      // } else {
+      //   drawerActions.close();
+      // }
 
-      setState({ ...state, [anchor]: open });
+      // setState({ left: open });
     };
   const anchor = 'left';
 
   return (
     <div>
-      <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
+      <Button onClick={toggleDrawer(true)}>{anchor}</Button>
       <MuiDrawer
         sx={{
           width: drawerWidth,
@@ -43,14 +43,14 @@ export default function AppDrawer() {
           },
         }}
         anchor={anchor}
-        open={state[anchor]}
+        open={isOpen}
         variant="persistent"
-        onClose={toggleDrawer(anchor, false)}
+        onClose={toggleDrawer(false)}
       >
         <Box
           role="presentation"
-          onClick={toggleDrawer(anchor, false)}
-          onKeyDown={toggleDrawer(anchor, false)}
+          onClick={toggleDrawer(false)}
+          onKeyDown={toggleDrawer(false)}
         >
           <div
             onClick={(e) => {

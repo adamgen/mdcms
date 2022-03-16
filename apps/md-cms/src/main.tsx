@@ -5,15 +5,10 @@ import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 
 import App from './app/app';
-
-
-import {
-  DRAWER_FEATURE_KEY,
-  drawerReducer,
-} from './app/app-layout/app-drawer/drawer.slice';
+import { appReducer } from './root-state';
 
 const store = configureStore({
-  reducer: { [DRAWER_FEATURE_KEY]: drawerReducer },
+  reducer: appReducer,
   // Additional middleware can be passed to this array
   middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
   devTools: process.env['NODE_ENV'] !== 'production',

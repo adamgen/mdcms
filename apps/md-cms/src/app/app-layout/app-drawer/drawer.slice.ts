@@ -29,6 +29,7 @@ export const drawerSlice = createSlice({
 });
 
 export const drawerReducer = drawerSlice.reducer;
+export const drawerActions = drawerSlice.actions;
 
 export const getDrawerState = (rootState: RootState): DrawerState =>
   rootState[DRAWER_FEATURE_KEY];
