@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
-
 import { Link, Route } from 'react-router-dom';
+
 import { AppLayout } from './app-layout/app-layout';
+import MdEditor from './md-editor/md-editor';
 
 const StyledApp = styled.div`
   // Your style here
@@ -11,6 +12,7 @@ export function App() {
   return (
     <StyledApp>
       <AppLayout>
+        <MdEditor />
         <Route
           path="/"
           exact
