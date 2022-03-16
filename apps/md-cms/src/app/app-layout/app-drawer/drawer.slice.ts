@@ -16,7 +16,6 @@ export const drawerSlice = createSlice({
   initialState: initialDrawerState,
   reducers: {
     close: (state) => {
-      console.log('console.log()');;
       return { ...state, isOpen: false };
     },
     open: (state) => {
