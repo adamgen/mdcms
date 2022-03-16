@@ -1,0 +1,70 @@
+{
+  "root": "apps/md-cms",
+  "sourceRoot": "apps/md-cms/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "swc",
+        "outputPath": "dist/apps/md-cms",
+        "index": "apps/md-cms/src/index.html",
+        "baseHref": "/",
+        "main": "apps/md-cms/src/main.tsx",
+        "polyfills": "apps/md-cms/src/polyfills.ts",
+        "tsConfig": "apps/md-cms/tsconfig.app.json",
+        "assets": ["apps/md-cms/src/favicon.ico", "apps/md-cms/src/assets"],
+        "styles": [],
+        "scripts": [],
+        "webpackConfig": "@nrwl/react/plugins/webpack"
+      },
+      "configurations": {
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/md-cms/src/environments/environment.ts",
+              "with": "apps/md-cms/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/web:dev-server",
+      "options": {
+        "buildTarget": "md-cms:build",
+        "hmr": true
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "md-cms:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/md-cms/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/md-cms"],
+      "options": {
+        "jestConfig": "apps/md-cms/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
