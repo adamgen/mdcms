@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 
-import AppNavigation from './app-navigation';
+import {AppNavigation} from './app-navigation';
 
 describe('AppNavigation', () => {
   it('should render successfully', () => {

@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 
-import FsTree from './fs-tree';
+import { FsTree } from './fs-tree';
 
 describe('Tree', () => {
   it('should render successfully', () => {
