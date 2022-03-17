@@ -12,7 +12,14 @@ export interface FsTreeEntity {
 // Define a service using a base URL and expected endpoints
 export const filesApi = createApi({
   reducerPath: 'filesApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3002/' }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: 'http://localhost:3002/',
+    prepareHeaders: (headers) => {
+      headers.set('accept', 'application/json');
+      return headers;
+    },
+    mode: 'cors',
+  }),
   endpoints: (builder) => ({
     getFileByName: builder.query<string, string>({
       query: (name) => `files/${name}`,
