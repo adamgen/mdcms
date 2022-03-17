@@ -8,6 +8,7 @@ module.exports = {
       { jsc: { transform: { react: { runtime: 'automatic' } } } },
     ],
   },
+  setupFilesAfterEnv: ['./jest.setup.js'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../../coverage/apps/md-cms',
 };
