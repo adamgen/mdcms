@@ -26,7 +26,7 @@ describe('fsTree reducer', () => {
     expect(authorization).toBeNull();
   });
 
-  it('should store server response to state', async () => {
+  it('should store server response to redux state', async () => {
     const store = makeStore();
     fetchMock.mockResponse(JSON.stringify(''));
 
