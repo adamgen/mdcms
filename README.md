@@ -2,6 +2,7 @@
 
 ## TODO
 
+- Re work jest's environment
 - Add lint rules
   - Import order
 - Add git support
