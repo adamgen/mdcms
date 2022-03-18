@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-
+import { getBackendUrl } from '@md-cms/shared-env';
 /*
  * Update these interfaces according to your requirements.
  */
@@ -13,7 +13,7 @@ export interface FsTreeEntity {
 export const filesApi = createApi({
   reducerPath: 'filesApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:3002/',
+    baseUrl: getBackendUrl(),
     prepareHeaders: (headers) => {
       headers.set('accept', 'application/json');
       return headers;

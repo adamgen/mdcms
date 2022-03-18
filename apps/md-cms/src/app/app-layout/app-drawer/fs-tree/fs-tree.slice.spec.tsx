@@ -5,6 +5,9 @@ import { filesApi, useGetFileByNameQuery } from './fs-tree.slice';
 import { appReducer } from '../../../../root-state';
 import { Provider } from 'react-redux';
 import React from 'react';
+import { getBackendUrl } from '@md-cms/shared-env';
+
+const BACKEND_URL = getBackendUrl();
 
 const makeStore = () =>
   configureStore({
@@ -29,7 +32,7 @@ describe('fsTree reducer', () => {
     const authorization = headers.get('authorization');
 
     expect(method).toBe('GET');
-    expect(url).toBe('http://localhost:3002/files/index.md');
+    expect(url).toBe(`${BACKEND_URL}/files/index.md`);
     expect(accept).toBe('application/json');
     expect(authorization).toBeNull();
   });
@@ -62,7 +65,7 @@ describe('fsTree reducer', () => {
 
     const { url } = fetchMock.mock.calls[2][0] as Request;
 
-    expect(url).toBe('http://localhost:3002/files/index.md');
+    expect(url).toBe(`${BACKEND_URL}/files/index.md`);
 
     await act(() => promise);
   });
