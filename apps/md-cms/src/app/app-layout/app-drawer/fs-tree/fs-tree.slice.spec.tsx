@@ -66,4 +66,20 @@ describe('fsTree reducer', () => {
 
     await act(() => promise);
   });
+
+  it('should return server response from a hook', async () => {
+    const promise = Promise.resolve();
+    fetchMock.mockResponse(JSON.stringify(''));
+    const { result, waitForNextUpdate } = renderHook(
+      () => useGetFileByNameQuery('index.md'),
+      {
+        wrapper,
+      }
+    );
+    await waitForNextUpdate();
+
+    expect(result.current.data).toBe('');
+
+    await act(() => promise);
+  });
 });
