@@ -77,7 +77,7 @@ describe('fsTree reducer', () => {
     await act(() => promise);
   });
 
-  it('should return server response from a hook', async () => {
+  it('should return server response for a singular get from a hook', async () => {
     const promise = Promise.resolve();
     fetchMock.mockResponse(JSON.stringify(filesMock[indexMd]));
     const { result, waitForNextUpdate } = renderHook(
