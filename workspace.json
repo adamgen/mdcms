@@ -2,6 +2,7 @@
   "version": 2,
   "projects": {
     "md-cms": "apps/md-cms",
-    "md-cms-e2e": "apps/md-cms-e2e"
+    "md-cms-e2e": "apps/md-cms-e2e",
+    "shared-env": "libs/shared-env"
   }
 }
