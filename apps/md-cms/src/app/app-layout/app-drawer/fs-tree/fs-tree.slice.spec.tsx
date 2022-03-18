@@ -1,7 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import fetchMock from 'jest-fetch-mock';
 import { act, renderHook } from '@testing-library/react-hooks';
-import { filesApi, useGetFileByNameQuery } from './fs-tree.slice';
+import {
+  filesApi,
+  useGetFileByNameQuery,
+  useGetFilesListQuery,
+} from './fs-tree.slice';
 import { appReducer } from '../../../../root-state';
 import { Provider } from 'react-redux';
 import React from 'react';
@@ -89,6 +93,22 @@ describe('fsTree reducer', () => {
     await waitForNextUpdate();
 
     expect(result.current.data).toBe(filesMock[indexMd]);
+
+    await act(() => promise);
+  });
+
+  it('should return server response for a plural get from a hook', async () => {
+    const promise = Promise.resolve();
+    fetchMock.mockResponse(JSON.stringify(filesMock));
+    const { result, waitForNextUpdate } = renderHook(
+      () => useGetFilesListQuery(),
+      {
+        wrapper,
+      }
+    );
+    await waitForNextUpdate();
+
+    expect(result.current.data).toEqual(filesMock);
 
     await act(() => promise);
   });
