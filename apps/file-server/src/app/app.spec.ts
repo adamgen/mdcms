@@ -20,5 +20,8 @@ describe('app health', () => {
         JSON.stringify({ message: 'Welcome to file-server!' })
       );
     });
+    await testRoute('/api/router', (response) => {
+      expect(response.statusCode).toBe(200);
+    });
   });
 });
