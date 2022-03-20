@@ -36,6 +36,16 @@ export const filesApi = createApi({
         body: mdContent,
       }),
     }),
+    updateFile: builder.mutation<
+      string,
+      Pick<FsTreeEntity, 'content' | 'filename'>
+    >({
+      query: ({ content, filename }) => ({
+        url: `/files/${filename}`,
+        method: 'POST',
+        body: content,
+      }),
+    }),
   }),
 });
 
@@ -43,4 +53,5 @@ export const {
   useGetFileByNameQuery,
   useGetFilesListQuery,
   useCreateFileMutation,
+  useUpdateFileMutation,
 } = filesApi;

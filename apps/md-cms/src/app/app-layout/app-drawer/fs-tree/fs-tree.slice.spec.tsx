@@ -1,11 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-import fetchMock from 'jest-fetch-mock';
+import fetchMock, { MockParams } from 'jest-fetch-mock';
 import { act, renderHook } from '@testing-library/react-hooks';
 import {
   filesApi,
   useCreateFileMutation,
   useGetFileByNameQuery,
   useGetFilesListQuery,
+  useUpdateFileMutation,
 } from './fs-tree.slice';
 import { appReducer } from '../../../../root-state';
 import { Provider } from 'react-redux';
@@ -147,5 +148,37 @@ describe('fsTree reducer', () => {
     expect(loadedResponse.isSuccess).toBe(true);
 
     expect(result.current[1].data).toBe(serverResponse);
+  });
+
+  it('should send update a file with a PUT request contents using a hook', async () => {
+    fetchMock.mockResponse('null', { status: 201 });
+    const { result, waitForNextUpdate } = renderHook(
+      () => useUpdateFileMutation(),
+      {
+        wrapper,
+      }
+    );
+
+    const [updateFile, initialResponse] = result.current;
+    expect(initialResponse.data).toBeUndefined();
+    expect(initialResponse.isLoading).toBe(false);
+
+    act(() => {
+      updateFile({
+        filename: '',
+        content: '',
+      });
+    });
+
+    const loadingResponse = result.current[1];
+    expect(loadingResponse.data).toBeUndefined();
+    expect(loadingResponse.isLoading).toBe(true);
+
+    await waitForNextUpdate({ timeout: 100 });
+
+    const loadedResponse = result.current[1];
+    expect(loadedResponse.data).not.toBeUndefined();
+    expect(loadedResponse.isLoading).toBe(false);
+    expect(loadedResponse.isSuccess).toBe(true);
   });
 });
