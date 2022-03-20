@@ -1,6 +1,7 @@
 {
   "version": 2,
   "projects": {
+    "file-server": "apps/file-server",
     "md-cms": "apps/md-cms",
     "md-cms-e2e": "apps/md-cms-e2e",
     "shared-env": "libs/shared-env"

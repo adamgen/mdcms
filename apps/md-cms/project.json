@@ -41,7 +41,8 @@
       "executor": "@nrwl/web:dev-server",
       "options": {
         "buildTarget": "md-cms:build",
-        "hmr": true
+        "hmr": true,
+        "proxyConfig": "apps/md-cms/proxy.conf.json"
       },
       "configurations": {
         "production": {
