@@ -3,7 +3,7 @@ import { Router } from 'express';
 const filesRouter = Router();
 
 filesRouter.get('', (req, res, next) => {
-  res.json({});
+  res.json([]);
 });
 
 filesRouter.post('', (req, res, next) => {

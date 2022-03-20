@@ -7,6 +7,6 @@ app.get('/api', (req, res) => {
   res.send({ message: 'Welcome to file-server!' });
 });
 
-app.use('/api/router', filesRouter);
+app.use('/api/files', filesRouter);
 
 export { app };
