@@ -14,6 +14,8 @@ describe('app health', () => {
     await testRoute('/non-existing-route', (response) => {
       expect(response.statusCode).toBe(404);
     });
+  });
+  it('should respond with 200 for existing routes', async () => {
     await testRoute('/api', (response) => {
       expect(response.statusCode).toBe(200);
       expect(response.text).toBe(
