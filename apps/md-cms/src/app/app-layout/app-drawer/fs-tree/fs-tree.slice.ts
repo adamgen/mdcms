@@ -4,9 +4,8 @@ import { getBackendUrl } from '@md-cms/shared-env';
  * Update these interfaces according to your requirements.
  */
 export interface FsTreeEntity {
-  id: number;
-  parentId: number;
-  children: number[];
+  filename: string; // Relative path to file including the filename and md extension
+  content: string; // The contents with md metadata
 }
 
 // Define a service using a base URL and expected endpoints
@@ -27,7 +26,21 @@ export const filesApi = createApi({
     getFileByName: builder.query<string, string>({
       query: (name) => `files/${name}`,
     }),
+    createFile: builder.mutation<
+      string,
+      Pick<FsTreeEntity, 'content' | 'filename'>
+    >({
+      query: (mdContent) => ({
+        url: '/files',
+        method: 'POST',
+        body: mdContent,
+      }),
+    }),
   }),
 });
 
-export const { useGetFileByNameQuery, useGetFilesListQuery } = filesApi;
+export const {
+  useGetFileByNameQuery,
+  useGetFilesListQuery,
+  useCreateFileMutation,
+} = filesApi;

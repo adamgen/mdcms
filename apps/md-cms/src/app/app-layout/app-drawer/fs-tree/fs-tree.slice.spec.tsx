@@ -3,6 +3,7 @@ import fetchMock from 'jest-fetch-mock';
 import { act, renderHook } from '@testing-library/react-hooks';
 import {
   filesApi,
+  useCreateFileMutation,
   useGetFileByNameQuery,
   useGetFilesListQuery,
 } from './fs-tree.slice';
@@ -111,5 +112,40 @@ describe('fsTree reducer', () => {
     expect(result.current.data).toEqual(filesMock);
 
     await act(() => promise);
+  });
+
+  it('should send a post request with file contents using a hook', async () => {
+    const serverResponse = 342;
+    fetchMock.mockResponse(serverResponse.toString());
+    const { result, waitForNextUpdate } = renderHook(
+      () => useCreateFileMutation(),
+      {
+        wrapper,
+      }
+    );
+
+    const [createFile, initialResponse] = result.current;
+    expect(initialResponse.data).toBeUndefined();
+    expect(initialResponse.isLoading).toBe(false);
+
+    act(() => {
+      createFile({
+        filename: '',
+        content: '',
+      });
+    });
+
+    const loadingResponse = result.current[1];
+    expect(loadingResponse.data).toBeUndefined();
+    expect(loadingResponse.isLoading).toBe(true);
+
+    await waitForNextUpdate({ timeout: 100 });
+
+    const loadedResponse = result.current[1];
+    expect(loadedResponse.data).not.toBeUndefined();
+    expect(loadedResponse.isLoading).toBe(false);
+    expect(loadedResponse.isSuccess).toBe(true);
+
+    expect(result.current[1].data).toBe(serverResponse);
   });
 });
