@@ -47,7 +47,11 @@ describe('Upsert post/put files', () => {
     expect(response.body).toBe(true);
 
     expect(
-      fs.readFileSync(path.join(process.env['FILES_SERVER_BASE_PATH'], 'index.md')).toString()
+      fs
+        .readFileSync(
+          path.join(process.env['FILES_SERVER_BASE_PATH'], 'index.md')
+        )
+        .toString()
     ).toEqual('# new index file header!');
   });
 
@@ -60,7 +64,33 @@ describe('Upsert post/put files', () => {
     expect(response.body).toBe(true);
 
     expect(
-      fs.readFileSync(path.join(process.env['FILES_SERVER_BASE_PATH'], 'new-file.md')).toString()
+      fs
+        .readFileSync(
+          path.join(process.env['FILES_SERVER_BASE_PATH'], 'new-file.md')
+        )
+        .toString()
     ).toEqual('# new random file header!');
+  });
+});
+
+describe('Delete files', () => {
+  initFilesTest(__dirname);
+  it('should fail to delete non existing files', async () => {
+    const response = await request(app).delete('/api/files/new-file.md');
+    expect(response.statusCode).toBe(400);
+    expect(response.body).toBe('Delete on non existing files.');
+  });
+
+  it('should delete existing files', async () => {
+    const indexFilePath = path.join(
+      process.env['FILES_SERVER_BASE_PATH'],
+      'index.md'
+    );
+    expect(fs.existsSync(indexFilePath)).toBeTruthy();
+
+    const response = await request(app).delete('/api/files/index.md');
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toBe('Deleted');
+    expect(fs.existsSync(indexFilePath)).toBeFalsy();
   });
 });

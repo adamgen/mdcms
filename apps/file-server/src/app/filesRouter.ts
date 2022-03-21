@@ -51,7 +51,18 @@ filesRouter.post('/:fileName', upsertFileHandler);
 filesRouter.put('/:fileName', upsertFileHandler);
 
 filesRouter.delete('/:fileName', (req, res, next) => {
-  res.json({});
+  const filePath = path.join(
+    process.env['FILES_SERVER_BASE_PATH'],
+    req.params.fileName
+  );
+
+  if (!fs.existsSync(filePath)) {
+    return res.status(400).json('Delete on non existing files.');
+  }
+
+  fs.removeSync(filePath);
+
+  res.json('Deleted');
 });
 
 export { filesRouter };
