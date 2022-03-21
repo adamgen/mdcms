@@ -6,7 +6,9 @@ import {
   useCreateFileMutation,
   useGetFilesListQuery,
 } from '../fs-tree/fs-tree.slice';
-import SaveIcon from '@mui/icons-material/save';
+import AddIcon from '@mui/icons-material/Add';
+import SaveAltIcon from '@mui/icons-material/SaveAlt';
+import { SvgIconTypeMap } from '@mui/material/SvgIcon/SvgIcon';
 
 /* eslint-disable-next-line */
 export interface FilePathTitleProps {}
@@ -36,6 +38,18 @@ export function FilePathTitle(props: FilePathTitleProps) {
     return path && filesQuery.data?.includes(path);
   }, [filesQuery, path]);
 
+  const iconProps: SvgIconTypeMap<{ onClick: () => void }>['props'] = {
+    sx: { cursor: 'pointer', padding: 1 },
+    fontSize: 'large',
+    onClick: () => {
+      if (!path) {
+        return;
+      }
+
+      createFile({ content, filename: path });
+    },
+  };
+
   return (
     <StyledFilePathTitle>
       <StyledFilePathTitleInput
@@ -45,19 +59,8 @@ export function FilePathTitle(props: FilePathTitleProps) {
         }}
         data-testid={'post-title'}
       />
-      {!isPathExists && (
-        <SaveIcon
-          sx={{ cursor: 'pointer', padding: 1 }}
-          fontSize="large"
-          onClick={() => {
-            if (!path) {
-              return;
-            }
-
-            createFile({ content, filename: path });
-          }}
-        />
-      )}
+      {!isPathExists && <AddIcon {...iconProps} />}
+      {isPathExists && <SaveAltIcon {...iconProps} />}
     </StyledFilePathTitle>
   );
 }
