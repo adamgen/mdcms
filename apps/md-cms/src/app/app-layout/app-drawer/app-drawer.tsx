@@ -23,7 +23,13 @@ export default function AppDrawer() {
       open={isOpen}
       variant="persistent"
     >
-      <Box role="presentation" data-testid="side-menu-container">
+      <Box
+        sx={{
+          padding: 2,
+        }}
+        role="presentation"
+        data-testid="side-menu-container"
+      >
         <div
           onClick={(e) => {
             e.stopPropagation();
