@@ -1,4 +1,4 @@
-import { createSelector, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../root-state';
 
 export const EDITOR_FEATURE_KEY = 'editor';
@@ -6,11 +6,13 @@ export const EDITOR_FEATURE_KEY = 'editor';
 export interface EditorState {
   path: string | null;
   content: string | null;
+  updater: 'editor' | 'other';
 }
 
 export const initialEditorState: EditorState = {
   path: null,
   content: null,
+  updater: 'other',
 };
 
 export const editorSlice = createSlice({
@@ -20,6 +22,7 @@ export const editorSlice = createSlice({
     update: (state, action) => {
       state.path = action.payload.path ?? state.path;
       state.content = action.payload.content ?? state.content;
+      state.updater = action.payload.updater ?? state.updater;
     },
   },
 });

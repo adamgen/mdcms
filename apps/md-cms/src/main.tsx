@@ -29,6 +29,10 @@ const store = configureStore({
   enhancers: [],
 });
 
+if ((window as any).Cypress) {
+  (window as any).store = store;
+}
+
 ReactDOM.render(
   <Provider store={store}>
     <StrictMode>

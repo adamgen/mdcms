@@ -3,6 +3,8 @@ import { Link, Route } from 'react-router-dom';
 
 import { AppLayout } from './app-layout/app-layout';
 import MdEditor from './md-editor/md-editor';
+import { useDispatch, useSelector } from 'react-redux';
+import { editorSlice, getEditorState } from './slices/editor.slice';
 
 const StyledApp = styled.div`
   // Your style here
@@ -19,10 +21,18 @@ const StyledPostPath = styled.input`
 `;
 
 export function App() {
+  const selector = useSelector(getEditorState);
+  const dispatch = useDispatch();
+
   return (
     <StyledApp>
       <AppLayout>
-        <StyledPostPath defaultValue={'posts/index.md'} />
+        <StyledPostPath
+          defaultValue={selector.path ?? ''}
+          onChange={(e) => {
+            dispatch(editorSlice.actions.update({ path: e.target.value }));
+          }}
+        />
         <MdEditor />
         <Route
           path="/"

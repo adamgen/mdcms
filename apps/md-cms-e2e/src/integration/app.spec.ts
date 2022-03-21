@@ -13,7 +13,19 @@ describe('md-cms', () => {
     cy.g('side-menu-container').should('be.visible');
   });
 
-  it.only('should create a new post', () => {
-    cy.g('new-post-button').click();
+  it.only('should store editor state to redux', () => {
+    cy.g('editor')
+      .get('.toastui-editor-md-container > .toastui-editor > .ProseMirror')
+      .type(`# Auto typed title\n\n- list item\nlist item 2`);
+
+    cy.window()
+      .its('store')
+      .invoke('getState')
+      .its('editor')
+      .should('deep.equal', {
+        path: null,
+        content: '# Auto typed title\n\n- list item\n- list item 2',
+        updater: 'editor',
+      });
   });
 });
