@@ -8,6 +8,7 @@
 - Add lint rules
   - Import order
   - cypress, no only
+  - react, exhustive hooks
 - Add git support
   - Commit, pull and push from browser
   - Diff between branches
