@@ -5,9 +5,7 @@ import { Editor } from '@toast-ui/react-editor';
 /* eslint-disable-next-line */
 export interface MdEditorProps {}
 
-const StyledMdEditor = styled.div`
-  color: pink;
-`;
+const StyledMdEditor = styled.div``;
 
 export function MdEditor(props: MdEditorProps) {
   return (

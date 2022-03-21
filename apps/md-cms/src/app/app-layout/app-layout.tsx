@@ -7,9 +7,7 @@ import { useSelector } from 'react-redux';
 import { getDrawerState } from './app-drawer/drawer.slice';
 import { css } from '@emotion/react';
 
-const StyledAppLayout = styled.div`
-  color: pink;
-`;
+const StyledAppLayout = styled.div``;
 const StylesAppContent = styled.div<{ isOpen: boolean }>`
   ${({ isOpen }) =>
     isOpen &&

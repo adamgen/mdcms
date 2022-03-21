@@ -8,10 +8,21 @@ const StyledApp = styled.div`
   // Your style here
 `;
 
+const StyledPostPath = styled.input`
+  font-size: 2rem;
+  padding: 10px;
+  margin: 20px 0;
+  background: lightgray;
+  font-family: sans-serif;
+  display: inline-block;
+  border: 0;
+`;
+
 export function App() {
   return (
     <StyledApp>
       <AppLayout>
+        <StyledPostPath value={'posts/index.md'} />
         <MdEditor />
         <Route
           path="/"
