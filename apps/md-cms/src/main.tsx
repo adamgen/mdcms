@@ -7,9 +7,20 @@ import { Provider } from 'react-redux';
 import App from './app/app';
 import { appReducer } from './root-state';
 import { filesApi } from './app/app-layout/app-drawer/fs-tree/fs-tree.slice';
+import {
+  DRAWER_FEATURE_KEY,
+  drawerReducer,
+} from './app/app-layout/app-drawer/drawer.slice';
+
+import { EDITOR_FEATURE_KEY, editorReducer } from './app/slices/editor.slice';
 
 const store = configureStore({
-  reducer: appReducer,
+  reducer: {
+    ...appReducer,
+    [EDITOR_FEATURE_KEY]: editorReducer,
+    [DRAWER_FEATURE_KEY]: drawerReducer,
+    [filesApi.reducerPath]: filesApi.reducer,
+  },
   // Additional middleware can be passed to this array
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(filesApi.middleware),
