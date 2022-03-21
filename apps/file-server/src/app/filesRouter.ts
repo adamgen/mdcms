@@ -24,7 +24,7 @@ filesRouter.get('', (req, res, next) => {
   }
 });
 
-filesRouter.post('/:fileName', (req, res, next) => {
+const upsertFileHandler = (req, res) => {
   const content = req.body.content;
   const filePath = path.join(
     process.env['FILES_SERVER_BASE_PATH'],
@@ -36,9 +36,6 @@ filesRouter.post('/:fileName', (req, res, next) => {
     return;
   }
 
-  if (fs.existsSync(filePath)) {
-    res.status(400).json('Trying to create an existing file');
-  }
   try {
     fs.writeFileSync(filePath, content);
   } catch (e) {
@@ -47,11 +44,11 @@ filesRouter.post('/:fileName', (req, res, next) => {
     return;
   }
   res.status(201).json(true);
-});
+};
 
-filesRouter.put('/:fileName', (req, res, next) => {
-  res.json({});
-});
+filesRouter.post('/:fileName', upsertFileHandler);
+
+filesRouter.put('/:fileName', upsertFileHandler);
 
 filesRouter.delete('/:fileName', (req, res, next) => {
   res.json({});
