@@ -40,3 +40,4 @@ Thumbs.db
 
 **/*.local
 **/.env
+/apps/file-server/src/app/__test-temp-data__/
