@@ -8,7 +8,7 @@ import {
   useGetFilesListQuery,
   useUpdateFileMutation,
 } from './fs-tree.slice';
-import { appReducer } from '../../../../root-state';
+import { appReducer } from '../../root-state';
 import { Provider } from 'react-redux';
 import React from 'react';
 
