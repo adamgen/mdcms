@@ -13,19 +13,25 @@ describe('md-cms', () => {
     cy.g('side-menu-container').should('be.visible');
   });
 
-  it.only('should store editor state to redux', () => {
+  it('should store editor state to redux', () => {
     cy.g('editor')
       .get('.toastui-editor-md-container > .toastui-editor > .ProseMirror')
       .type(`# Auto typed title\n\n- list item\nlist item 2`);
 
-    cy.window()
-      .its('store')
-      .invoke('getState')
-      .its('editor')
-      .should('deep.equal', {
-        path: null,
-        content: '# Auto typed title\n\n- list item\n- list item 2',
-        updater: 'editor',
-      });
+    cy.reduxStore().its('editor').should('deep.equal', {
+      path: null,
+      content: '# Auto typed title\n\n- list item\n- list item 2',
+      updater: 'editor',
+    });
+  });
+
+  it('should store title state to redux', () => {
+    cy.g('post-title').type(`posts/my-unique-url.md`);
+
+    cy.reduxStore().its('editor').should('deep.equal', {
+      path: `posts/my-unique-url.md`,
+      content: '',
+      updater: 'other',
+    });
   });
 });

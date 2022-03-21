@@ -18,7 +18,7 @@ export function MdEditor(props: MdEditorProps) {
 
   useEffect(() => {
     if (updater === 'other') {
-      editorRef.current?.editorInst.setMarkdown(content ?? '');
+      editorRef.current?.editorInst.setMarkdown(content ?? '', false);
     }
   }, [content, updater]);
 
@@ -31,9 +31,18 @@ export function MdEditor(props: MdEditorProps) {
         height="600px"
         initialEditType="markdown"
         useCommandShortcut={true}
+        autofocus={false}
         onChange={(e) => {
-          const content = editorRef.current?.editorInst.getMarkdown();
-          dispatch(editorSlice.actions.update({ content, updater: 'editor' }));
+          const contentUpdate = editorRef.current?.editorInst.getMarkdown();
+          if (contentUpdate === content) {
+            return;
+          }
+          dispatch(
+            editorSlice.actions.update({
+              content: contentUpdate,
+              updater: 'editor',
+            })
+          );
         }}
       />
     </StyledMdEditor>

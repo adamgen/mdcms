@@ -32,6 +32,7 @@ export function App() {
           onChange={(e) => {
             dispatch(editorSlice.actions.update({ path: e.target.value }));
           }}
+          data-testid={'post-title'}
         />
         <MdEditor />
         <Route

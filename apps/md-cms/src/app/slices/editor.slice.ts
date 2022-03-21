@@ -5,13 +5,13 @@ export const EDITOR_FEATURE_KEY = 'editor';
 
 export interface EditorState {
   path: string | null;
-  content: string | null;
+  content: string;
   updater: 'editor' | 'other';
 }
 
 export const initialEditorState: EditorState = {
   path: null,
-  content: null,
+  content: '',
   updater: 'other',
 };
 
@@ -22,7 +22,7 @@ export const editorSlice = createSlice({
     update: (state, action) => {
       state.path = action.payload.path ?? state.path;
       state.content = action.payload.content ?? state.content;
-      state.updater = action.payload.updater ?? state.updater;
+      state.updater = action.payload.updater === 'editor' ? 'editor' : 'other';
     },
   },
 });
