@@ -47,7 +47,7 @@ const upsertFileHandler = (req, res) => {
     res.status(500).json(e);
     return;
   }
-  res.status(201).json(true);
+  res.status(201).json(`Stored file to ${filePath}`);
 };
 
 filesRouter.post('/:fileName', upsertFileHandler);
