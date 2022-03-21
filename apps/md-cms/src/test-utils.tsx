@@ -3,13 +3,19 @@ import { render as rtlRender } from '@testing-library/react';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { appReducer } from './root-state';
+import { filesApi } from './app/app-layout/app-drawer/fs-tree/fs-tree.slice';
 // Import your own reducer
 
 function render(
   ui: React.ReactElement,
   {
     preloadedState = {},
-    store = configureStore({ reducer: appReducer }),
+    store = configureStore({
+      reducer: appReducer,
+      // Additional middleware can be passed to this array
+      middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware().concat(filesApi.middleware),
+    }),
     ...renderOptions
   } = {}
 ) {
