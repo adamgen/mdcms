@@ -12,7 +12,7 @@ const testRoute = async (
 
 const filesArray = ['index.md', 'my-post.md', 'a-great-post.md', 'category'];
 
-describe('filesRouter', () => {
+describe('GET files', () => {
   initFilesTest(__dirname);
 
   it('should return a list of files when existing', async () => {
@@ -27,3 +27,31 @@ describe('filesRouter', () => {
     });
   });
 });
+
+describe('POST files', () => {
+  initFilesTest(__dirname);
+  it('should fail to write to a file with missing body', async () => {
+    const response = await request(app).post('/api/files/new-file.md');
+    expect(response.statusCode).toBe(400);
+    expect(response.body).toBe('Required body not provided.');
+  });
+
+  it('should fail writing to an existing file path', async () => {
+    const response = await request(app)
+      .post('/api/files/index.md')
+      .send({ content: '# new index file header!' })
+      .set('Accept', 'application/json');
+    expect(response.statusCode).toBe(400);
+    expect(response.body).toBe('Trying to create an existing file');
+  });
+
+  it('should write to a file', async () => {
+    const response = await request(app)
+      .post('/api/files/new-file.md')
+      .send({ content: '# new index file header!' })
+      .set('Accept', 'application/json');
+    expect(response.statusCode).toBe(201);
+    expect(response.body).toBe(true);
+  });
+});
+
