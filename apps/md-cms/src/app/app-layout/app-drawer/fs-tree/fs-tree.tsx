@@ -3,8 +3,17 @@ import TreeView from '@mui/lab/TreeView';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import TreeItem from '@mui/lab/TreeItem';
+import { useGetFilesListQuery } from './fs-tree.slice';
 
 export function FsTree() {
+  const { data, isLoading } = useGetFilesListQuery();
+
+  console.log(data);
+
+  if (isLoading) {
+    return <>Loading...</>;
+  }
+
   return (
     <TreeView
       aria-label="file system navigator"

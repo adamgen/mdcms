@@ -71,6 +71,10 @@ describe('Upsert post/put files', () => {
         .toString()
     ).toEqual('# new random file header!');
   });
+
+  it('should write to a new file to a non existing path', async () => {
+    expect(true).toBeFalsy()
+  });
 });
 
 describe('Delete files', () => {

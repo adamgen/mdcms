@@ -14,12 +14,16 @@ filesRouter.get('/:fileName', (req, res, next) => {
 });
 
 filesRouter.get('', (req, res, next) => {
+  const baseFilesPath = path.join(process.env['FILES_SERVER_BASE_PATH']);
+
   try {
-    const filesList = fs.readdirSync(
-      path.join(process.env['FILES_SERVER_BASE_PATH'])
-    );
+    if (!fs.existsSync(baseFilesPath)) {
+      fs.mkdirsSync(baseFilesPath);
+    }
+    const filesList = fs.readdirSync(baseFilesPath);
     res.status(200).json(filesList);
   } catch (e) {
+    console.error(e);
     res.status(500).json(null);
   }
 });
