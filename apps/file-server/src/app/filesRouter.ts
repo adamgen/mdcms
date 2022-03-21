@@ -4,8 +4,8 @@ import * as path from 'path';
 
 const filesRouter = Router();
 
-filesRouter.get('/:id', (req, res, next) => {
-  const file = fs.readFileSync(path.join(process.env['FILES_SERVER_BASE_PATH'], req.params.id)).toString();
+filesRouter.get('/:fileName', (req, res, next) => {
+  const file = fs.readFileSync(path.join(process.env['FILES_SERVER_BASE_PATH'], req.params.fileName)).toString();
   res.json(file);
 });
 
@@ -18,15 +18,15 @@ filesRouter.get('', (req, res, next) => {
   }
 });
 
-filesRouter.post('', (req, res, next) => {
+filesRouter.post('/:fileName', (req, res, next) => {
   res.json({});
 });
 
-filesRouter.put('', (req, res, next) => {
+filesRouter.put('/:fileName', (req, res, next) => {
   res.json({});
 });
 
-filesRouter.delete('', (req, res, next) => {
+filesRouter.delete('/:fileName', (req, res, next) => {
   res.json({});
 });
 
