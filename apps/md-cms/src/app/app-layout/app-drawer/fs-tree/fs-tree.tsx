@@ -6,9 +6,7 @@ import TreeItem from '@mui/lab/TreeItem';
 import { useGetFilesListQuery } from './fs-tree.slice';
 
 export function FsTree() {
-  const { data, isLoading } = useGetFilesListQuery();
-
-  console.log(data);
+  const { isLoading } = useGetFilesListQuery();
 
   if (isLoading) {
     return <>Loading...</>;
