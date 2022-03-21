@@ -5,13 +5,13 @@ import * as path from 'path';
 const filesRouter = Router();
 
 filesRouter.get('/:id', (req, res, next) => {
-  const file = fs.readFileSync(path.join('posts', req.params.id));
+  const file = fs.readFileSync(path.join(process.env['FILES_SERVER_BASE_PATH'], req.params.id)).toString();
   res.json(file);
 });
 
 filesRouter.get('', (req, res, next) => {
   try {
-    const filesList = fs.readdirSync('posts');
+    const filesList = fs.readdirSync(path.join(process.env['FILES_SERVER_BASE_PATH']));
     res.status(200).json(filesList);
   } catch (e) {
     res.status(500).json(null);

@@ -1,6 +1,7 @@
 import * as request from 'supertest';
 import { app } from './app';
-import {jestFs} from './__mocks__/fs.interface';
+import * as path from 'path';
+import * as fs from 'fs-extra';
 
 const testRoute = async (
   route: string,
@@ -10,20 +11,20 @@ const testRoute = async (
   test(response);
 };
 
-jest.mock('fs');
-const fs: jestFs = require('fs');
-fs.__setMockFiles({
-  posts: {
-    'index.md': '# Im the index',
-    'my-post.md': 'Just a post',
-    'a-great-post.md': 'A great post',
-    category: {
-      'index.md': 'category index',
-    },
-  },
-});
-
 describe('app health', () => {
+  let env = process.env;
+  const tempTestDir = path.join(__dirname, '__test-temp-data__');
+  beforeEach(() => {
+    env = process.env;
+    process.env['FILES_SERVER_BASE_PATH'] = tempTestDir;
+    fs.copySync(path.join(__dirname, '__testing-files__'), tempTestDir);
+  });
+
+  afterEach(() => {
+    fs.removeSync(tempTestDir);
+    process.env = env;
+  });
+
   it('should respond with 404 for non existing route', async () => {
     const response = await request(app).get('/non-existing-route');
     expect(response.statusCode).toBe(404);
