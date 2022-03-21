@@ -55,6 +55,11 @@ export const AppNavigation = () => {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
+          <MenuIcon
+            data-testid="side-menu-toggle"
+            onClick={() => dispatch(drawerActions.toggle())}
+          />
+
           <Typography
             variant="h6"
             noWrap

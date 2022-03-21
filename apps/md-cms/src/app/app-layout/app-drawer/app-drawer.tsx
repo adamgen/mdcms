@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
 import { FsTree } from './fs-tree/fs-tree';
 import { useSelector } from 'react-redux';
-import { drawerActions, getDrawerState } from './drawer.slice';
+import { getDrawerState } from './drawer.slice';
 import { drawerWidth } from '../../../consts';
 
 export default function AppDrawer() {
@@ -23,7 +23,7 @@ export default function AppDrawer() {
       open={isOpen}
       variant="persistent"
     >
-      <Box role="presentation">
+      <Box role="presentation" data-testid="side-menu-container">
         <div
           onClick={(e) => {
             e.stopPropagation();

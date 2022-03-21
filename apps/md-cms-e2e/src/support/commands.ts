@@ -1,10 +1,12 @@
 declare namespace Cypress {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface Chainable<Subject> {
-    login(email: string, password: string): void;
+    g: typeof g;
   }
 }
 
-Cypress.Commands.add('login', (email, password) => {
-  console.log('Custom command example: Login', email, password);
-});
+function g(id: string) {
+  return cy.get(`[data-testid="${id}"]`);
+}
+
+Cypress.Commands.add('g', g);

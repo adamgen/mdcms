@@ -4,4 +4,12 @@ describe('md-cms', () => {
   it('should display file system tree', () => {
     cy.get('[data-testid="fs-tree"]');
   });
+
+  it.only('should toggle the side menu on and off', () => {
+    cy.g('side-menu-container').should('be.visible');
+    cy.g('side-menu-toggle').click();
+    cy.g('side-menu-container').should('not.be.visible');
+    cy.g('side-menu-toggle').click();
+    cy.g('side-menu-container').should('be.visible');
+  });
 });
