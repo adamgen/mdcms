@@ -22,7 +22,7 @@ export function App() {
   return (
     <StyledApp>
       <AppLayout>
-        <StyledPostPath value={'posts/index.md'} />
+        <StyledPostPath defaultValue={'posts/index.md'} />
         <MdEditor />
         <Route
           path="/"
