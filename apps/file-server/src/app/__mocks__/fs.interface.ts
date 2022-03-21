@@ -1,5 +1,10 @@
 import * as nodefs from 'fs';
 
+interface MockFilesInput {
+  [path: string]: string | MockFilesInput;
+}
+
 export type jestFs = typeof nodefs & {
-  __setMockFiles: (filesList: { [filename: string]: string }) => void;
+  __setMockFiles: (filesList: MockFilesInput) => void;
+  __mockFiles: MockFilesInput;
 };

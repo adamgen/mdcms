@@ -4,8 +4,18 @@ import * as path from 'path';
 
 const filesRouter = Router();
 
+filesRouter.get('/:id', (req, res, next) => {
+  const file = fs.readFileSync(path.join('posts', req.params.id));
+  res.json(file);
+});
+
 filesRouter.get('', (req, res, next) => {
-  res.json(fs.readdirSync(path.join(__dirname, 'posts')));
+  try {
+    const filesList = fs.readdirSync('posts');
+    res.status(200).json(filesList);
+  } catch (e) {
+    res.status(500).json(null);
+  }
 });
 
 filesRouter.post('', (req, res, next) => {

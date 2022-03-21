@@ -11,21 +11,31 @@ const testRoute = async (
   test(response);
 };
 
-const filesArray = ['index.md', 'my-post.md', 'a-great-post.md'];
+const filesArray = ['index.md', 'my-post.md', 'a-great-post.md', 'category'];
 
 jest.mock('fs');
-
 const fs: jestFs = require('fs');
 fs.__setMockFiles({
-  [path.join(__dirname, 'posts', 'index.md')]: '# Im the index',
-  [path.join(__dirname, 'posts', 'my-post.md')]: 'Just a post',
-  [path.join(__dirname, 'posts', 'a-great-post.md')]: 'A great post',
+  posts: {
+    'index.md': '# Im the index',
+    'my-post.md': 'Just a post',
+    'a-great-post.md': 'A great post',
+    category: {
+      'index.md': 'category index',
+    },
+  },
 });
 
 describe('filesRouter', () => {
   it('should return a list of files when existing', async () => {
     await testRoute('/api/files', (response) => {
       expect(response.body).toEqual(filesArray);
+    });
+  });
+
+  it('should return the contents of a file by param', async () => {
+    await testRoute('/api/files/index.md', (response) => {
+      expect(response.body).toEqual('# Im the index');
     });
   });
 });
