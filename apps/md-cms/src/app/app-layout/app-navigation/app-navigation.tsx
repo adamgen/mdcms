@@ -58,6 +58,9 @@ export const AppNavigation = () => {
           <MenuIcon
             data-testid="side-menu-toggle"
             onClick={() => dispatch(drawerActions.toggle())}
+            sx={{
+              cursor: 'pointer'
+            }}
           />
 
           <Typography
