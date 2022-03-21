@@ -1,9 +1,11 @@
 import { Router } from 'express';
+import * as fs from 'fs';
+import * as path from 'path';
 
 const filesRouter = Router();
 
 filesRouter.get('', (req, res, next) => {
-  res.json([]);
+  res.json(fs.readdirSync(path.join(__dirname, 'posts')));
 });
 
 filesRouter.post('', (req, res, next) => {
