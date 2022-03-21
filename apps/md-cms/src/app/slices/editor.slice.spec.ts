@@ -1,50 +1,26 @@
-import { fetchEditor, editorAdapter, editorReducer } from './editor.slice';
+import {
+  editorReducer,
+  editorSlice,
+  EditorState,
+  initialEditorState,
+} from './editor.slice';
 
-describe('editor reducer', () => {
-  it('should handle initial state', () => {
-    const expected = editorAdapter.getInitialState({
-      loadingStatus: 'not loaded',
-      error: null,
-    });
-
-    expect(editorReducer(undefined, { type: '' })).toEqual(expected);
+const testReducer = (payload: Partial<EditorState>) =>
+  editorReducer(initialEditorState, {
+    ...editorSlice.actions.update,
+    payload,
   });
 
-  it('should handle fetchEditors', () => {
-    let state = editorReducer(undefined, fetchEditor.pending(null, null));
-
-    expect(state).toEqual(
-      expect.objectContaining({
-        loadingStatus: 'loading',
-        error: null,
-        entities: {},
-      })
-    );
-
-    state = editorReducer(
-      state,
-      fetchEditor.fulfilled([{ id: 1 }], null, null)
-    );
-
-    expect(state).toEqual(
-      expect.objectContaining({
-        loadingStatus: 'loaded',
-        error: null,
-        entities: { 1: { id: 1 } },
-      })
-    );
-
-    state = editorReducer(
-      state,
-      fetchEditor.rejected(new Error('Uh oh'), null, null)
-    );
-
-    expect(state).toEqual(
-      expect.objectContaining({
-        loadingStatus: 'error',
-        error: 'Uh oh',
-        entities: { 1: { id: 1 } },
-      })
-    );
+describe('editor slice', () => {
+  fit('should update the state', async () => {
+    const newFilePath = 'posts/index.md';
+    expect(testReducer({ path: newFilePath })).toEqual({
+      ...initialEditorState,
+      path: newFilePath,
+    });
+    expect(testReducer({ content: newFilePath })).toEqual({
+      ...initialEditorState,
+      content: newFilePath,
+    });
   });
 });
