@@ -4,6 +4,8 @@ import * as path from 'path';
 
 const filesRouter = Router();
 
+console.log(`Files base folder at ${process.env['FILES_SERVER_BASE_PATH']}`);
+
 filesRouter.get('/:fileName', (req, res, next) => {
   const file = fs
     .readFileSync(
@@ -41,6 +43,9 @@ const upsertFileHandler = (req, res) => {
   }
 
   try {
+    if (!fs.existsSync(path.dirname(filePath))) {
+      fs.mkdirsSync(path.dirname(filePath));
+    }
     fs.writeFileSync(filePath, content);
   } catch (e) {
     console.error(e);

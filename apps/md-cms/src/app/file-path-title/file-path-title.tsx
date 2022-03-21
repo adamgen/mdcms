@@ -1,11 +1,21 @@
 import styled from '@emotion/styled';
 import { useDispatch, useSelector } from 'react-redux';
+import { useMemo } from 'react';
 import { editorSlice, getEditorState } from '../slices/editor.slice';
+import {
+  useCreateFileMutation,
+  useGetFilesListQuery,
+} from '../fs-tree/fs-tree.slice';
+import SaveIcon from '@mui/icons-material/save';
 
 /* eslint-disable-next-line */
 export interface FilePathTitleProps {}
 
-const StyledFilePathTitle = styled.input`
+const StyledFilePathTitle = styled.div`
+  display: flex;
+  align-items: center;
+`;
+const StyledFilePathTitleInput = styled.input`
   font-size: 2rem;
   padding: 10px;
   margin: 20px 0;
@@ -16,17 +26,39 @@ const StyledFilePathTitle = styled.input`
 `;
 
 export function FilePathTitle(props: FilePathTitleProps) {
-  const selector = useSelector(getEditorState);
+  const { path } = useSelector(getEditorState);
+  const filesQuery = useGetFilesListQuery();
+  const [createFile] = useCreateFileMutation();
   const dispatch = useDispatch();
+  const { content } = useSelector(getEditorState);
+
+  const isPathExists = useMemo(() => {
+    return path && filesQuery.data?.includes(path);
+  }, [filesQuery, path]);
 
   return (
-    <StyledFilePathTitle
-      defaultValue={selector.path ?? ''}
-      onChange={(e) => {
-        dispatch(editorSlice.actions.update({ path: e.target.value }));
-      }}
-      data-testid={'post-title'}
-    />
+    <StyledFilePathTitle>
+      <StyledFilePathTitleInput
+        defaultValue={path ?? ''}
+        onChange={(e) => {
+          dispatch(editorSlice.actions.update({ path: e.target.value }));
+        }}
+        data-testid={'post-title'}
+      />
+      {!isPathExists && (
+        <SaveIcon
+          sx={{ cursor: 'pointer', padding: 1 }}
+          fontSize="large"
+          onClick={() => {
+            if (!path) {
+              return;
+            }
+
+            createFile({ content, filename: path });
+          }}
+        />
+      )}
+    </StyledFilePathTitle>
   );
 }
 
