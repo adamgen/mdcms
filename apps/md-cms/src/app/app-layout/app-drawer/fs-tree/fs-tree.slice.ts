@@ -12,7 +12,7 @@ export interface FsTreeEntity {
 export const filesApi = createApi({
   reducerPath: 'filesApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: getBackendUrl(),
+    baseUrl: '/api',
     prepareHeaders: (headers) => {
       headers.set('accept', 'application/json');
       return headers;
