@@ -7,6 +7,26 @@ const checkTooltipForMissingPathOrContent = (message) => {
   cy.contains('.MuiTooltip-tooltip').should('not.exist');
 };
 
+describe.only('Editor online functions', () => {
+  beforeEach(() => {
+    cy.task('resetDevFilesFolder');
+    cy.visit('/');
+  });
+
+  it('should send a request when there are title and content', () => {
+    cy.mdEditor().type(texts.EDITOR_TYPE_CONTENT);
+    cy.g('post-title').type(`my-unique-url.md`);
+
+    cy.g('save-to-filesystem-button').trigger('mouseover');
+    cy.g('save-to-filesystem-button').click();
+
+    cy.task('readDevFile', 'my-unique-url.md').should(
+      'equal',
+      texts.EDITOR_RESULT_CONTENT
+    );
+  });
+});
+
 describe('Editor offline functions', () => {
   beforeEach(() => cy.visit('/'));
 
@@ -66,7 +86,7 @@ describe('Editor offline functions', () => {
     cy.g('save-to-filesystem-button').click();
     cy.wait('@addPost').then((interception) => {
       expect(interception.request.body.content).equal(
-        texts.EDITOR_RESULT_CONTENT,
+        texts.EDITOR_RESULT_CONTENT
       );
     });
   });
