@@ -7,7 +7,16 @@ const checkTooltipForMissingPathOrContent = (message) => {
   cy.contains('.MuiTooltip-tooltip').should('not.exist');
 };
 
-describe('Editor online functions', () => {
+const prebuildTestFiles = () => {
+  for (let i = 0; i < 10; i++) {
+    cy.task('makeDevFile', {
+      name: `file${i + 1}.md`,
+      content: `# Content ${i + 1}`,
+    });
+  }
+};
+
+describe('Editor writes', () => {
   beforeEach(() => {
     cy.task('resetDevFilesFolder');
     cy.visit('/');
@@ -28,17 +37,26 @@ describe('Editor online functions', () => {
       texts.EDITOR_RESULT_CONTENT
     );
   });
-
+});
+describe('Editor reads', () => {
+  beforeEach(() => {
+    cy.task('resetDevFilesFolder');
+  });
   it('should show a list of files in the sidenav', function () {
     cy.gPrefix('file-name-').should('have.length', 0);
-    for (let i = 0; i < 10; i++) {
-      cy.task('makeDevFile', {
-        name: `file${i + 1}.md`,
-        content: `# Content ${i + 1}`,
-      });
-    }
+    prebuildTestFiles();
     cy.visit('/');
     cy.gPrefix('file-name-').should('have.length', 10);
+  });
+
+  it.only('should show a list of files in the sidenav', function () {
+    cy.task('makeDevFile', {
+      name: 'index.md',
+      content: '# MD title',
+    });
+    cy.visit('/');
+    cy.g('file-name--index.md').click();
+    cy.g('post-title').should('have.value', 'index.md');
   });
 });
 

@@ -76,7 +76,7 @@ export function FilePathTitle(props: FilePathTitleProps) {
   return (
     <StyledFilePathTitle data-testid="save-to-filesystem-button">
       <StyledFilePathTitleInput
-        defaultValue={path ?? ''}
+        value={path ?? ''}
         onChange={(e) => {
           dispatch(editorSlice.actions.update({ path: e.target.value }));
         }}

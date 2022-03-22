@@ -4,9 +4,12 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import TreeItem from '@mui/lab/TreeItem';
 import { useGetFilesListQuery } from './fs-tree.slice';
+import { useDispatch } from 'react-redux';
+import { editorSlice } from '../slices/editor.slice';
 
 export function FsTree() {
   const { isLoading, data } = useGetFilesListQuery();
+  const dispatch = useDispatch();
 
   if (isLoading) {
     return <>Loading...</>;
@@ -26,6 +29,10 @@ export function FsTree() {
     >
       {data.map((filename) => (
         <TreeItem
+          key={filename}
+          onClick={() => {
+            dispatch(editorSlice.actions.update({ path: filename }));
+          }}
           nodeId={filename}
           label={filename}
           data-testid={`file-name--${filename}`}
