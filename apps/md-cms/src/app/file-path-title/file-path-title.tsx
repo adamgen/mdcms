@@ -40,7 +40,7 @@ export function FilePathTitle(props: FilePathTitleProps) {
   }, [filesQuery, path]);
 
   const isButtonDisabled = useMemo(() => {
-    return !!path && !!content;
+    return !path && !content;
   }, [content, path]);
 
   const missingDataTooltipTitle = useMemo(() => {

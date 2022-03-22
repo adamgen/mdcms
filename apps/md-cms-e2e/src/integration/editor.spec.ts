@@ -4,7 +4,7 @@ const checkTooltipForMissingPathOrContent = (message) => {
   cy.g('save-to-filesystem-button').trigger('mouseover');
   cy.contains('.MuiTooltip-tooltip', message).should('be.visible');
   cy.g('save-to-filesystem-button').trigger('mouseout');
-  cy.contains('.MuiTooltip-tooltip', message).should('not.be.visible');
+  cy.contains('.MuiTooltip-tooltip').should('not.exist');
 };
 
 describe('Editor online functions changes file system', () => {
@@ -56,5 +56,21 @@ describe('Editor offline functions', () => {
   it('should prevent saving when content is missing', () => {
     cy.g('post-title').type(`posts/my-unique-url.md`);
     checkTooltipForMissingPathOrContent('Missing content');
+  });
+
+  it('should send a request when there are title and content', () => {
+    cy.mdEditor().type(texts.EDITOR_TYPE_CONTENT);
+    cy.g('post-title').type(`posts/my-unique-url.md`);
+
+    cy.g('save-to-filesystem-button').trigger('mouseover');
+    cy.contains('.MuiTooltip-tooltip').should('not.exist');
+
+    cy.intercept('/api/files/posts/my-unique-url.md', 'true').as('addPost');
+    cy.g('save-to-filesystem-button').click();
+    cy.wait('@addPost').then((interception) => {
+      expect(interception.request.body.content).equal(
+        texts.EDITOR_RESULT_CONTENT
+      );
+    });
   });
 });
