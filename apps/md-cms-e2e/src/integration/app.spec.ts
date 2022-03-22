@@ -1,12 +1,4 @@
-const typeToEditor = (content: string) =>
-  cy
-    .g('editor')
-    .get('.toastui-editor-md-container > .toastui-editor > .ProseMirror')
-    .type(content);
-
-const EDITOR_TYPE_CONTENT = '# Auto typed title\n\n- list item\nlist item 2';
-const EDITOR_RESULT_CONTENT =
-  '# Auto typed title\n\n- list item\n- list item 2';
+import texts from '../fixtures/texts.json';
 
 describe('md-cms', () => {
   beforeEach(() => cy.visit('/'));
@@ -23,12 +15,12 @@ describe('md-cms', () => {
     cy.g('side-menu-container').should('be.visible');
   });
 
-  it('should store editor state to redux', () => {
-    typeToEditor(EDITOR_TYPE_CONTENT);
+  it('should store editor state to redux', function () {
+    cy.mdEditor().type(texts.EDITOR_TYPE_CONTENT);
 
     cy.reduxStore().its('editor').should('deep.equal', {
       path: null,
-      content: EDITOR_RESULT_CONTENT,
+      content: texts.EDITOR_RESULT_CONTENT,
       updater: 'editor',
     });
   });
@@ -44,12 +36,12 @@ describe('md-cms', () => {
   });
 
   it('should store title and content state to redux', () => {
-    typeToEditor(EDITOR_TYPE_CONTENT);
+    cy.mdEditor().type(texts.EDITOR_TYPE_CONTENT);
     cy.g('post-title').type(`posts/my-unique-url.md`);
 
     cy.reduxStore().its('editor').should('deep.equal', {
       path: 'posts/my-unique-url.md',
-      content: EDITOR_RESULT_CONTENT,
+      content: texts.EDITOR_RESULT_CONTENT,
       updater: 'other',
     });
   });

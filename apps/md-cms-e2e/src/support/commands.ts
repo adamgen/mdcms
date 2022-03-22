@@ -3,6 +3,7 @@ declare namespace Cypress {
   interface Chainable<Subject> {
     g: typeof g;
     reduxStore: typeof reduxStore;
+    mdEditor: typeof mdEditor;
   }
 }
 
@@ -14,5 +15,12 @@ function reduxStore() {
   return cy.window().its('store').invoke('getState');
 }
 
+function mdEditor() {
+  return cy
+    .g('editor')
+    .get('.toastui-editor-md-container > .toastui-editor > .ProseMirror');
+}
+
 Cypress.Commands.add('g', g);
 Cypress.Commands.add('reduxStore', reduxStore);
+Cypress.Commands.add('mdEditor', mdEditor);
