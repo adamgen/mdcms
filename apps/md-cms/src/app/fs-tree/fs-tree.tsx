@@ -6,10 +6,14 @@ import TreeItem from '@mui/lab/TreeItem';
 import { useGetFilesListQuery } from './fs-tree.slice';
 
 export function FsTree() {
-  const { isLoading } = useGetFilesListQuery();
+  const { isLoading, data } = useGetFilesListQuery();
 
   if (isLoading) {
     return <>Loading...</>;
+  }
+
+  if (!data) {
+    return <>no files are present...</>;
   }
 
   return (
@@ -20,15 +24,13 @@ export function FsTree() {
       sx={{ height: 240, flexGrow: 1, maxWidth: 400, overflowY: 'auto' }}
       data-testid="fs-tree"
     >
-      <TreeItem nodeId="1" label="Applications">
-        <TreeItem nodeId="2" label="Calendar" />
-      </TreeItem>
-      <TreeItem nodeId="5" label="Documents">
-        <TreeItem nodeId="10" label="OSS" />
-        <TreeItem nodeId="6" label="MUI">
-          <TreeItem nodeId="8" label="index.js" />
-        </TreeItem>
-      </TreeItem>
+      {data.map((filename) => (
+        <TreeItem
+          nodeId={filename}
+          label={filename}
+          data-testid={`file-name--${filename}`}
+        />
+      ))}
     </TreeView>
   );
 }

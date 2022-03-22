@@ -7,7 +7,7 @@ const checkTooltipForMissingPathOrContent = (message) => {
   cy.contains('.MuiTooltip-tooltip').should('not.exist');
 };
 
-describe.only('Editor online functions', () => {
+describe('Editor online functions', () => {
   beforeEach(() => {
     cy.task('resetDevFilesFolder');
     cy.visit('/');
@@ -24,6 +24,18 @@ describe.only('Editor online functions', () => {
       'equal',
       texts.EDITOR_RESULT_CONTENT
     );
+  });
+
+  it('should show a list of files in the sidenav', function () {
+    cy.gPrefix('file-name-').should('have.length', 0);
+    for (let i = 0; i < 10; i++) {
+      cy.task('makeDevFile', {
+        name: `file${i + 1}.md`,
+        content: `# Content ${i + 1}`,
+      });
+    }
+    cy.visit('/');
+    cy.gPrefix('file-name-').should('have.length', 10);
   });
 });
 

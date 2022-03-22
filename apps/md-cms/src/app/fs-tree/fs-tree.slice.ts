@@ -20,7 +20,7 @@ export const filesApi = createApi({
     mode: 'cors',
   }),
   endpoints: (builder) => ({
-    getFilesList: builder.query<string, void>({
+    getFilesList: builder.query<string[], void>({
       query: () => `files`,
     }),
     getFileByName: builder.query<string, string>({
