@@ -59,40 +59,11 @@ export const AppNavigation = () => {
             data-testid="side-menu-toggle"
             onClick={() => dispatch(drawerActions.toggle())}
             sx={{
-              cursor: 'pointer'
+              cursor: 'pointer',
             }}
           />
 
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
-          >
-            LOGO
-          </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={toggleDrawer}
-              color="inherit"
-              data-testid="drawer-toggler"
-            >
-              <MenuIcon />
-            </IconButton>
-          </Box>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
-          >
-            LOGO
-          </Typography>
+          <Box sx={{ flexGrow: 1 }} />
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
