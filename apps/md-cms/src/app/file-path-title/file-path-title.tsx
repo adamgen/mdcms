@@ -9,6 +9,7 @@ import {
 import AddIcon from '@mui/icons-material/Add';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import { SvgIconTypeMap } from '@mui/material/SvgIcon/SvgIcon';
+import { Tooltip } from '@mui/material';
 
 /* eslint-disable-next-line */
 export interface FilePathTitleProps {}
@@ -38,6 +39,24 @@ export function FilePathTitle(props: FilePathTitleProps) {
     return path && filesQuery.data?.includes(path);
   }, [filesQuery, path]);
 
+  const isButtonDisabled = useMemo(() => {
+    return !!path && !!content;
+  }, [content, path]);
+
+  const missingDataTooltipTitle = useMemo(() => {
+    if (!path && !content) {
+      return 'Missing content and file path';
+    }
+    if (!content) {
+      return 'Missing content';
+    }
+    if (!path) {
+      return 'Missing file path';
+    }
+
+    return null;
+  }, [content, path]);
+
   const iconProps: SvgIconTypeMap<{ onClick: () => void }>['props'] = {
     sx: { cursor: 'pointer', padding: 1 },
     fontSize: 'large',
@@ -46,12 +65,16 @@ export function FilePathTitle(props: FilePathTitleProps) {
         return;
       }
 
+      if (isButtonDisabled) {
+        return;
+      }
+
       createFile({ content, filename: path });
     },
   };
 
   return (
-    <StyledFilePathTitle>
+    <StyledFilePathTitle data-testid="save-to-filesystem-button">
       <StyledFilePathTitleInput
         defaultValue={path ?? ''}
         onChange={(e) => {
@@ -59,8 +82,23 @@ export function FilePathTitle(props: FilePathTitleProps) {
         }}
         data-testid={'post-title'}
       />
-      {!isPathExists && <AddIcon {...iconProps} />}
-      {isPathExists && <SaveAltIcon {...iconProps} />}
+      {missingDataTooltipTitle && (
+        <Tooltip
+          title={missingDataTooltipTitle}
+          data-testid="missing-data-tooltip"
+        >
+          <div>
+            {!isPathExists && <AddIcon {...iconProps} />}
+            {isPathExists && <SaveAltIcon {...iconProps} />}
+          </div>
+        </Tooltip>
+      )}
+      {!missingDataTooltipTitle && (
+        <>
+          {!isPathExists && <AddIcon {...iconProps} />}
+          {isPathExists && <SaveAltIcon {...iconProps} />}
+        </>
+      )}
     </StyledFilePathTitle>
   );
 }
