@@ -4,6 +4,7 @@
 
 - Represent file navigation on browser
 - Sync the md presentation component with an external one
+- Live push file update to the browser
 - Re work jest's environment
   - Add jest typeahead
 - Add lint rules
