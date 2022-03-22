@@ -13,7 +13,7 @@ describe('Editor online functions', () => {
     cy.visit('/');
   });
 
-  it('should send a request when there are title and content', () => {
+  it.only('should write content to a file', () => {
     cy.mdEditor().type(texts.EDITOR_TYPE_CONTENT);
     cy.g('post-title').type(`my-unique-url.md`);
 
