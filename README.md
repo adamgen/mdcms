@@ -3,12 +3,15 @@
 ## TODO
 
 - Represent file navigation on browser
+- Sync the md presentation component with an external one
 - Re work jest's environment
   - Add jest typeahead
 - Add lint rules
   - Import order
   - cypress, no only
-  - react, exhustive hooks
+  - react, exhaustive hooks
+  - no unused vars
+  - prettier
 - Add git support
   - Commit, pull and push from browser
   - Diff between branches
