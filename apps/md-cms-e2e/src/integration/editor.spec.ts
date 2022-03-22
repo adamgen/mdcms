@@ -13,12 +13,15 @@ describe('Editor online functions', () => {
     cy.visit('/');
   });
 
-  it.only('should write content to a file', () => {
+  it('should write content to a file', () => {
     cy.mdEditor().type(texts.EDITOR_TYPE_CONTENT);
     cy.g('post-title').type(`my-unique-url.md`);
 
     cy.g('save-to-filesystem-button').trigger('mouseover');
+
+    cy.intercept('/api/files/my-unique-url.md').as('addPost');
     cy.g('save-to-filesystem-button').click();
+    cy.wait('@addPost');
 
     cy.task('readDevFile', 'my-unique-url.md').should(
       'equal',
