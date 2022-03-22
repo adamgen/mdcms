@@ -5,6 +5,7 @@ import { Editor as NativeEditor } from '@toast-ui/editor';
 import { useDispatch, useSelector } from 'react-redux';
 import { editorSlice, getEditorState } from '../slices/editor.slice';
 import { useEffect, useRef } from 'react';
+import { useGetFileByNameQuery } from '../fs-tree/fs-tree.slice';
 
 /* eslint-disable-next-line */
 export interface MdEditorProps {}
@@ -12,15 +13,25 @@ export interface MdEditorProps {}
 const StyledMdEditor = styled.div``;
 
 export function MdEditor(props: MdEditorProps) {
+  const { path } = useSelector(getEditorState);
   const { content, updater } = useSelector(getEditorState);
   const dispatch = useDispatch();
   const editorRef = useRef<Editor & { editorInst: NativeEditor }>(null);
-
+  const { data } = useGetFileByNameQuery(path as string, { skip: !path });
   useEffect(() => {
     if (updater === 'other') {
       editorRef.current?.editorInst.setMarkdown(content ?? '', false);
     }
   }, [content, updater]);
+
+  useEffect(() => {
+    console.log(data);
+    dispatch(
+      editorSlice.actions.update({
+        content: data,
+      })
+    );
+  }, [data]);
 
   return (
     <StyledMdEditor data-testid="editor">

@@ -38,6 +38,7 @@ describe('Editor writes', () => {
     );
   });
 });
+
 describe('Editor reads', () => {
   beforeEach(() => {
     cy.task('resetDevFilesFolder');
@@ -55,8 +56,12 @@ describe('Editor reads', () => {
       content: '# MD title',
     });
     cy.visit('/');
+    cy.intercept('/api/files/index.md').as('getPost');
     cy.g('file-name--index.md').click();
+    cy.wait('@getPost');
+
     cy.g('post-title').should('have.value', 'index.md');
+    cy.mdEditor().should('have.text', '# MD title');
   });
 });
 
