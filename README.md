@@ -2,6 +2,23 @@
 
 ## TODO
 
+### Immediate tasks and basic story
+
+- Prevent creating a file with existing name, allow only edits
+- Allow renaming
+- Add new file
+  - Add a new temp file to the fs tree
+  - Hide save button before there are title and content
+- Delete a file
+  - Right click or delete button
+  - Delete dialog
+
+Done
+
+✅ Edit a file
+
+### Next
+
 - Represent file navigation on browser
 - Sync the md presentation component with an external one
 - Live push file update to the browser
