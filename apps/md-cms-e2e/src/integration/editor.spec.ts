@@ -50,7 +50,7 @@ describe('Editor reads', () => {
     cy.gPrefix('file-name-').should('have.length', 10);
   });
 
-  it.only('should show a list of files in the sidenav', function () {
+  it('should show a list of files in the sidenav', function () {
     cy.task('makeDevFile', {
       name: 'index.md',
       content: '# MD title',
