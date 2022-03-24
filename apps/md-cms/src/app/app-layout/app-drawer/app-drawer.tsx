@@ -5,7 +5,7 @@ import { FsTree } from '../../fs-tree/fs-tree';
 import { useSelector } from 'react-redux';
 import { getDrawerState } from './drawer.slice';
 import { drawerWidth } from '../../../consts';
-import { Button } from '@mui/material';
+import { CreatePostButton } from '../../../components/create-post-button';
 
 export default function AppDrawer() {
   const { isOpen } = useSelector(getDrawerState);
@@ -39,15 +39,7 @@ export default function AppDrawer() {
       >
         <FsTree />
 
-        <Button
-          data-testid="new-post-button"
-          sx={{
-            marginTop: 'auto',
-          }}
-          variant="contained"
-        >
-          Create a new post
-        </Button>
+        <CreatePostButton />
       </Box>
     </MuiDrawer>
   );
