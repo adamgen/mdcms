@@ -11,7 +11,7 @@ const prebuildTestFiles = () => {
   for (let i = 0; i < 10; i++) {
     cy.task('makeDevFile', {
       name: `file${i + 1}.md`,
-      content: `# Content ${i + 1}`,
+      localContent: `# Content ${i + 1}`,
     });
   }
 };
@@ -55,7 +55,7 @@ describe('Editor reads', () => {
   it('should show a list of files in the sidenav', function () {
     cy.task('makeDevFile', {
       name: 'index.md',
-      content: '# MD title',
+      localContent: '# MD title',
     });
     cy.visit('/');
     cy.intercept('/api/files/index.md').as('getPost');
@@ -67,7 +67,7 @@ describe('Editor reads', () => {
   });
 });
 
-describe('Editor offline functions', () => {
+describe.only('Editor offline functions', () => {
   beforeEach(() => cy.visit('/'));
 
   it('should store editor state to redux', function () {
@@ -75,8 +75,7 @@ describe('Editor offline functions', () => {
 
     cy.reduxStore().its('editor').should('deep.equal', {
       path: null,
-      content: texts.EDITOR_RESULT_CONTENT,
-      updater: 'editor',
+      localContent: texts.EDITOR_RESULT_CONTENT,
     });
   });
 
@@ -85,8 +84,7 @@ describe('Editor offline functions', () => {
 
     cy.reduxStore().its('editor').should('deep.equal', {
       path: `posts/my-unique-url.md`,
-      content: '',
-      updater: 'other',
+      localContent: '',
     });
   });
 
@@ -96,12 +94,11 @@ describe('Editor offline functions', () => {
 
     cy.reduxStore().its('editor').should('deep.equal', {
       path: 'posts/my-unique-url.md',
-      content: texts.EDITOR_RESULT_CONTENT,
-      updater: 'other',
+      localContent: texts.EDITOR_RESULT_CONTENT,
     });
   });
 
-  it('should prevent saving when path and content are missing', () => {
+  it.only('should prevent saving when path and content are missing', () => {
     checkTooltipForMissingPathOrContent('Missing content and file path');
   });
 

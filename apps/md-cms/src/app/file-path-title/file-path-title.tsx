@@ -71,36 +71,41 @@ export function FilePathTitle(props: FilePathTitleProps) {
         }}
         data-testid={'post-title'}
       />
-      {missingDataTooltipTitle && (
-        <Tooltip
-          title={missingDataTooltipTitle}
-          data-testid="missing-data-tooltip"
-        >
+      <div
+        data-testid="save-to-filesystem-button"
+        onClick={() => {
+          if (!path || !localContent) {
+            return;
+          }
+
+          if (isButtonDisabled) {
+            return;
+          }
+
+          createFile({ content: localContent, filename: path });
+        }}
+      >
+        {missingDataTooltipTitle && (
+          <>
+            <Tooltip
+              title={missingDataTooltipTitle}
+              data-testid="missing-data-tooltip"
+            >
+              {/*MUST use a div here in order for tooltip to work*/}
+              <div>
+                {!isPathExists && <AddIcon {...iconProps} />}
+                {isPathExists && <SaveAltIcon {...iconProps} />}
+              </div>
+            </Tooltip>
+          </>
+        )}
+        {!missingDataTooltipTitle && (
           <>
             {!isPathExists && <AddIcon {...iconProps} />}
             {isPathExists && <SaveAltIcon {...iconProps} />}
           </>
-        </Tooltip>
-      )}
-      {!missingDataTooltipTitle && (
-        <div
-          data-testid="save-to-filesystem-button"
-          onClick={() => {
-            if (!path || !localContent) {
-              return;
-            }
-
-            if (isButtonDisabled) {
-              return;
-            }
-
-            createFile({ content: localContent, filename: path });
-          }}
-        >
-          {!isPathExists && <AddIcon {...iconProps} />}
-          {isPathExists && <SaveAltIcon {...iconProps} />}
-        </div>
-      )}
+        )}
+      </div>
     </StyledFilePathTitle>
   );
 }
