@@ -6,7 +6,7 @@ import {
   useCreateFileMutation,
   useGetFileByNameQuery,
   useGetFilesListQuery,
-} from '../fs-tree/fs-tree.slice';
+} from '../slices/files.api';
 import AddIcon from '@mui/icons-material/Add';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import { SvgIconTypeMap } from '@mui/material/SvgIcon/SvgIcon';
@@ -30,54 +30,40 @@ const StyledFilePathTitleInput = styled.input`
 `;
 
 export function FilePathTitle(props: FilePathTitleProps) {
-  const { path } = useSelector(getEditorState);
+  const { path, localContent } = useSelector(getEditorState);
   const filesQuery = useGetFilesListQuery();
   const [createFile] = useCreateFileMutation();
   const dispatch = useDispatch();
-  const { data: content } = useGetFileByNameQuery(path as string, {
-    skip: !path,
-  });
 
   const isPathExists = useMemo(() => {
     return path && filesQuery.data?.includes(path);
   }, [filesQuery, path]);
 
   const isButtonDisabled = useMemo(() => {
-    return !path && !content;
-  }, [content, path]);
+    return !path && !localContent;
+  }, [localContent, path]);
 
   const missingDataTooltipTitle = useMemo(() => {
-    if (!path && !content) {
-      return 'Missing content and file path';
+    if (!path && !localContent) {
+      return 'Missing localContent and file path';
     }
-    if (!content) {
-      return 'Missing content';
+    if (!localContent) {
+      return 'Missing localContent';
     }
     if (!path) {
       return 'Missing file path';
     }
 
     return null;
-  }, [content, path]);
+  }, [localContent, path]);
 
-  const iconProps: SvgIconTypeMap<{ onClick: () => void }>['props'] = {
+  const iconProps: SvgIconTypeMap['props'] = {
     sx: { cursor: 'pointer', padding: 1 },
     fontSize: 'large',
-    onClick: () => {
-      if (!path || !content) {
-        return;
-      }
-
-      if (isButtonDisabled) {
-        return;
-      }
-
-      createFile({ content, filename: path });
-    },
   };
 
   return (
-    <StyledFilePathTitle data-testid="save-to-filesystem-button">
+    <StyledFilePathTitle>
       <StyledFilePathTitleInput
         value={path ?? ''}
         onChange={(e) => {
@@ -90,17 +76,30 @@ export function FilePathTitle(props: FilePathTitleProps) {
           title={missingDataTooltipTitle}
           data-testid="missing-data-tooltip"
         >
-          <div>
+          <>
             {!isPathExists && <AddIcon {...iconProps} />}
             {isPathExists && <SaveAltIcon {...iconProps} />}
-          </div>
+          </>
         </Tooltip>
       )}
       {!missingDataTooltipTitle && (
-        <>
+        <div
+          data-testid="save-to-filesystem-button"
+          onClick={() => {
+            if (!path || !localContent) {
+              return;
+            }
+
+            if (isButtonDisabled) {
+              return;
+            }
+
+            createFile({ content: localContent, filename: path });
+          }}
+        >
           {!isPathExists && <AddIcon {...iconProps} />}
           {isPathExists && <SaveAltIcon {...iconProps} />}
-        </>
+        </div>
       )}
     </StyledFilePathTitle>
   );

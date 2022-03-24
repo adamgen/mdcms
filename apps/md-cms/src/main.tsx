@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 
 import App from './app/app';
 import { appReducer } from './root-state';
-import { filesApi } from './app/fs-tree/fs-tree.slice';
+import { filesApi } from './app/slices/files.api';
 import {
   DRAWER_FEATURE_KEY,
   drawerReducer,

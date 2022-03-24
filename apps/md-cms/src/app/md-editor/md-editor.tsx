@@ -5,7 +5,7 @@ import { Editor as NativeEditor } from '@toast-ui/editor';
 import { useDispatch, useSelector } from 'react-redux';
 import { editorSlice, getEditorState } from '../slices/editor.slice';
 import { useEffect, useRef } from 'react';
-import { useGetFileByNameQuery } from '../fs-tree/fs-tree.slice';
+import { useGetFileByNameQuery } from '../slices/files.api';
 
 /* eslint-disable-next-line */
 export interface MdEditorProps {}
@@ -35,8 +35,7 @@ export function MdEditor(props: MdEditorProps) {
           const contentUpdate = editorRef.current?.editorInst.getMarkdown();
           dispatch(
             editorSlice.actions.update({
-              content: contentUpdate,
-              updater: 'editor',
+              localContent: contentUpdate,
             })
           );
         }}

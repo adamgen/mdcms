@@ -7,11 +7,14 @@ const filesRouter = Router();
 console.log(`Files base folder at ${process.env['FILES_SERVER_BASE_PATH']}`);
 
 filesRouter.get('/:fileName', (req, res, next) => {
-  const file = fs
-    .readFileSync(
-      path.join(process.env['FILES_SERVER_BASE_PATH'], req.params.fileName)
-    )
-    .toString();
+  const filePath = path.join(
+    process.env['FILES_SERVER_BASE_PATH'],
+    req.params.fileName
+  );
+  if (!fs.existsSync(filePath)) {
+    return res.status(404).json(`File not found on path ${filePath}`)
+  }
+  const file = fs.readFileSync(filePath).toString();
   res.json(file);
 });
 

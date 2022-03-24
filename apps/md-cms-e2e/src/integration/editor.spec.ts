@@ -28,7 +28,9 @@ describe('Editor writes', () => {
 
     cy.g('save-to-filesystem-button').trigger('mouseover');
 
-    cy.intercept('/api/files/my-unique-url.md').as('addPost');
+    cy.intercept({ method: 'POST', url: '/api/files/my-unique-url.md' }).as(
+      'addPost'
+    );
     cy.g('save-to-filesystem-button').click();
     cy.wait('@addPost');
 

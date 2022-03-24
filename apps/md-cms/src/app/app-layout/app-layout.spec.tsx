@@ -4,7 +4,7 @@ import { AppLayout } from './app-layout';
 import { render } from '../../test-utils';
 import { configureStore } from '@reduxjs/toolkit';
 import { appReducer } from '../../root-state';
-import { filesApi } from '../fs-tree/fs-tree.slice';
+import { filesApi } from '../slices/files.api';
 
 describe('AppLayout', () => {
   it('should render successfully', () => {
