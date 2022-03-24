@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { getBackendUrl } from '@md-cms/shared-env';
+
 /*
  * Update these interfaces according to your requirements.
  */
