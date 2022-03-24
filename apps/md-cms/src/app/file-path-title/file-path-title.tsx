@@ -4,7 +4,6 @@ import { useMemo } from 'react';
 import { editorSlice, getEditorState } from '../slices/editor.slice';
 import {
   useCreateFileMutation,
-  useGetFileByNameQuery,
   useGetFilesListQuery,
 } from '../slices/files.api';
 import AddIcon from '@mui/icons-material/Add';
