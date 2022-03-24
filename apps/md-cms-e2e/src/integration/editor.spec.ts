@@ -11,7 +11,7 @@ const prebuildTestFiles = () => {
   for (let i = 0; i < 10; i++) {
     cy.task('makeDevFile', {
       name: `file${i + 1}.md`,
-      localContent: `# Content ${i + 1}`,
+      content: `# Content ${i + 1}`,
     });
   }
 };
@@ -52,10 +52,10 @@ describe('Editor reads', () => {
     cy.gPrefix('file-name-').should('have.length', 10);
   });
 
-  it('should show a list of files in the sidenav', function () {
+  it('should show a single file in the sidenav', function () {
     cy.task('makeDevFile', {
       name: 'index.md',
-      localContent: '# MD title',
+      content: '# MD title',
     });
     cy.visit('/');
     cy.intercept('/api/files/index.md').as('getPost');
@@ -67,7 +67,7 @@ describe('Editor reads', () => {
   });
 });
 
-describe.only('Editor offline functions', () => {
+describe('Editor offline functions', () => {
   beforeEach(() => cy.visit('/'));
 
   it('should store editor state to redux', function () {
@@ -98,8 +98,8 @@ describe.only('Editor offline functions', () => {
     });
   });
 
-  it.only('should prevent saving when path and content are missing', () => {
-    checkTooltipForMissingPathOrContent('Missing content and file path');
+  it('should prevent saving when path and content are missing', () => {
+    checkTooltipForMissingPathOrContent('Missing localContent and file path');
   });
 
   it('should prevent saving when path is missing', () => {
@@ -109,7 +109,7 @@ describe.only('Editor offline functions', () => {
 
   it('should prevent saving when content is missing', () => {
     cy.g('post-title').type(`posts/my-unique-url.md`);
-    checkTooltipForMissingPathOrContent('Missing content');
+    checkTooltipForMissingPathOrContent('Missing localContent');
   });
 
   it('should send a request when there are title and content', () => {
