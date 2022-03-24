@@ -4,6 +4,7 @@ import { useMemo } from 'react';
 import { editorSlice, getEditorState } from '../slices/editor.slice';
 import {
   useCreateFileMutation,
+  useGetFileByNameQuery,
   useGetFilesListQuery,
 } from '../fs-tree/fs-tree.slice';
 import AddIcon from '@mui/icons-material/Add';
@@ -33,7 +34,9 @@ export function FilePathTitle(props: FilePathTitleProps) {
   const filesQuery = useGetFilesListQuery();
   const [createFile] = useCreateFileMutation();
   const dispatch = useDispatch();
-  const { content } = useSelector(getEditorState);
+  const { data: content } = useGetFileByNameQuery(path as string, {
+    skip: !path,
+  });
 
   const isPathExists = useMemo(() => {
     return path && filesQuery.data?.includes(path);
@@ -61,7 +64,7 @@ export function FilePathTitle(props: FilePathTitleProps) {
     sx: { cursor: 'pointer', padding: 1 },
     fontSize: 'large',
     onClick: () => {
-      if (!path) {
+      if (!path || !content) {
         return;
       }
 

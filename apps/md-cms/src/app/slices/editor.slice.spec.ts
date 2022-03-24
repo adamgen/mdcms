@@ -18,9 +18,5 @@ describe('editor slice', () => {
       ...initialEditorState,
       path: newFilePath,
     });
-    expect(testReducer({ content: newFilePath })).toEqual({
-      ...initialEditorState,
-      content: newFilePath,
-    });
   });
 });

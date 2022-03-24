@@ -1,6 +1,5 @@
-import { render } from '@testing-library/react';
-
 import MdEditor from './md-editor';
+import { render } from '../../test-utils';
 
 describe('MdEditor', () => {
   it('should render successfully', () => {
