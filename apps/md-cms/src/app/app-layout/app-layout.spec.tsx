@@ -18,11 +18,5 @@ describe('AppLayout', () => {
       store,
     });
     expect(baseElement).toBeTruthy();
-
-    expect(store.getState().drawer.isOpen).toBe(true);
-    fireEvent.click(screen.getByTestId('drawer-toggler'));
-    expect(store.getState().drawer.isOpen).toBe(false);
-    fireEvent.click(screen.getByTestId('drawer-toggler'));
-    expect(store.getState().drawer.isOpen).toBe(true);
   });
 });
