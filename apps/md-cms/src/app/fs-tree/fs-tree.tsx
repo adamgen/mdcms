@@ -31,7 +31,12 @@ export function FsTree() {
         <TreeItem
           key={filename}
           onClick={() => {
-            dispatch(editorSlice.actions.update({ path: filename }));
+            dispatch(
+              editorSlice.actions.update({
+                selectedFile: filename,
+                path: filename,
+              })
+            );
           }}
           nodeId={filename}
           label={filename}

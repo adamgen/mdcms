@@ -12,7 +12,10 @@ filesRouter.get('/:fileName', (req, res, next) => {
     req.params.fileName
   );
   if (!fs.existsSync(filePath)) {
-    return res.status(404).json(`File not found on path ${filePath}`)
+    if (req.query.check) {
+      return res.status(200).json(null);
+    }
+    return res.status(404).json(`File not found on path ${filePath}`);
   }
   const file = fs.readFileSync(filePath).toString();
   res.json(file);

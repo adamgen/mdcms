@@ -1,4 +1,5 @@
 import texts from '../fixtures/texts.json';
+import {initialEditorState} from '../../../md-cms/src/app/slices/editor.slice';
 
 const checkTooltipForMissingPathOrContent = (message) => {
   cy.g('save-to-filesystem-button').trigger('mouseover');
@@ -74,7 +75,7 @@ describe('Editor offline functions', () => {
     cy.mdEditor().type(texts.EDITOR_TYPE_CONTENT);
 
     cy.reduxStore().its('editor').should('deep.equal', {
-      path: null,
+      ...initialEditorState,
       localContent: texts.EDITOR_RESULT_CONTENT,
     });
   });
@@ -83,8 +84,8 @@ describe('Editor offline functions', () => {
     cy.g('post-title').type(`posts/my-unique-url.md`);
 
     cy.reduxStore().its('editor').should('deep.equal', {
+      ...initialEditorState,
       path: `posts/my-unique-url.md`,
-      localContent: '',
     });
   });
 
@@ -93,6 +94,7 @@ describe('Editor offline functions', () => {
     cy.g('post-title').type(`posts/my-unique-url.md`);
 
     cy.reduxStore().its('editor').should('deep.equal', {
+      ...initialEditorState,
       path: 'posts/my-unique-url.md',
       localContent: texts.EDITOR_RESULT_CONTENT,
     });

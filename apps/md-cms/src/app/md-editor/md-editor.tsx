@@ -13,10 +13,10 @@ export interface MdEditorProps {}
 const StyledMdEditor = styled.div``;
 
 export function MdEditor(props: MdEditorProps) {
-  const { path } = useSelector(getEditorState);
+  const { selectedFile } = useSelector(getEditorState);
   const dispatch = useDispatch();
   const editorRef = useRef<Editor & { editorInst: NativeEditor }>(null);
-  const { data: content } = useGetFileByNameQuery(path as string, { skip: !path });
+  const { data: content } = useGetFileByNameQuery(selectedFile, { skip: !selectedFile });
 
   useEffect(() => {
     editorRef.current?.editorInst.setMarkdown(content ?? '', false);
