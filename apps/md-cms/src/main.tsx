@@ -6,13 +6,13 @@ import { Provider } from 'react-redux';
 
 import App from './app/app';
 import { appReducer } from './root-state';
-import { filesApi } from './app/slices/files.api';
+import { filesApi } from './app/store/files.api';
 import {
   DRAWER_FEATURE_KEY,
   drawerReducer,
 } from './app/app-layout/app-drawer/drawer.slice';
 
-import { EDITOR_FEATURE_KEY, editorReducer } from './app/slices/editor.slice';
+import { EDITOR_FEATURE_KEY, editorReducer } from './app/store/editor.slice';
 
 const store = configureStore({
   reducer: {

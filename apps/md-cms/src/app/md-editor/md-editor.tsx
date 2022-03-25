@@ -3,9 +3,9 @@ import styled from '@emotion/styled';
 import { Editor } from '@toast-ui/react-editor';
 import { Editor as NativeEditor } from '@toast-ui/editor';
 import { useDispatch, useSelector } from 'react-redux';
-import { editorSlice, getEditorState } from '../slices/editor.slice';
+import { editorSlice, getEditorState } from '../store/editor.slice';
 import { useEffect, useRef } from 'react';
-import { useGetFileByNameQuery } from '../slices/files.api';
+import { useGetFileByNameQuery } from '../store/files.api';
 
 /* eslint-disable-next-line */
 export interface MdEditorProps {}

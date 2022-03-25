@@ -3,8 +3,8 @@ import {
   drawerReducer,
   DrawerState,
 } from './app/app-layout/app-drawer/drawer.slice';
-import { filesApi } from './app/slices/files.api';
-import { EDITOR_FEATURE_KEY, editorReducer } from './app/slices/editor.slice';
+import { filesApi } from './app/store/files.api';
+import { EDITOR_FEATURE_KEY, editorReducer } from './app/store/editor.slice';
 
 export interface RootState {
   [DRAWER_FEATURE_KEY]: DrawerState;
