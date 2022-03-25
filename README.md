@@ -4,16 +4,21 @@
 
 ### Immediate tasks and basic story
 
-- Prevent creating a file with existing name, allow only edits
-- Allow renaming
-- Add new file
-  - Add a new temp file to the fs tree
-  - Hide save button before there are title and content
-- Delete a file
-  - Right click or delete button
-  - Delete dialog
-- Edit filename
-  - Add a rename-filename popup
+- Add default screen with a "Please select or create a file"
+- Add create-file state
+  - Click on "create new file" opens the edit state
+  - A file placeholder to the fs-tree
+  - Add a publish button
+    ![btn](./todo/publish-btn.png)
+    - Disabled until all fields are filled
+    - Un-publish once a post is published
+- Add edit-file state
+  - Update button
+    - "Update the file content?" + yes/no
+  - Click on filename
+    - "New file path" + a save button.
+- Delete a file button
+  - "Delete the file entirely?" + yes/no
 
 Done
 
@@ -41,3 +46,5 @@ Done
     - Folder creation
     - File save/update/delete
   - Prettier notifications for existing consoles
+- Support local drafts -> file store in a separate
+  folder that's ignored from git. Or simply use local-store.
