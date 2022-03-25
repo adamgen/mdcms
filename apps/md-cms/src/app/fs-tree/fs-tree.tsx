@@ -33,7 +33,7 @@ export function FsTree() {
           onClick={() => {
             dispatch(
               editorSlice.actions.update({
-                selectedFile: filename,
+                selectedFilePath: filename,
                 path: filename,
               })
             );
