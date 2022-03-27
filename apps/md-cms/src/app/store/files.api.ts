@@ -1,4 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { cloneDeep } from 'lodash';
+import { useDispatch } from 'react-redux';
+import { editorSlice, File } from './editor.slice';
+import { useEffect } from 'react';
 
 /*
  * Update these interfaces according to your requirements.
@@ -50,8 +54,32 @@ export const filesApi = createApi({
   }),
 });
 
+const { useGetFileByNameQuery: useGetFileByNameQueryBase } = filesApi;
+
+export const useGetFileByNameQuery: typeof useGetFileByNameQueryBase = (
+  fileName,
+  options
+) => {
+  const result = useGetFileByNameQueryBase(fileName, options);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!result['data'] || !result['originalArgs']) {
+      return;
+    }
+    const selectedFile: File = {
+      path: result['originalArgs'],
+      content: result['data'],
+    };
+
+    dispatch(editorSlice.actions.update({ selectedFile }));
+  }, [result['originalArgs'], result['data']]);
+
+  return cloneDeep(result);
+};
+
 export const {
-  useGetFileByNameQuery,
   useGetFilesListQuery,
   useCreateFileMutation,
   useUpdateFileMutation,
