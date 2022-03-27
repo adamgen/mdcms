@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Route } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 import { AppLayout } from './app-layout/app-layout';
 import MdEditor from './components/md-editor/md-editor';
@@ -12,13 +12,19 @@ export function App() {
   return (
     <StyledApp>
       <AppLayout>
-        <Route path={'/'} exact={true}>
-          <EmptyView />
-        </Route>
-        <Route path={'/file'}>
-          <FilePathTitle />
-          <MdEditor />
-        </Route>
+        <Routes>
+          <Route path={'/aaa'} element={<EmptyView />} />
+          <Route path={'/'} element={<EmptyView />} />
+          <Route
+            path={'/file'}
+            element={
+              <>
+                <FilePathTitle />
+                <MdEditor />
+              </>
+            }
+          />
+        </Routes>
       </AppLayout>
     </StyledApp>
   );

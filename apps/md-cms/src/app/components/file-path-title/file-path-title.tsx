@@ -10,6 +10,7 @@ import AddIcon from '@mui/icons-material/Add';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import { SvgIconTypeMap } from '@mui/material/SvgIcon/SvgIcon';
 import { Tooltip } from '@mui/material';
+import { useQuery } from '../../hooks/use-query/use-query';
 
 /* eslint-disable-next-line */
 export interface FilePathTitleProps {}
@@ -29,7 +30,9 @@ const StyledFilePathTitleInput = styled.input`
 `;
 
 export function FilePathTitle(props: FilePathTitleProps) {
-  const { path, localContent } = useSelector(getEditorState);
+  const path = useQuery('name') ?? '';
+
+  const { localContent } = useSelector(getEditorState);
   const filesQuery = useGetFilesListQuery();
   const [createFile] = useCreateFileMutation();
   const dispatch = useDispatch();
