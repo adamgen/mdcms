@@ -3,26 +3,14 @@ import { RootState } from '../../root-state';
 
 export const EDITOR_FEATURE_KEY = 'editor';
 
-export interface File {
-  path: string;
-  content: string;
-}
-
 export interface EditorState {
-  path: string | null;
   localContent: string;
   selectedFilePath: string; // selectedFile from th e menu
-  // TODO update app to match
-  selectedFile?: File;
-  newFile?: Partial<File>;
 }
 
 export const initialEditorState: EditorState = {
-  path: null,
   localContent: '',
   selectedFilePath: '',
-  selectedFile: undefined,
-  newFile: undefined,
 };
 
 const storeAllowedKeys = Object.keys(initialEditorState);

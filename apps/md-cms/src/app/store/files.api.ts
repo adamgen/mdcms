@@ -1,8 +1,4 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { cloneDeep } from 'lodash';
-import { useDispatch } from 'react-redux';
-import { editorSlice, File } from './editor.slice';
-import { useEffect } from 'react';
 
 /*
  * Update these interfaces according to your requirements.
@@ -24,14 +20,17 @@ export const filesApi = createApi({
     mode: 'cors',
   }),
   tagTypes: ['Files'],
-  // TODO https://redux-toolkit.js.org/rtk-query/usage/mutations#revalidation-example
   endpoints: (builder) => ({
     getFilesList: builder.query<string[], void>({
       query: () => `files`,
-      providesTags: (result) => [{ type: 'Files', id: 'LIST' }],
+      providesTags: () => [{ type: 'Files', id: 'LIST' }],
     }),
     getFileByName: builder.query<string, string>({
       query: (name) => `files/${name}`,
+      providesTags: (result, error, id) => {
+        console.log('id', id);
+        return [{ type: 'Files', id }];
+      },
     }),
     createFile: builder.mutation<
       string,
@@ -42,34 +41,16 @@ export const filesApi = createApi({
         method: 'POST',
         body: { content },
       }),
-      invalidatesTags: [{ type: 'Files', id: 'LIST' }],
+      invalidatesTags: (result, error, id) => {
+        console.log('id.filename', id.filename);
+        return [{ type: 'Files', id: id.filename }];
+      },
     }),
   }),
 });
 
-const { useGetFileByNameQuery: useGetFileByNameQueryBase } = filesApi;
-
-export const useGetFileByNameQuery: typeof useGetFileByNameQueryBase = (
-  fileName,
-  options
-) => {
-  const result = useGetFileByNameQueryBase(fileName, options);
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (!result['data'] || !result['originalArgs']) {
-      return;
-    }
-    const selectedFile: File = {
-      path: result['originalArgs'],
-      content: result['data'],
-    };
-
-    dispatch(editorSlice.actions.update({ selectedFile }));
-  }, [result['originalArgs'], result['data']]);
-
-  return cloneDeep(result);
-};
-
-export const { useGetFilesListQuery, useCreateFileMutation } = filesApi;
+export const {
+  useGetFilesListQuery,
+  useCreateFileMutation,
+  useGetFileByNameQuery,
+} = filesApi;

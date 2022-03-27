@@ -1,11 +1,9 @@
 import styled from '@emotion/styled';
 import FilePathTitle from '../../components/file-path-title/file-path-title';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import MdEditor from '../../components/md-editor/md-editor';
 import { useQuery } from '../../hooks/use-query/use-query';
-import { useDispatch, useSelector } from 'react-redux';
-import { editorSlice, getEditorState } from '../../store/editor.slice';
 import {
   useCreateFileMutation,
   useGetFileByNameQuery,
@@ -15,43 +13,46 @@ const StyledSelectedFileView = styled.div``;
 
 export function SelectedFileView() {
   const path = useQuery('name') ?? '';
+  const [content, setContent] = useState('');
 
-  const { localContent } = useSelector(getEditorState);
   const [createFile] = useCreateFileMutation();
-  const dispatch = useDispatch();
 
   const isButtonDisabled = useMemo(() => {
-    return !path && !localContent;
-  }, [localContent, path]);
+    return !path && !content;
+  }, [content, path]);
 
   const missingDataTooltipTitle = useMemo(() => {
-    if (!path && !localContent) {
-      return 'Missing localContent and file path';
+    if (!path && !content) {
+      return 'Missing content and file path';
     }
-    if (!localContent) {
-      return 'Missing localContent';
+    if (!content) {
+      return 'Missing content';
     }
     if (!path) {
       return 'Missing file path';
     }
 
     return null;
-  }, [localContent, path]);
+  }, [content, path]);
 
   const name = useQuery('name') ?? '';
-  const { data: content } = useGetFileByNameQuery(name, {
+  const { data } = useGetFileByNameQuery(name, {
     skip: !name,
   });
+
+  useEffect(() => {
+    setContent(data ?? '');
+  }, [data]);
 
   return (
     <StyledSelectedFileView>
       <FilePathTitle
         path={path}
         onChange={(value) => {
-          dispatch(editorSlice.actions.update({ path: value }));
+          // TODO add edit title option and validation
         }}
         onSave={() => {
-          if (!path || !localContent) {
+          if (!path || !content) {
             return;
           }
 
@@ -59,7 +60,7 @@ export function SelectedFileView() {
             return;
           }
 
-          createFile({ content: localContent, filename: path });
+          createFile({ content, filename: path });
         }}
         iconTooltip={missingDataTooltipTitle ?? ''}
       />
@@ -67,11 +68,7 @@ export function SelectedFileView() {
       <MdEditor
         content={content ?? ''}
         onChange={(value) => {
-          dispatch(
-            editorSlice.actions.update({
-              localContent: value,
-            })
-          );
+          setContent(value);
         }}
       />
     </StyledSelectedFileView>
