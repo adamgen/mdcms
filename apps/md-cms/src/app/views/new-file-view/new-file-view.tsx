@@ -53,7 +53,6 @@ export function NewFileView() {
       />
 
       <MdEditor
-        content={content}
         onChange={(value) => {
           setContent(value);
         }}

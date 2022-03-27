@@ -6,7 +6,7 @@ import { useEffect, useRef } from 'react';
 
 /* eslint-disable-next-line */
 export interface MdEditorProps {
-  content: string;
+  content?: string;
   onChange: (value: string) => void;
 }
 
@@ -18,6 +18,7 @@ export function MdEditor({ content, onChange }: MdEditorProps) {
   useEffect(() => {
     editorRef.current?.editorInst.setMarkdown(content ?? '', false);
   }, [content]);
+
   return (
     <StyledMdEditor data-testid="editor">
       <Editor
