@@ -3,6 +3,7 @@ import * as ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
+import CssBaseline from '@mui/material/CssBaseline';
 
 import App from './app/app';
 import { appReducer } from './root-state';
@@ -35,6 +36,7 @@ if ((window as any).Cypress) {
 
 ReactDOM.render(
   <Provider store={store}>
+    <CssBaseline />
     <StrictMode>
       <BrowserRouter>
         <App />
