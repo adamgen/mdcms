@@ -1,11 +1,15 @@
 import styled from '@emotion/styled';
 import FilePathTitle from '../../components/file-path-title/file-path-title';
+import { useMemo } from 'react';
+
 import MdEditor from '../../components/md-editor/md-editor';
 import { useQuery } from '../../hooks/use-query/use-query';
 import { useDispatch, useSelector } from 'react-redux';
 import { editorSlice, getEditorState } from '../../store/editor.slice';
-import { useCreateFileMutation } from '../../store/files.api';
-import { useMemo } from 'react';
+import {
+  useCreateFileMutation,
+  useGetFileByNameQuery,
+} from '../../store/files.api';
 
 /* eslint-disable-next-line */
 export interface SelectedFileViewProps {}
@@ -37,6 +41,11 @@ export function SelectedFileView(props: SelectedFileViewProps) {
     return null;
   }, [localContent, path]);
 
+  const name = useQuery('name') ?? '';
+  const { data: content } = useGetFileByNameQuery(name, {
+    skip: !name,
+  });
+
   return (
     <StyledSelectedFileView>
       <FilePathTitle
@@ -58,7 +67,16 @@ export function SelectedFileView(props: SelectedFileViewProps) {
         iconTooltip={missingDataTooltipTitle ?? ''}
       />
 
-      <MdEditor />
+      <MdEditor
+        content={content ?? ''}
+        onChange={(value) => {
+          dispatch(
+            editorSlice.actions.update({
+              localContent: value,
+            })
+          );
+        }}
+      />
     </StyledSelectedFileView>
   );
 }
