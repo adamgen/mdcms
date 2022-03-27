@@ -11,12 +11,9 @@ import {
   useGetFileByNameQuery,
 } from '../../store/files.api';
 
-/* eslint-disable-next-line */
-export interface SelectedFileViewProps {}
-
 const StyledSelectedFileView = styled.div``;
 
-export function SelectedFileView(props: SelectedFileViewProps) {
+export function SelectedFileView() {
   const path = useQuery('name') ?? '';
 
   const { localContent } = useSelector(getEditorState);

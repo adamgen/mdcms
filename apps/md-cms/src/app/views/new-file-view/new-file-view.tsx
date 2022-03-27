@@ -4,12 +4,9 @@ import MdEditor from '../../components/md-editor/md-editor';
 import { useMemo, useState } from 'react';
 import { useCreateFileMutation } from '../../store/files.api';
 
-/* eslint-disable-next-line */
-export interface NewFileViewProps {}
-
 const StyledNewFileView = styled.div``;
 
-export function NewFileView(props: NewFileViewProps) {
+export function NewFileView() {
   const [path, setPath] = useState('');
   const [content, setContent] = useState('');
 
