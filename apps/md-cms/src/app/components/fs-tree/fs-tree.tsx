@@ -3,16 +3,10 @@ import TreeView from '@mui/lab/TreeView';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import TreeItem from '@mui/lab/TreeItem';
-import { Link } from 'react-router-dom';
-import styled from '@emotion/styled';
 
 import { useGetFilesListQuery } from '../../store/files.api';
 import { useQuery } from '../../hooks/use-query/use-query';
-
-const StyledLink = styled(Link)`
-  text-decoration: none;
-  color: #000;
-`;
+import { AppLink } from '../app-link/app-link';
 
 export function FsTree() {
   const { isLoading, data } = useGetFilesListQuery();
@@ -38,7 +32,7 @@ export function FsTree() {
       onNodeToggle={() => {}}
     >
       {data.map((filename) => (
-        <StyledLink
+        <AppLink
           key={filename}
           to={name === filename ? '/' : `/file?name=${filename}`}
         >
@@ -48,7 +42,7 @@ export function FsTree() {
             label={filename}
             data-testid={`file-name--${filename}`}
           />
-        </StyledLink>
+        </AppLink>
       ))}
     </TreeView>
   );
