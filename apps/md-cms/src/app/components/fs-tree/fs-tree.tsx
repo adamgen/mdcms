@@ -3,9 +3,9 @@ import TreeView from '@mui/lab/TreeView';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import TreeItem from '@mui/lab/TreeItem';
-import { useGetFilesListQuery } from '../store/files.api';
+import { useGetFilesListQuery } from '../../store/files.api';
 import { useDispatch } from 'react-redux';
-import { editorSlice } from '../store/editor.slice';
+import { editorSlice } from '../../store/editor.slice';
 
 export function FsTree() {
   const { isLoading, data } = useGetFilesListQuery();

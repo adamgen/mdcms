@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 
 import { AppLayout } from './app-layout/app-layout';
-import MdEditor from './md-editor/md-editor';
-import FilePathTitle from './file-path-title/file-path-title';
+import MdEditor from './components/md-editor/md-editor';
+import FilePathTitle from './components/file-path-title/file-path-title';
 
 const StyledApp = styled.div``;
 

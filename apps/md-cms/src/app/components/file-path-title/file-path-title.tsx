@@ -1,11 +1,11 @@
 import styled from '@emotion/styled';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMemo } from 'react';
-import { editorSlice, getEditorState } from '../store/editor.slice';
+import { editorSlice, getEditorState } from '../../store/editor.slice';
 import {
   useCreateFileMutation,
   useGetFilesListQuery,
-} from '../store/files.api';
+} from '../../store/files.api';
 import AddIcon from '@mui/icons-material/Add';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import { SvgIconTypeMap } from '@mui/material/SvgIcon/SvgIcon';
