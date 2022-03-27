@@ -53,7 +53,7 @@ export function SelectedFileView(props: SelectedFileViewProps) {
         onChange={(value) => {
           dispatch(editorSlice.actions.update({ path: value }));
         }}
-        onClick={() => {
+        onSave={() => {
           if (!path || !localContent) {
             return;
           }

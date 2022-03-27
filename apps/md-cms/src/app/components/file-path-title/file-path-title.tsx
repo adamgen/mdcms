@@ -7,7 +7,7 @@ import { Tooltip } from '@mui/material';
 export interface FilePathTitleProps {
   path: string;
   onChange: (value: string) => void;
-  onClick: () => void;
+  onSave: () => void;
   iconTooltip: string;
 }
 
@@ -28,7 +28,7 @@ const StyledFilePathTitleInput = styled.input`
 export function FilePathTitle({
   path,
   onChange,
-  onClick,
+  onSave,
   iconTooltip,
 }: FilePathTitleProps) {
   const iconProps: SvgIconTypeMap['props'] = {
@@ -44,7 +44,7 @@ export function FilePathTitle({
         }}
         data-testid={'post-title'}
       />
-      <div data-testid="save-to-filesystem-button" onClick={onClick}>
+      <div data-testid="save-to-filesystem-button" onClick={onSave}>
         {iconTooltip && (
           <Tooltip title={iconTooltip} data-testid="missing-data-tooltip">
             <SaveAltIcon {...iconProps} />
