@@ -5,7 +5,7 @@ import { FsTree } from '../../components/fs-tree/fs-tree';
 import { useSelector } from 'react-redux';
 import { getDrawerState } from './drawer.slice';
 import { drawerWidth } from '../../../consts';
-import { CreatePostButton } from '../../../components/create-post-button';
+import { CreatePostButton } from '../../components/create-post-button/create-post-button';
 
 export default function AppDrawer() {
   const { isOpen } = useSelector(getDrawerState);
