@@ -19,6 +19,7 @@ export const filesApi = createApi({
     },
     mode: 'cors',
   }),
+  // TODO https://redux-toolkit.js.org/rtk-query/usage/mutations#revalidation-example
   endpoints: (builder) => ({
     getFilesList: builder.query<string[], void>({
       query: () => `files`,
