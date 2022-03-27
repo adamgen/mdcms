@@ -23,10 +23,12 @@ export const filesApi = createApi({
     },
     mode: 'cors',
   }),
+  tagTypes: ['Files'],
   // TODO https://redux-toolkit.js.org/rtk-query/usage/mutations#revalidation-example
   endpoints: (builder) => ({
     getFilesList: builder.query<string[], void>({
       query: () => `files`,
+      providesTags: (result) => [{ type: 'Files', id: 'LIST' }],
     }),
     getFileByName: builder.query<string, string>({
       query: (name) => `files/${name}`,
@@ -40,16 +42,7 @@ export const filesApi = createApi({
         method: 'POST',
         body: { content },
       }),
-    }),
-    updateFile: builder.mutation<
-      string,
-      Pick<FsTreeEntity, 'content' | 'filename'>
-    >({
-      query: ({ content, filename }) => ({
-        url: `/files/${filename}`,
-        method: 'POST',
-        body: { content },
-      }),
+      invalidatesTags: [{ type: 'Files', id: 'LIST' }],
     }),
   }),
 });
@@ -79,8 +72,4 @@ export const useGetFileByNameQuery: typeof useGetFileByNameQueryBase = (
   return cloneDeep(result);
 };
 
-export const {
-  useGetFilesListQuery,
-  useCreateFileMutation,
-  useUpdateFileMutation,
-} = filesApi;
+export const { useGetFilesListQuery, useCreateFileMutation } = filesApi;
