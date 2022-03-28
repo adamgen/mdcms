@@ -3,6 +3,17 @@
   "sourceRoot": "libs/file-server-express-app/src",
   "projectType": "library",
   "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/file-server-express-app",
+        "tsConfig": "libs/file-server-express-app/tsconfig.lib.json",
+        "packageJson": "libs/file-server-express-app/package.json",
+        "main": "libs/file-server-express-app/src/index.ts",
+        "assets": ["libs/file-server-express-app/*.md"]
+      }
+    },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],

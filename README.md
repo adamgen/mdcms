@@ -48,3 +48,11 @@ Done
   - Prettier notifications for existing consoles
 - Support local drafts -> file store in a separate
   folder that's ignored from git. Or simply use local-store.
+
+## Publishing to npm
+
+To release an alpha use
+
+```
+npm version prerelease --preid=alpha
+``` 
