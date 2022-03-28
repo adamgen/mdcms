@@ -1,16 +1,16 @@
 {
-  "root": "apps/file-server",
-  "sourceRoot": "apps/file-server/src",
+  "root": "apps/fscms-dev-server",
+  "sourceRoot": "apps/fscms-dev-server/src",
   "projectType": "application",
   "targets": {
     "build": {
       "executor": "@nrwl/node:webpack",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/apps/file-server",
-        "main": "apps/file-server/src/main.ts",
-        "tsConfig": "apps/file-server/tsconfig.app.json",
-        "assets": ["apps/file-server/src/assets"]
+        "outputPath": "dist/apps/fscms-dev-server",
+        "main": "apps/fscms-dev-server/src/main.ts",
+        "tsConfig": "apps/fscms-dev-server/tsconfig.app.json",
+        "assets": ["apps/fscms-dev-server/src/assets"]
       },
       "configurations": {
         "production": {
@@ -19,8 +19,8 @@
           "inspect": false,
           "fileReplacements": [
             {
-              "replace": "apps/file-server/src/environments/environment.ts",
-              "with": "apps/file-server/src/environments/environment.prod.ts"
+              "replace": "apps/fscms-dev-server/src/environments/environment.ts",
+              "with": "apps/fscms-dev-server/src/environments/environment.prod.ts"
             }
           ]
         }
@@ -29,21 +29,21 @@
     "serve": {
       "executor": "@nrwl/node:node",
       "options": {
-        "buildTarget": "file-server:build"
+        "buildTarget": "fscms-dev-server:build"
       }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["apps/file-server/**/*.ts"]
+        "lintFilePatterns": ["apps/fscms-dev-server/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/file-server"],
+      "outputs": ["coverage/apps/fscms-dev-server"],
       "options": {
-        "jestConfig": "apps/file-server/jest.config.js",
+        "jestConfig": "apps/fscms-dev-server/jest.config.js",
         "passWithNoTests": true
       }
     }
