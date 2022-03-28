@@ -18,7 +18,7 @@ filesRouter.get('/:fileName', (req, res, next) => {
     return res.status(404).json(`File not found on path ${filePath}`);
   }
   const file = fs.readFileSync(filePath).toString();
-  res.json(file);
+  res.json(JSON.stringify(file));
 });
 
 filesRouter.get('', (req, res, next) => {
