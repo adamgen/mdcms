@@ -2,6 +2,8 @@
   "version": 2,
   "projects": {
     "file-server": "apps/file-server",
+    "file-server-express-app": "libs/file-server-express-app",
+    "fscms": "libs/fscms",
     "md-cms": "apps/md-cms",
     "md-cms-e2e": "apps/md-cms-e2e",
     "shared-env": "libs/shared-env"
