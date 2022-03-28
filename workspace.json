@@ -1,6 +1,8 @@
 {
   "version": 2,
   "projects": {
+    "dev-server": "apps/dev-server",
+    "dev-server-e2e": "apps/dev-server-e2e",
     "fscms": "libs/fscms",
     "fscms-dev-server": "apps/fscms-dev-server",
     "fscms-dev-ui": "apps/fscms-dev-ui",
