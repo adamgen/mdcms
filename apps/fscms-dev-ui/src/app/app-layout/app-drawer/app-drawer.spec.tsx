@@ -1,5 +1,5 @@
 import AppDrawer from './app-drawer';
-import {render} from '../../../test-utils';
+import { render } from '../../../test-utils';
 
 describe('Drawer', () => {
   it('should render successfully', () => {

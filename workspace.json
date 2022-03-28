@@ -4,8 +4,8 @@
     "file-server-express-app": "libs/file-server-express-app",
     "fscms": "libs/fscms",
     "fscms-dev-server": "apps/fscms-dev-server",
-    "md-cms": "apps/md-cms",
-    "md-cms-e2e": "apps/md-cms-e2e",
+    "fscms-dev-ui": "apps/fscms-dev-ui",
+    "fscms-dev-ui-e2e": "apps/fscms-dev-ui-e2e",
     "shared-env": "libs/shared-env"
   }
 }

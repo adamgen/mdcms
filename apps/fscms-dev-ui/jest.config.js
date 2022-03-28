@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: 'md-cms',
+  displayName: 'fscms-dev-ui',
   preset: '../../jest.preset.js',
   transform: {
     '^(?!.*\\.(js|jsx|ts|tsx|css|json)$)': '@nrwl/react/plugins/jest',
@@ -10,5 +10,5 @@ module.exports = {
   },
   setupFilesAfterEnv: ['./jest.setup.js'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-  coverageDirectory: '../../coverage/apps/md-cms',
+  coverageDirectory: '../../coverage/apps/fscms-dev-ui',
 };

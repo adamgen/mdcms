@@ -1,5 +1,5 @@
 import texts from '../fixtures/texts.json';
-import {initialEditorState} from '../../../md-cms/src/app/store/editor.slice';
+import { initialEditorState } from '../../../md-cms/src/app/store/editor.slice';
 
 const checkTooltipForMissingPathOrContent = (message) => {
   cy.g('save-to-filesystem-button').trigger('mouseover');
@@ -74,30 +74,36 @@ describe('Editor offline functions', () => {
   it('should store editor state to redux', function () {
     cy.mdEditor().type(texts.EDITOR_TYPE_CONTENT);
 
-    cy.reduxStore().its('editor').should('deep.equal', {
-      ...initialEditorState,
-      localContent: texts.EDITOR_RESULT_CONTENT,
-    });
+    cy.reduxStore()
+      .its('editor')
+      .should('deep.equal', {
+        ...initialEditorState,
+        localContent: texts.EDITOR_RESULT_CONTENT,
+      });
   });
 
   it('should store title state to redux', () => {
     cy.g('post-title').type(`posts/my-unique-url.md`);
 
-    cy.reduxStore().its('editor').should('deep.equal', {
-      ...initialEditorState,
-      path: `posts/my-unique-url.md`,
-    });
+    cy.reduxStore()
+      .its('editor')
+      .should('deep.equal', {
+        ...initialEditorState,
+        path: `posts/my-unique-url.md`,
+      });
   });
 
   it('should store title and content state to redux', () => {
     cy.mdEditor().type(texts.EDITOR_TYPE_CONTENT);
     cy.g('post-title').type(`posts/my-unique-url.md`);
 
-    cy.reduxStore().its('editor').should('deep.equal', {
-      ...initialEditorState,
-      path: 'posts/my-unique-url.md',
-      localContent: texts.EDITOR_RESULT_CONTENT,
-    });
+    cy.reduxStore()
+      .its('editor')
+      .should('deep.equal', {
+        ...initialEditorState,
+        path: 'posts/my-unique-url.md',
+        localContent: texts.EDITOR_RESULT_CONTENT,
+      });
   });
 
   it('should prevent saving when path and content are missing', () => {

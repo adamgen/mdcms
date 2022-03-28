@@ -1,5 +1,5 @@
-import {AppNavigation} from './app-navigation';
-import {render} from '../../../test-utils';
+import { AppNavigation } from './app-navigation';
+import { render } from '../../../test-utils';
 
 describe('AppNavigation', () => {
   it('should render successfully', () => {

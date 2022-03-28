@@ -1,0 +1,28 @@
+{
+  "root": "apps/fscms-dev-ui-e2e",
+  "sourceRoot": "apps/fscms-dev-ui-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/fscms-dev-ui-e2e/cypress.json",
+        "devServerTarget": "fscms-dev-ui:serve"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "fscms-dev-ui:serve:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/fscms-dev-ui-e2e/**/*.{js,ts}"]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["fscms-dev-ui"]
+}
