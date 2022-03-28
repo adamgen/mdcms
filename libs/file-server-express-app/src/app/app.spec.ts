@@ -1,6 +1,6 @@
 import * as request from 'supertest';
 import { app } from './app';
-import { initFilesTest } from '../../../md-cms/src/init-files-test';
+import { initFilesTest } from '../../../../apps/md-cms/src/init-files-test';
 
 const testRoute = async (
   route: string,

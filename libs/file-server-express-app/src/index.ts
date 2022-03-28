@@ -1,1 +1,1 @@
-export * from './lib/file-server-express-app';
+export { app } from './app/app';

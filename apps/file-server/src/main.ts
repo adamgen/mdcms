@@ -1,4 +1,4 @@
-import { app } from './app/app';
+import { app } from '@md-cms/file-server-express-app';
 import { environment } from './environments/environment';
 import * as path from 'path';
 
