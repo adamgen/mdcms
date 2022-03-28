@@ -73,7 +73,7 @@ describe('Upsert post/put files', () => {
   });
 
   it('should write to a new file to a non existing path', async () => {
-    expect(true).toBeFalsy()
+    expect(true).toBeFalsy();
   });
 });
 

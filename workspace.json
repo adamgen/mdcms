@@ -1,11 +1,11 @@
 {
   "version": 2,
   "projects": {
-    "file-server-express-app": "libs/file-server-express-app",
     "fscms": "libs/fscms",
     "fscms-dev-server": "apps/fscms-dev-server",
     "fscms-dev-ui": "apps/fscms-dev-ui",
     "fscms-dev-ui-e2e": "apps/fscms-dev-ui-e2e",
+    "server": "libs/server",
     "shared-env": "libs/shared-env"
   }
 }

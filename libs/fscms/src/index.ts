@@ -1,4 +1,4 @@
-import { app } from '@md-cms/file-server-express-app';
+import { app } from '@fscms/server';
 import * as path from 'path';
 
 process.env['FILES_SERVER_BASE_PATH'] =

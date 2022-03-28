@@ -15,9 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@md-cms/file-server-express-app": [
-        "libs/file-server-express-app/src/index.ts"
-      ],
+      "@fscms/server": ["libs/server/src/index.ts"],
       "@md-cms/shared-env": ["libs/shared-env/src/index.ts"],
       "fscms": ["libs/fscms/src/index.ts"]
     }
