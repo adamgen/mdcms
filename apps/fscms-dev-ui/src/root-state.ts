@@ -1,9 +1,8 @@
-import { filesApi } from './app/store/files.api';
-import { EDITOR_FEATURE_KEY, editorReducer } from './app/store/editor.slice';
+import { EDITOR_FEATURE_KEY, editorReducer, filesApi } from '@md-cms/store';
 
 export interface RootState {
-  [filesApi.reducerPath]: any;
-  [EDITOR_FEATURE_KEY]: any;
+  [filesApi.reducerPath]: ReturnType<typeof filesApi.reducer>;
+  [EDITOR_FEATURE_KEY]: ReturnType<typeof editorReducer>;
 }
 
 export const appReducer = {

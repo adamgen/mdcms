@@ -8,6 +8,7 @@
     "fscms-dev-ui": "apps/fscms-dev-ui",
     "fscms-dev-ui-e2e": "apps/fscms-dev-ui-e2e",
     "server": "libs/server",
-    "shared-env": "libs/shared-env"
+    "shared-env": "libs/shared-env",
+    "store": "libs/store"
   }
 }

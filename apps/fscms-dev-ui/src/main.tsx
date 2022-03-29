@@ -7,9 +7,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 
 import App from './app/app';
 import { appReducer } from './root-state';
-import { filesApi } from './app/store/files.api';
-
-import { EDITOR_FEATURE_KEY, editorReducer } from './app/store/editor.slice';
+import { EDITOR_FEATURE_KEY, editorReducer, filesApi } from '@md-cms/store';
 
 const store = configureStore({
   reducer: {

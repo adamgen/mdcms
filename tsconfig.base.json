@@ -17,6 +17,7 @@
     "paths": {
       "@fscms/server": ["libs/server/src/index.ts"],
       "@md-cms/shared-env": ["libs/shared-env/src/index.ts"],
+      "@md-cms/store": ["libs/store/src/index.ts"],
       "fscms": ["libs/fscms/src/index.ts"]
     }
   },

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../../root-state';
+import { RootState } from '../../../../apps/fscms-dev-ui/src/root-state';
 
 export const EDITOR_FEATURE_KEY = 'editor';
 

@@ -3,8 +3,8 @@ import TreeView from '@mui/lab/TreeView';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import TreeItem from '@mui/lab/TreeItem';
+import { useGetFilesListQuery } from '@md-cms/store';
 
-import { useGetFilesListQuery } from '../../store/files.api';
 import { useQuery } from '../../hooks/use-query/use-query';
 import { AppLink } from '../app-link/app-link';
 

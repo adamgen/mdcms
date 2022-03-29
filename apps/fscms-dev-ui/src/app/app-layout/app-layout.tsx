@@ -5,7 +5,7 @@ import AppDrawer from './app-drawer/app-drawer';
 import { drawerWidth } from '../../consts';
 import { useSelector } from 'react-redux';
 import { css } from '@emotion/react';
-import { getEditorState } from '../store/editor.slice';
+import { getEditorState } from '@md-cms/store';
 
 const StyledAppLayout = styled.div``;
 const StylesAppContent = styled.div<{ isOpen: boolean }>`

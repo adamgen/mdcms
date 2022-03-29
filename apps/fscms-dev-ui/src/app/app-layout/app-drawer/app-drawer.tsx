@@ -1,11 +1,11 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
+import {getEditorState} from '@md-cms/store';
 import { FsTree } from '../../components/fs-tree/fs-tree';
 import { useSelector } from 'react-redux';
 import { drawerWidth } from '../../../consts';
 import { CreatePostButton } from '../../components/create-post-button/create-post-button';
-import { getEditorState } from '../../store/editor.slice';
 
 export default function AppDrawer() {
   const { isDrawerOpen } = useSelector(getEditorState);
