@@ -6,11 +6,13 @@ export const EDITOR_FEATURE_KEY = 'editor';
 export interface EditorState {
   localContent: string;
   selectedFilePath: string; // selectedFile from th e menu
+  isDrawerOpen: boolean;
 }
 
 export const initialEditorState: EditorState = {
   localContent: '',
   selectedFilePath: '',
+  isDrawerOpen: true,
 };
 
 const storeAllowedKeys = Object.keys(initialEditorState);
@@ -31,6 +33,9 @@ export const editorSlice = createSlice({
           // @ts-ignore
           state[key] = value;
         });
+    },
+    toggleDrawer(state) {
+      state.isDrawerOpen = !state;
     },
   },
 });

@@ -4,8 +4,8 @@ import { AppNavigation } from './app-navigation/app-navigation';
 import AppDrawer from './app-drawer/app-drawer';
 import { drawerWidth } from '../../consts';
 import { useSelector } from 'react-redux';
-import { getDrawerState } from './app-drawer/drawer.slice';
 import { css } from '@emotion/react';
+import { getEditorState } from '../store/editor.slice';
 
 const StyledAppLayout = styled.div``;
 const StylesAppContent = styled.div<{ isOpen: boolean }>`
@@ -19,11 +19,11 @@ const StylesAppContent = styled.div<{ isOpen: boolean }>`
 `;
 
 export function AppLayout(props: PropsWithChildren<unknown>) {
-  const { isOpen } = useSelector(getDrawerState);
+  const { isDrawerOpen } = useSelector(getEditorState);
 
   return (
     <StyledAppLayout>
-      <StylesAppContent isOpen={isOpen}>
+      <StylesAppContent isOpen={isDrawerOpen}>
         <AppNavigation />
         {props.children}
       </StylesAppContent>

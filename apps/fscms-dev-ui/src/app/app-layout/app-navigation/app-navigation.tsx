@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useCallback } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -11,13 +10,12 @@ import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import { drawerActions, getDrawerState } from '../app-drawer/drawer.slice';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { editorSlice } from '../../store/editor.slice';
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 export const AppNavigation = () => {
-  const { isOpen } = useSelector(getDrawerState);
   const dispatch = useDispatch();
 
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
@@ -32,32 +30,13 @@ export const AppNavigation = () => {
     setAnchorElUser(null);
   };
 
-  const toggleDrawer = useCallback(
-    (event: React.KeyboardEvent | React.MouseEvent) => {
-      if (
-        event.type === 'keydown' &&
-        ((event as React.KeyboardEvent).key === 'Tab' ||
-          (event as React.KeyboardEvent).key === 'Shift')
-      ) {
-        return;
-      }
-
-      if (!isOpen) {
-        dispatch(drawerActions.open());
-      } else {
-        dispatch(drawerActions.close());
-      }
-    },
-    [isOpen]
-  );
-
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <MenuIcon
             data-testid="side-menu-toggle"
-            onClick={() => dispatch(drawerActions.toggle())}
+            onClick={() => dispatch(editorSlice.actions.toggleDrawer())}
             sx={{
               cursor: 'pointer',
             }}

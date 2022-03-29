@@ -3,12 +3,12 @@ import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
 import { FsTree } from '../../components/fs-tree/fs-tree';
 import { useSelector } from 'react-redux';
-import { getDrawerState } from './drawer.slice';
 import { drawerWidth } from '../../../consts';
 import { CreatePostButton } from '../../components/create-post-button/create-post-button';
+import { getEditorState } from '../../store/editor.slice';
 
 export default function AppDrawer() {
-  const { isOpen } = useSelector(getDrawerState);
+  const { isDrawerOpen } = useSelector(getEditorState);
 
   return (
     <MuiDrawer
@@ -21,7 +21,7 @@ export default function AppDrawer() {
         },
       }}
       anchor={'left'}
-      open={isOpen}
+      open={isDrawerOpen}
       variant="persistent"
     >
       <Box
