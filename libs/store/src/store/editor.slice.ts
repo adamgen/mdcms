@@ -35,7 +35,7 @@ export const editorSlice = createSlice({
         });
     },
     toggleDrawer(state) {
-      state.isDrawerOpen = !state;
+      state.isDrawerOpen = !state.isDrawerOpen;
     },
   },
 });

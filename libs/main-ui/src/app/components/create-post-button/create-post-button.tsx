@@ -10,7 +10,7 @@ const StyledCreatePostButton = styled(Button)``;
 
 export function CreatePostButton(props: CreatePostButtonProps) {
   return (
-    <AppLink to={'/file/new'}>
+    <AppLink href={'/file/new'}>
       <StyledCreatePostButton
         data-testid="new-post-button"
         sx={{

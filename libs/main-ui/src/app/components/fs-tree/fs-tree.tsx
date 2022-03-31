@@ -34,7 +34,7 @@ export function FsTree() {
       {data.map((filename) => (
         <AppLink
           key={filename}
-          to={name === filename ? '/' : `/file?name=${filename}`}
+          href={name === filename ? '/' : `/file?name=${filename}`}
         >
           <TreeItem
             className={'Mui-selected'}

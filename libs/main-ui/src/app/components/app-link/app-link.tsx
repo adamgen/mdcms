@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 export const AppLink = styled(Link)`
   text-decoration: none;
