@@ -25,12 +25,7 @@ function CustomApp({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
       <AppLayout>
-        <Head>
-          <title>Welcome to dev-server!</title>
-        </Head>
-        <main className="app">
-          <Component {...pageProps} />
-        </main>
+        <Component {...pageProps} />
       </AppLayout>
     </Provider>
   );
