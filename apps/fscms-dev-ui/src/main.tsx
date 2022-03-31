@@ -5,9 +5,9 @@ import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import CssBaseline from '@mui/material/CssBaseline';
 
-import App from './app/app';
 import { appReducer } from './root-state';
 import { EDITOR_FEATURE_KEY, editorReducer, filesApi } from '@md-cms/store';
+import { App } from '@md-cms/main-ui';
 
 const store = configureStore({
   reducer: {

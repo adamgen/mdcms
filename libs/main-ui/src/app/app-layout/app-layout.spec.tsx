@@ -1,9 +1,9 @@
 import { fireEvent, screen } from '@testing-library/react';
 
 import { AppLayout } from './app-layout';
-import { render } from '../../test-utils';
+import { render } from '../../../../../apps/fscms-dev-ui/src/test-utils';
 import { configureStore } from '@reduxjs/toolkit';
-import { appReducer } from '../../root-state';
+import { appReducer } from '../../../../../apps/fscms-dev-ui/src/root-state';
 import { filesApi } from '../store/files.api';
 
 describe('AppLayout', () => {

@@ -7,6 +7,7 @@
     "fscms-dev-server": "apps/fscms-dev-server",
     "fscms-dev-ui": "apps/fscms-dev-ui",
     "fscms-dev-ui-e2e": "apps/fscms-dev-ui-e2e",
+    "main-ui": "libs/main-ui",
     "server": "libs/server",
     "shared-env": "libs/shared-env",
     "store": "libs/store"

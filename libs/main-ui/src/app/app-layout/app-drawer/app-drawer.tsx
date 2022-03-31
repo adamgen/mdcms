@@ -4,7 +4,7 @@ import MuiDrawer from '@mui/material/Drawer';
 import {getEditorState} from '@md-cms/store';
 import { FsTree } from '../../components/fs-tree/fs-tree';
 import { useSelector } from 'react-redux';
-import { drawerWidth } from '../../../consts';
+import { drawerWidth } from '../../../../../../apps/fscms-dev-ui/src/consts';
 import { CreatePostButton } from '../../components/create-post-button/create-post-button';
 
 export default function AppDrawer() {

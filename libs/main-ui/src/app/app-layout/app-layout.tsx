@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { PropsWithChildren } from 'react';
 import { AppNavigation } from './app-navigation/app-navigation';
 import AppDrawer from './app-drawer/app-drawer';
-import { drawerWidth } from '../../consts';
+import { drawerWidth } from '../../../../../apps/fscms-dev-ui/src/consts';
 import { useSelector } from 'react-redux';
 import { css } from '@emotion/react';
 import { getEditorState } from '@md-cms/store';

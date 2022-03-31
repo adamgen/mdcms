@@ -1,5 +1,5 @@
 import MdEditor from './md-editor';
-import { render } from '../../../test-utils';
+import { render } from '../../../../../../apps/fscms-dev-ui/src/test-utils';
 
 jest.mock('@toast-ui/react-editor');
 
