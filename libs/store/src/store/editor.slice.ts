@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../../../../apps/fscms-dev-ui/src/root-state';
 
 export const EDITOR_FEATURE_KEY = 'editor';
 
@@ -42,5 +41,5 @@ export const editorSlice = createSlice({
 
 export const editorReducer = editorSlice.reducer;
 
-export const getEditorState = (rootState: RootState): EditorState =>
+export const getEditorState = (rootState: any): EditorState =>
   rootState[EDITOR_FEATURE_KEY];

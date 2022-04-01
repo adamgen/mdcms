@@ -1,13 +1,15 @@
-import { getGreeting } from '../support/app.po';
-
-describe('dev-server', () => {
+describe('md-cms', () => {
   beforeEach(() => cy.visit('/'));
 
-  it('should display welcome message', () => {
-    // Custom command example, see `../support/commands.ts` file
-    cy.login('my-email@something.com', 'myPassword');
+  it('should display file system tree', () => {
+    cy.get('[data-testid="fs-tree"]');
+  });
 
-    // Function helper example, see `../support/app.po.ts` file
-    getGreeting().contains('Welcome dev-server');
+  it('should toggle the side menu on and off', () => {
+    cy.g('side-menu-container').should('be.visible');
+    cy.g('side-menu-toggle').click();
+    cy.g('side-menu-container').should('not.be.visible');
+    cy.g('side-menu-toggle').click();
+    cy.g('side-menu-container').should('be.visible');
   });
 });
