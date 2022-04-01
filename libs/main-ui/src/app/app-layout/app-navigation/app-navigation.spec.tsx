@@ -1,5 +1,5 @@
 import { AppNavigation } from './app-navigation';
-import { render } from '../../../../../../apps/fscms-dev-ui/src/test-utils';
+import { render } from '../../../test-utils';
 
 describe('AppNavigation', () => {
   it('should render successfully', () => {

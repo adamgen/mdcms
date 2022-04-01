@@ -1,4 +1,4 @@
-import { render } from '../../../../../../apps/fscms-dev-ui/src/test-utils';
+import { render } from '../../../test-utils';
 
 import { FsTree } from './fs-tree';
 

@@ -1,5 +1,5 @@
 import FilePathTitle from './file-path-title';
-import { render } from '../../../../../../apps/fscms-dev-ui/src/test-utils';
+import { render } from '../../../test-utils';
 
 describe('FilePathTitle', () => {
   it('should render successfully', () => {

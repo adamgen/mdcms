@@ -1,7 +1,7 @@
 import { BrowserRouter } from 'react-router-dom';
 
 import App from './app';
-import { render } from '../../../../apps/fscms-dev-ui/src/test-utils';
+import { render } from '../test-utils';
 
 describe('App', () => {
   it('should render successfully', () => {
