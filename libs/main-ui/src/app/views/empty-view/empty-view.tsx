@@ -14,5 +14,3 @@ export function EmptyView(props: EmptyViewProps) {
     </StyledEmptyView>
   );
 }
-
-export default EmptyView;

@@ -1,18 +1,7 @@
-import styled from '@emotion/styled';
-import { Editor } from '@toast-ui/react-editor';
-
-const StyledPage = styled.div`
-  .page {
-  }
-`;
+import { EmptyView } from '../../../libs/main-ui/src/app/views/empty-view/empty-view';
 
 export function Index() {
-  /*
-   * Replace the elements below with your own.
-   *
-   * Note: The corresponding styles are in the ./index.@emotion/styled file.
-   */
-  return <StyledPage></StyledPage>;
+  return <EmptyView />;
 }
 
 export default Index;
