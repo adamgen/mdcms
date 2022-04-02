@@ -37,7 +37,7 @@ filesRouter.get('', (req, res, next) => {
 });
 
 const upsertFileHandler = (req, res) => {
-  const content = req.body.content;
+  const content = JSON.parse(req.body).content;
   const filePath = path.join(
     process.env['FILES_SERVER_BASE_PATH'],
     req.params.fileName

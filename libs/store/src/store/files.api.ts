@@ -17,7 +17,7 @@ export const filesApi = createApi({
       headers.set('accept', 'application/json');
       return headers;
     },
-    mode: 'cors',
+    mode: 'no-cors',
   }),
   tagTypes: ['Files'],
   endpoints: (builder) => ({
