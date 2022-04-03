@@ -1,5 +1,5 @@
 import texts from '../fixtures/texts.json';
-import { initialEditorState } from '../../../md-cms/src/app/store/editor.slice';
+import { initialEditorState } from '@md-cms/store';
 
 const checkTooltipForMissingPathOrContent = (message) => {
   cy.g('save-to-filesystem-button').trigger('mouseover');
