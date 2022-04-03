@@ -69,45 +69,10 @@ describe('Editor reads', () => {
 });
 
 describe('Editor offline functions', () => {
-  beforeEach(() => cy.visit('/'));
+  beforeEach(() => cy.visit('/file/new'));
 
-  it('should store editor state to redux', function () {
-    cy.mdEditor().type(texts.EDITOR_TYPE_CONTENT);
-
-    cy.reduxStore()
-      .its('editor')
-      .should('deep.equal', {
-        ...initialEditorState,
-        localContent: texts.EDITOR_RESULT_CONTENT,
-      });
-  });
-
-  it('should store title state to redux', () => {
-    cy.g('post-title').type(`posts/my-unique-url.md`);
-
-    cy.reduxStore()
-      .its('editor')
-      .should('deep.equal', {
-        ...initialEditorState,
-        path: `posts/my-unique-url.md`,
-      });
-  });
-
-  it('should store title and content state to redux', () => {
-    cy.mdEditor().type(texts.EDITOR_TYPE_CONTENT);
-    cy.g('post-title').type(`posts/my-unique-url.md`);
-
-    cy.reduxStore()
-      .its('editor')
-      .should('deep.equal', {
-        ...initialEditorState,
-        path: 'posts/my-unique-url.md',
-        localContent: texts.EDITOR_RESULT_CONTENT,
-      });
-  });
-
-  it('should prevent saving when path and content are missing', () => {
-    checkTooltipForMissingPathOrContent('Missing localContent and file path');
+  it('should prevent saving when both filepath and content are missing', () => {
+    checkTooltipForMissingPathOrContent('Missing content and file path');
   });
 
   it('should prevent saving when path is missing', () => {
@@ -117,10 +82,10 @@ describe('Editor offline functions', () => {
 
   it('should prevent saving when content is missing', () => {
     cy.g('post-title').type(`posts/my-unique-url.md`);
-    checkTooltipForMissingPathOrContent('Missing localContent');
+    checkTooltipForMissingPathOrContent('Missing content');
   });
 
-  it('should send a request when there are title and content', () => {
+  it('should send a request when there are both filepath and content', () => {
     cy.mdEditor().type(texts.EDITOR_TYPE_CONTENT);
     cy.g('post-title').type(`posts/my-unique-url.md`);
 
@@ -130,7 +95,7 @@ describe('Editor offline functions', () => {
     cy.intercept('/api/files/posts/my-unique-url.md', 'true').as('addPost');
     cy.g('save-to-filesystem-button').click();
     cy.wait('@addPost').then((interception) => {
-      expect(interception.request.body.content).equal(
+      expect(JSON.parse(interception.request.body)?.content).equal(
         texts.EDITOR_RESULT_CONTENT
       );
     });
