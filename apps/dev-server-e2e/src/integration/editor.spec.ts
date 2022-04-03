@@ -46,6 +46,7 @@ describe('Editor reads', () => {
   beforeEach(() => {
     cy.task('resetDevFilesFolder');
   });
+
   it('should show a list of files in the sidenav', function () {
     cy.gPrefix('file-name-').should('have.length', 0);
     prebuildTestFiles();
@@ -53,7 +54,7 @@ describe('Editor reads', () => {
     cy.gPrefix('file-name-').should('have.length', 10);
   });
 
-  it('should show a single file in the sidenav', function () {
+  it('should show a single file in the sidenav and show its content on the editor', function () {
     cy.task('makeDevFile', {
       name: 'index.md',
       content: '# MD title',
