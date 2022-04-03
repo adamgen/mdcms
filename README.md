@@ -4,7 +4,8 @@
 
 ### Immediate tasks and basic story
 
-- Add default screen with a "Please select or create a file"
+- Re-fetch with rtk when adding a file
+- Support markdown metadata
 - Add create-file state
   - Click on "create new file" opens the edit state
   - A file placeholder to the fs-tree
@@ -23,6 +24,7 @@
 Done
 
 ✅ Edit a file content
+✅ Add empty view
 
 ### Next
 
