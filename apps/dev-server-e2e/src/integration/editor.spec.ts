@@ -20,7 +20,7 @@ const prebuildTestFiles = () => {
 describe('Editor writes', () => {
   beforeEach(() => {
     cy.task('resetDevFilesFolder');
-    cy.visit('/');
+    cy.visit('/file/new');
   });
 
   it('should write content to a file', () => {
