@@ -3,14 +3,10 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 export const EDITOR_FEATURE_KEY = 'editor';
 
 export interface EditorState {
-  localContent: string;
-  selectedFilePath: string; // selectedFile from th e menu
   isDrawerOpen: boolean;
 }
 
 export const initialEditorState: EditorState = {
-  localContent: '',
-  selectedFilePath: '',
   isDrawerOpen: true,
 };
 
