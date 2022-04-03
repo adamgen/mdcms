@@ -41,8 +41,10 @@ export const filesApi = createApi({
         body: { content },
       }),
       invalidatesTags: (result, error, id) => {
-        console.log('id.filename', id.filename);
-        return [{ type: 'Files', id: id.filename }];
+        return [
+          { type: 'Files', id: 'LIST' },
+          { type: 'Files', id: id.filename },
+        ];
       },
     }),
   }),

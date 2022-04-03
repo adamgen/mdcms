@@ -4,7 +4,6 @@
 
 ### Immediate tasks and basic story
 
-- Re-fetch with rtk when adding a file
 - Support markdown metadata
 - Add create-file state
   - Click on "create new file" opens the edit state
@@ -25,6 +24,7 @@ Done
 
 ✅ Edit a file content
 ✅ Add empty view
+✅ Re-fetch with rtk when adding a file
 
 ### Next
 

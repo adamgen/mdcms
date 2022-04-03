@@ -40,6 +40,14 @@ describe('Editor writes', () => {
       texts.EDITOR_RESULT_CONTENT
     );
   });
+
+  it.only('should update the file list after writing a new file', () => {
+    cy.mdEditor().type(texts.EDITOR_TYPE_CONTENT);
+    cy.g('post-title').type(`my-unique-url.md`);
+    cy.g('file-name--my-unique-url.md').should('not.exist');
+    cy.g('save-to-filesystem-button').click();
+    cy.g('file-name--my-unique-url.md').should('exist');
+  });
 });
 
 describe('Editor reads', () => {
