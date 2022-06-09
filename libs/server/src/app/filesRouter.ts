@@ -13,7 +13,8 @@ filesRouter.get('/*', (req, res, next) => {
     req.params[0]
   );
   if (!fs.existsSync(filePath)) {
-    return res.status(404).json(`File not found on path ${filePath}`);
+    console.error(`File not found on path ${filePath}`);
+    return res.status(404).json();
   }
   const stat = fs.statSync(filePath);
   if (stat.isFile()) {

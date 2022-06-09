@@ -36,7 +36,9 @@ describe('GET files', () => {
         { type: 'directory', path: 'sub-category' },
       ]);
     });
+  });
 
+  it('should return a list of files from a sub-subfolder', async () => {
     await testRoute('/api/files/category/sub-category', (response) => {
       expect(response.statusCode).toBe(200);
       expect(response.body.sort()).toEqual([
