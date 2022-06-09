@@ -3,7 +3,6 @@
   "projects": {
     "dev-server": "apps/dev-server",
     "dev-server-e2e": "apps/dev-server-e2e",
-    "fscms": "libs/fscms",
     "main-ui": "libs/main-ui",
     "server": "libs/server",
     "store": "libs/store"
