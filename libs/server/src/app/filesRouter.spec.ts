@@ -25,7 +25,10 @@ describe('GET files', () => {
 
   it('should return the contents of a file by param', async () => {
     await testRoute('/api/files/index.md', (response) => {
-      expect(response.body.trim()).toEqual('# Im the index');
+      expect(response.body).toMatchInlineSnapshot(`
+        "# Im the index
+        "
+      `);
     });
   });
 });
