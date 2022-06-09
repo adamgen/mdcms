@@ -57,6 +57,12 @@ describe('GET files', () => {
   });
 });
 
+const getfile = (filePath: string) => {
+  return fs
+    .readFileSync(path.join(process.env['FILES_SERVER_BASE_PATH'], filePath))
+    .toString();
+};
+
 describe('Upsert post/put files', () => {
   initFilesTest(__dirname);
   it('should fail to write to a file with missing body', async () => {
@@ -75,13 +81,20 @@ describe('Upsert post/put files', () => {
       `"Stored file to process.env['FILES_SERVER_BASE_PATH']/index.md"`
     );
 
-    expect(
-      fs
-        .readFileSync(
-          path.join(process.env['FILES_SERVER_BASE_PATH'], 'index.md')
-        )
-        .toString()
-    ).toEqual('# new index file header!');
+    expect(getfile('index.md')).toEqual('# new index file header!');
+  });
+
+  it('should succeed writing to an existing subfolder file path', async () => {
+    const response = await request(app)
+      .post('/api/files/category/index.md')
+      .send({ content: '# new index file header!' })
+      .set('Accept', 'application/json');
+    expect(response.statusCode).toBe(201);
+    expect(response.body).toMatchInlineSnapshot(
+      `"Stored file to process.env['FILES_SERVER_BASE_PATH']/category/index.md"`
+    );
+
+    expect(getfile('category/index.md')).toEqual('# new index file header!');
   });
 
   it('should write to a new file', async () => {
@@ -94,13 +107,7 @@ describe('Upsert post/put files', () => {
       `"Stored file to process.env['FILES_SERVER_BASE_PATH']/new-file.md"`
     );
 
-    expect(
-      fs
-        .readFileSync(
-          path.join(process.env['FILES_SERVER_BASE_PATH'], 'new-file.md')
-        )
-        .toString()
-    ).toEqual('# new random file header!');
+    expect(getfile('new-file.md')).toEqual('# new random file header!');
   });
 
   it('should write to a non existing path', async () => {
@@ -113,16 +120,9 @@ describe('Upsert post/put files', () => {
       `"Stored file to process.env['FILES_SERVER_BASE_PATH']/subfolder/sub-subfolder/new-file.md"`
     );
 
-    expect(
-      fs
-        .readFileSync(
-          path.join(
-            process.env['FILES_SERVER_BASE_PATH'],
-            'subfolder/sub-subfolder/new-file.md'
-          )
-        )
-        .toString()
-    ).toEqual('# new random file header!');
+    expect(getfile('subfolder/sub-subfolder/new-file.md')).toEqual(
+      '# new random file header!'
+    );
   });
 });
 

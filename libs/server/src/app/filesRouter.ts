@@ -58,9 +58,7 @@ const upsertFileHandler: RequestHandler = (req, res) => {
 
   const basePath = process.env['FILES_SERVER_BASE_PATH'];
 
-  const relativeFilePath = req.params[0]
-    ? path.join(req.params[0], req.params.fileName)
-    : req.params.fileName;
+  const relativeFilePath = req.params[0];
 
   const absoluteFilePath = path.join(basePath, relativeFilePath);
 
@@ -86,11 +84,9 @@ const upsertFileHandler: RequestHandler = (req, res) => {
     );
 };
 
-filesRouter.post('/:fileName', upsertFileHandler);
+filesRouter.post('/*', upsertFileHandler);
 
-filesRouter.post('/*/:fileName', upsertFileHandler);
-
-filesRouter.put('/:fileName', upsertFileHandler);
+filesRouter.put('/*', upsertFileHandler);
 
 filesRouter.delete('/:fileName', (req, res, next) => {
   const filePath = path.join(
