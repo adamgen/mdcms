@@ -66,7 +66,9 @@ describe('Upsert post/put files', () => {
       .send({ content: '# new random file header!' })
       .set('Accept', 'application/json');
     expect(response.statusCode).toBe(201);
-    expect(response.body).toBe(true);
+    expect(response.body).toMatchInlineSnapshot(
+      `"Stored file to process.env['FILES_SERVER_BASE_PATH']/new-file.md"`
+    );
 
     expect(
       fs
@@ -77,7 +79,7 @@ describe('Upsert post/put files', () => {
     ).toEqual('# new random file header!');
   });
 
-  it('should write to a new file to a non existing path', async () => {
+  it('should write to a non existing path', async () => {
     expect(true).toBeFalsy();
   });
 });
