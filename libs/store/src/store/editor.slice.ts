@@ -25,7 +25,6 @@ export const editorSlice = createSlice({
           if (!value) {
             return;
           }
-          // @ts-ignore
           state[key] = value;
         });
     },
@@ -37,5 +36,6 @@ export const editorSlice = createSlice({
 
 export const editorReducer = editorSlice.reducer;
 
-export const getEditorState = (rootState: any): EditorState =>
-  rootState[EDITOR_FEATURE_KEY];
+export const getEditorState = (rootState: {
+  [EDITOR_FEATURE_KEY]: EditorState;
+}): EditorState => rootState[EDITOR_FEATURE_KEY];

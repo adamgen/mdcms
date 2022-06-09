@@ -1,7 +1,6 @@
 import * as fs from 'fs-extra';
 
-const _ = require('lodash'); // yup, dev dependencies
-const path = require('path'); // yup, built in node modules
+import * as path from 'path';
 
 const devServerFilesPath = path.join(
   process.cwd(),
@@ -12,7 +11,7 @@ const devServerFilesPath = path.join(
 
 console.log('dir', devServerFilesPath);
 
-module.exports = (on, config) => {
+module.exports = (on) => {
   on('task', {
     resetDevFilesFolder() {
       fs.removeSync(devServerFilesPath);

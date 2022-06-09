@@ -1,23 +1,14 @@
-import { configureStore } from '@reduxjs/toolkit';
-import fetchMock, { MockParams } from 'jest-fetch-mock';
+import fetchMock from 'jest-fetch-mock';
 import { act, renderHook } from '@testing-library/react-hooks';
 import {
   filesApi,
   useCreateFileMutation,
   useGetFileByNameQuery,
   useGetFilesListQuery,
-  useUpdateFileMutation,
 } from './files.api';
-import { appReducer } from '../../root-state';
 import { Provider } from 'react-redux';
 import React from 'react';
-
-const makeStore = () =>
-  configureStore({
-    reducer: appReducer,
-    middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(filesApi.middleware),
-  });
+import { makeStore } from './reducer';
 
 const wrapper: React.FC = ({ children }) => {
   const store = makeStore();
@@ -55,11 +46,11 @@ describe('fsTree reducer', () => {
     const request =
       store.getState()[filesApi.reducerPath].queries[
         `getFileByName("${indexMd}")`
-      ]!;
+      ];
 
     expect(request).toBeTruthy();
 
-    expect(request.data).toBe(filesMock[indexMd]);
+    expect(request?.data).toBe(filesMock[indexMd]);
   });
 
   it('should request the right URL from a hook', async () => {
@@ -150,7 +141,7 @@ describe('fsTree reducer', () => {
   it('should send update a file with a PUT request contents using a hook', async () => {
     fetchMock.mockResponse('null', { status: 201 });
     const { result, waitForNextUpdate } = renderHook(
-      () => useUpdateFileMutation(),
+      () => useCreateFileMutation(),
       {
         wrapper,
       }

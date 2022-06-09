@@ -29,7 +29,9 @@ export function FsTree() {
       data-testid="fs-tree"
       selected={name}
       multiSelect={false}
-      onNodeToggle={() => {}}
+      onNodeToggle={() => {
+        // TODO add folder reader
+      }}
     >
       {data.map((filename) => (
         <AppLink

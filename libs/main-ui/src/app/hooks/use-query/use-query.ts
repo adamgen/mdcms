@@ -1,13 +1,12 @@
-import * as React from 'react';
+import { useMemo } from 'react';
 import { useRouter } from 'next/router';
 
 export function useQuery(param: string) {
-  // const { search } = useLocation();
   const search = useRouter().query;
 
-  return (
-    // @ts-ignore
-    React.useMemo(() => new URLSearchParams(search), [search]).get(param) ??
-    undefined
-  );
+  const searchParams = useMemo(() => {
+    return new URLSearchParams(search as unknown as string);
+  }, [search]);
+
+  return searchParams.get(param) ?? undefined;
 }
