@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 
 import MdEditor from '../../components/md-editor/md-editor';
 import { useQuery } from '../../hooks/use-query/use-query';
-import { useCreateFileMutation, useGetFileByNameQuery } from '@md-cms/store';
+import { useCreateFileMutation, useGetFileByNameQuery } from '@md-cms/ui-store';
 
 const StyledSelectedFileView = styled.div``;
 

@@ -4,7 +4,7 @@
     "dev-server": "apps/dev-server",
     "dev-server-e2e": "apps/dev-server-e2e",
     "server": "libs/server",
-    "store": "libs/store",
-    "ui-react": "libs/ui/react"
+    "ui-react": "libs/ui/react",
+    "ui-store": "libs/ui/store"
   }
 }

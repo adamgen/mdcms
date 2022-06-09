@@ -1,7 +1,7 @@
 import { AppLayout } from './app-layout';
 import { render } from '../../test-utils';
 import { configureStore } from '@reduxjs/toolkit';
-import { EDITOR_FEATURE_KEY, editorReducer, filesApi } from '@md-cms/store';
+import { EDITOR_FEATURE_KEY, editorReducer, filesApi } from '@md-cms/ui-store';
 
 describe('AppLayout', () => {
   it('should render successfully', () => {

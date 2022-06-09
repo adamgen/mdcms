@@ -1,9 +1,9 @@
 module.exports = {
-  displayName: 'store',
-  preset: '../../jest.preset.js',
+  displayName: 'ui-store',
+  preset: '../../../jest.preset.js',
   transform: {
     '^.+\\.[tj]sx?$': 'babel-jest',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-  coverageDirectory: '../../coverage/libs/store',
+  coverageDirectory: '../../../coverage/libs/ui/store',
 };

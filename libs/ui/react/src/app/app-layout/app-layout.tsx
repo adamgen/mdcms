@@ -4,7 +4,7 @@ import { AppNavigation } from './app-navigation/app-navigation';
 import AppDrawer from './app-drawer/app-drawer';
 import { useSelector } from 'react-redux';
 import { css } from '@emotion/react';
-import { getEditorState } from '@md-cms/store';
+import { getEditorState } from '@md-cms/ui-store';
 
 const StyledAppLayout = styled.div``;
 const StylesAppContent = styled.div<{ isOpen: boolean }>`

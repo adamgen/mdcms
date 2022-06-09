@@ -3,7 +3,7 @@ import { render as rtlRender } from '@testing-library/react';
 import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 
-import { EDITOR_FEATURE_KEY, editorReducer, filesApi } from '@md-cms/store';
+import { EDITOR_FEATURE_KEY, editorReducer, filesApi } from '@md-cms/ui-store';
 
 function render(
   ui: React.ReactElement,
