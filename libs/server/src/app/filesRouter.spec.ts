@@ -47,7 +47,9 @@ describe('Upsert post/put files', () => {
       .send({ content: '# new index file header!' })
       .set('Accept', 'application/json');
     expect(response.statusCode).toBe(201);
-    expect(response.body).toBe(true);
+    expect(response.body).toMatchInlineSnapshot(
+      `"Stored file to process.env['FILES_SERVER_BASE_PATH']/index.md"`
+    );
 
     expect(
       fs
