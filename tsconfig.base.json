@@ -16,8 +16,8 @@
     "baseUrl": ".",
     "paths": {
       "@fscms/server": ["libs/server/src/index.ts"],
-      "@md-cms/main-ui": ["libs/main-ui/src/index.ts"],
       "@md-cms/store": ["libs/store/src/index.ts"],
+      "@md-cms/ui-react": ["libs/ui/react/src/index.ts"],
       "fscms": ["libs/fscms/src/index.ts"]
     }
   },

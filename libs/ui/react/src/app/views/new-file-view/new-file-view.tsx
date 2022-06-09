@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import FilePathTitle from '../../components/file-path-title/file-path-title';
 import MdEditor from '../../components/md-editor/md-editor';
 import { useMemo, useState } from 'react';
-import {useCreateFileMutation} from '@md-cms/store';
+import { useCreateFileMutation } from '@md-cms/store';
 
 const StyledNewFileView = styled.div``;
 

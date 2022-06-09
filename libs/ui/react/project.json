@@ -1,6 +1,6 @@
 {
-  "root": "libs/main-ui",
-  "sourceRoot": "libs/main-ui/src",
+  "root": "libs/ui/react",
+  "sourceRoot": "libs/ui/react/src",
   "projectType": "library",
   "tags": [],
   "targets": {
@@ -8,14 +8,14 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/main-ui/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": ["libs/ui/react/**/*.{ts,tsx,js,jsx}"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/main-ui"],
+      "outputs": ["coverage/libs/ui/react"],
       "options": {
-        "jestConfig": "libs/main-ui/jest.config.js",
+        "jestConfig": "libs/ui/react/jest.config.js",
         "passWithNoTests": true
       }
     }
