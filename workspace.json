@@ -3,7 +3,7 @@
   "projects": {
     "dev-server": "apps/dev-server",
     "dev-server-e2e": "apps/dev-server-e2e",
-    "server": "libs/server",
+    "file-server": "libs/file-server",
     "ui-react": "libs/ui/react",
     "ui-store": "libs/ui/store"
   }

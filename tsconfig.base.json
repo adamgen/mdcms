@@ -15,7 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@fscms/server": ["libs/server/src/index.ts"],
+      "@md-cms/file-server": ["libs/file-server/src/index.ts"],
       "@md-cms/ui-react": ["libs/ui/react/src/index.ts"],
       "@md-cms/ui-store": ["libs/ui/store/src/index.ts"],
       "fscms": ["libs/fscms/src/index.ts"]

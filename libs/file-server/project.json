@@ -1,0 +1,34 @@
+{
+  "root": "libs/file-server",
+  "sourceRoot": "libs/file-server/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/file-server",
+        "tsConfig": "libs/file-server/tsconfig.lib.json",
+        "packageJson": "libs/file-server/package.json",
+        "main": "libs/file-server/src/index.ts",
+        "assets": ["libs/file-server/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/file-server/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/file-server"],
+      "options": {
+        "jestConfig": "libs/file-server/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

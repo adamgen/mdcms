@@ -18,12 +18,12 @@
     "serve": {
       "executor": "@nrwl/next:server",
       "options": {
-        "buildTarget": "dev-server:build",
+        "buildTarget": "dev-file-server:build",
         "dev": true
       },
       "configurations": {
         "production": {
-          "buildTarget": "dev-server:build:production",
+          "buildTarget": "dev-file-server:build:production",
           "dev": false
         }
       }
@@ -31,7 +31,7 @@
     "export": {
       "executor": "@nrwl/next:export",
       "options": {
-        "buildTarget": "dev-server:build:production"
+        "buildTarget": "dev-file-server:build:production"
       }
     },
     "test": {
