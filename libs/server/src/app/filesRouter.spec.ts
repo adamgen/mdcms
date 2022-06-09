@@ -80,7 +80,25 @@ describe('Upsert post/put files', () => {
   });
 
   it('should write to a non existing path', async () => {
-    expect(true).toBeFalsy();
+    const response = await request(app)
+      .post('/api/files/subfolder/sub-subfolder/new-file.md')
+      .send({ content: '# new random file header!' })
+      .set('Accept', 'application/json');
+    expect(response.statusCode).toBe(201);
+    expect(response.body).toMatchInlineSnapshot(
+      `"Stored file to process.env['FILES_SERVER_BASE_PATH']/subfolder/sub-subfolder/new-file.md"`
+    );
+
+    expect(
+      fs
+        .readFileSync(
+          path.join(
+            process.env['FILES_SERVER_BASE_PATH'],
+            'subfolder/sub-subfolder/new-file.md'
+          )
+        )
+        .toString()
+    ).toEqual('# new random file header!');
   });
 });
 

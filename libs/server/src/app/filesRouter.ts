@@ -38,10 +38,14 @@ filesRouter.get('', (req, res, next) => {
 
 const upsertFileHandler: RequestHandler = (req, res) => {
   const content = req.body.content;
-  const filePath = path.join(
-    process.env['FILES_SERVER_BASE_PATH'],
-    req.params.fileName
-  );
+
+  const basePath = process.env['FILES_SERVER_BASE_PATH'];
+
+  const relativeFilePath = req.params[0]
+    ? path.join(req.params[0], req.params.fileName)
+    : req.params.fileName;
+
+  const absoluteFilePath = path.join(basePath, relativeFilePath);
 
   if (!content) {
     res.status(400).json('Required body not provided.');
@@ -49,10 +53,10 @@ const upsertFileHandler: RequestHandler = (req, res) => {
   }
 
   try {
-    if (!fs.existsSync(path.dirname(filePath))) {
-      fs.mkdirsSync(path.dirname(filePath));
+    if (!fs.existsSync(path.dirname(absoluteFilePath))) {
+      fs.mkdirsSync(path.dirname(absoluteFilePath));
     }
-    fs.writeFileSync(filePath, content);
+    fs.writeFileSync(absoluteFilePath, content);
   } catch (e) {
     console.error(e);
     res.status(500).json(e);
@@ -61,7 +65,7 @@ const upsertFileHandler: RequestHandler = (req, res) => {
   res
     .status(201)
     .json(
-      `Stored file to process.env['FILES_SERVER_BASE_PATH']/${req.params.fileName}`
+      `Stored file to process.env['FILES_SERVER_BASE_PATH']/${relativeFilePath}`
     );
 };
 
