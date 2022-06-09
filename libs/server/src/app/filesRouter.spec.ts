@@ -13,19 +13,35 @@ const testRoute = async (
   test(response);
 };
 
-const filesArray: File[] = [
-  { type: 'file', path: 'a-great-post.md' },
-  { type: 'directory', path: 'category' },
-  { type: 'file', path: 'index.md' },
-  { type: 'file', path: 'my-post.md' },
-];
-
 describe('GET files', () => {
   initFilesTest(__dirname);
 
   it('should return a list of files when existing', async () => {
     await testRoute('/api/files', (response) => {
-      expect(response.body.sort()).toEqual(filesArray);
+      expect(response.statusCode).toBe(200);
+      expect(response.body.sort()).toEqual([
+        { type: 'file', path: 'a-great-post.md' },
+        { type: 'directory', path: 'category' },
+        { type: 'file', path: 'index.md' },
+        { type: 'file', path: 'my-post.md' },
+      ]);
+    });
+  });
+
+  it('should return a list of files from a subfolder', async () => {
+    await testRoute('/api/files/category', (response) => {
+      expect(response.statusCode).toBe(200);
+      expect(response.body.sort()).toEqual([
+        { type: 'file', path: 'index.md' },
+        { type: 'directory', path: 'sub-category' },
+      ]);
+    });
+
+    await testRoute('/api/files/category/sub-category', (response) => {
+      expect(response.statusCode).toBe(200);
+      expect(response.body.sort()).toEqual([
+        { type: 'file', path: 'index.md' },
+      ]);
     });
   });
 

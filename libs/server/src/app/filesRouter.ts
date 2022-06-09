@@ -7,51 +7,50 @@ const filesRouter = Router();
 
 console.log(`Files base folder at ${process.env['FILES_SERVER_BASE_PATH']}`);
 
-filesRouter.get('/:fileName', (req, res, next) => {
+filesRouter.get('/*', (req, res, next) => {
   const filePath = path.join(
     process.env['FILES_SERVER_BASE_PATH'],
-    req.params.fileName
+    req.params[0]
   );
   if (!fs.existsSync(filePath)) {
-    if (req.query.check) {
-      return res.status(200).json(null);
-    }
     return res.status(404).json(`File not found on path ${filePath}`);
   }
-  const file = fs.readFileSync(filePath).toString();
-  res.json(file);
-});
-
-filesRouter.get('', (req, res, next) => {
-  const baseFilesPath = path.join(process.env['FILES_SERVER_BASE_PATH']);
-
-  try {
-    if (!fs.existsSync(baseFilesPath)) {
-      fs.mkdirsSync(baseFilesPath);
-    }
-    const filesList: File[] = fs
-      .readdirSync(baseFilesPath)
-      .reduce((accumulator, filePath) => {
-        const absoluteFilePath = path.join(baseFilesPath, filePath);
-        const stat = fs.statSync(absoluteFilePath);
-        const type = stat.isFile() ? 'file' : stat.isDirectory() && 'directory';
-        if (type !== 'file' && type !== 'directory') {
-          return accumulator;
-        }
-        return [
-          ...accumulator,
-          {
-            path: filePath,
-            type: type,
-          },
-        ];
-      }, [] as File[]);
-    res.status(200).json(filesList);
-  } catch (e) {
-    console.error(e);
-    res.status(500).json(null);
+  const stat = fs.statSync(filePath);
+  if (stat.isFile()) {
+    const file = fs.readFileSync(filePath).toString();
+    return res.json(file);
   }
+  if (stat.isDirectory()) {
+    const filesList = readFiles(filePath);
+    return res.status(200).json(filesList);
+  }
+  return res.status(401).json();
 });
+
+const readFiles = (filesPath) => {
+  if (!fs.existsSync(filesPath)) {
+    fs.mkdirsSync(filesPath);
+  }
+  const filesList: File[] = fs
+    .readdirSync(filesPath)
+    .reduce((accumulator, filePath) => {
+      const absoluteFilePath = path.join(filesPath, filePath);
+      const stat = fs.statSync(absoluteFilePath);
+      const type = stat.isFile() ? 'file' : stat.isDirectory() && 'directory';
+      if (type !== 'file' && type !== 'directory') {
+        return accumulator;
+      }
+      return [
+        ...accumulator,
+        {
+          path: filePath,
+          type: type,
+        },
+      ];
+    }, [] as File[]);
+
+  return filesList;
+};
 
 const upsertFileHandler: RequestHandler = (req, res) => {
   const content = req.body.content;
