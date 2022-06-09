@@ -3,7 +3,6 @@ import { app } from './app';
 import * as path from 'path';
 import * as fs from 'fs';
 import { initFilesTest } from './init-files-test';
-import { File } from './file.interface';
 
 const testRoute = async (
   route: string,
