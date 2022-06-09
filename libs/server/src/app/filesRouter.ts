@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router, RequestHandler } from 'express';
 import * as fs from 'fs-extra';
 import * as path from 'path';
 
@@ -36,7 +36,7 @@ filesRouter.get('', (req, res, next) => {
   }
 });
 
-const upsertFileHandler = (req, res) => {
+const upsertFileHandler: RequestHandler = (req, res) => {
   const content = req.body.content;
   const filePath = path.join(
     process.env['FILES_SERVER_BASE_PATH'],
@@ -66,6 +66,8 @@ const upsertFileHandler = (req, res) => {
 };
 
 filesRouter.post('/:fileName', upsertFileHandler);
+
+filesRouter.post('/*/:fileName', upsertFileHandler);
 
 filesRouter.put('/:fileName', upsertFileHandler);
 
