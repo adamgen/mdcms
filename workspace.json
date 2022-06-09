@@ -6,7 +6,6 @@
     "fscms": "libs/fscms",
     "main-ui": "libs/main-ui",
     "server": "libs/server",
-    "shared-env": "libs/shared-env",
     "store": "libs/store"
   }
 }
