@@ -146,4 +146,17 @@ describe('Delete files', () => {
     expect(response.body).toBe('Deleted');
     expect(fs.existsSync(indexFilePath)).toBeFalsy();
   });
+
+  it('should delete existing subfolder files', async () => {
+    const indexFilePath = path.join(
+      process.env['FILES_SERVER_BASE_PATH'],
+      'category/index.md'
+    );
+    expect(fs.existsSync(indexFilePath)).toBeTruthy();
+
+    const response = await request(app).delete('/api/files/category/index.md');
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toBe('Deleted');
+    expect(fs.existsSync(indexFilePath)).toBeFalsy();
+  });
 });

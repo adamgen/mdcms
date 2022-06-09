@@ -88,10 +88,10 @@ filesRouter.post('/*', upsertFileHandler);
 
 filesRouter.put('/*', upsertFileHandler);
 
-filesRouter.delete('/:fileName', (req, res, next) => {
+filesRouter.delete('/*', (req, res, next) => {
   const filePath = path.join(
     process.env['FILES_SERVER_BASE_PATH'],
-    req.params.fileName
+    req.params[0]
   );
 
   if (!fs.existsSync(filePath)) {
