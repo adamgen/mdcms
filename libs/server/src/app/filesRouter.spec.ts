@@ -3,6 +3,7 @@ import { app } from './app';
 import * as path from 'path';
 import * as fs from 'fs';
 import { initFilesTest } from './init-files-test';
+import { File } from './file.interface';
 
 const testRoute = async (
   route: string,
@@ -12,14 +13,19 @@ const testRoute = async (
   test(response);
 };
 
-const filesArray = ['index.md', 'my-post.md', 'a-great-post.md', 'category'];
+const filesArray: File[] = [
+  { type: 'file', path: 'a-great-post.md' },
+  { type: 'directory', path: 'category' },
+  { type: 'file', path: 'index.md' },
+  { type: 'file', path: 'my-post.md' },
+];
 
 describe('GET files', () => {
   initFilesTest(__dirname);
 
   it('should return a list of files when existing', async () => {
     await testRoute('/api/files', (response) => {
-      expect(response.body.sort()).toEqual(filesArray.sort());
+      expect(response.body.sort()).toEqual(filesArray);
     });
   });
 

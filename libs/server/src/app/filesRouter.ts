@@ -1,6 +1,7 @@
 import { Router, RequestHandler } from 'express';
 import * as fs from 'fs-extra';
 import * as path from 'path';
+import { File } from './file.interface';
 
 const filesRouter = Router();
 
@@ -28,7 +29,23 @@ filesRouter.get('', (req, res, next) => {
     if (!fs.existsSync(baseFilesPath)) {
       fs.mkdirsSync(baseFilesPath);
     }
-    const filesList = fs.readdirSync(baseFilesPath);
+    const filesList: File[] = fs
+      .readdirSync(baseFilesPath)
+      .reduce((accumulator, filePath) => {
+        const absoluteFilePath = path.join(baseFilesPath, filePath);
+        const stat = fs.statSync(absoluteFilePath);
+        const type = stat.isFile() ? 'file' : stat.isDirectory() && 'directory';
+        if (type !== 'file' && type !== 'directory') {
+          return accumulator;
+        }
+        return [
+          ...accumulator,
+          {
+            path: filePath,
+            type: type,
+          },
+        ];
+      }, [] as File[]);
     res.status(200).json(filesList);
   } catch (e) {
     console.error(e);
