@@ -32,6 +32,7 @@ export function NewFileView() {
 
   return (
     <StyledNewFileView>
+      {/* TODO: Sync the title with the article metadata */}
       <FilePathTitle
         path={path}
         onChange={(value) => {
@@ -51,6 +52,9 @@ export function NewFileView() {
         }}
         iconTooltip={missingDataTooltipTitle ?? ''}
       />
+
+      {/* TODO: Add a file input */}
+      {/* TODO: Suggest file name out of the title */}
 
       <MdEditor
         onChange={(value) => {
