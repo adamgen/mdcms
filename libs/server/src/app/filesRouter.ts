@@ -7,7 +7,7 @@ const filesRouter = Router();
 
 console.log(`Files base folder at ${process.env['FILES_SERVER_BASE_PATH']}`);
 
-filesRouter.get('/*', (req, res, next) => {
+filesRouter.get('/*', (req, res) => {
   const filePath = path.join(
     process.env['FILES_SERVER_BASE_PATH'],
     req.params[0]
@@ -88,7 +88,7 @@ filesRouter.post('/*', upsertFileHandler);
 
 filesRouter.put('/*', upsertFileHandler);
 
-filesRouter.delete('/*', (req, res, next) => {
+filesRouter.delete('/*', (req, res) => {
   const filePath = path.join(
     process.env['FILES_SERVER_BASE_PATH'],
     req.params[0]
