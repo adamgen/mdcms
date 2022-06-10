@@ -23,7 +23,6 @@ const upsertFileHandler: RequestHandler<RouteParameters<'/*'>> = (req, res) => {
   const destFilePath = req.body.filePath;
 
   if (destFilePath) {
-    // TODO normalize setPath & exists
     if (!api.exists()) {
       console.error(`File not found on path ${api.path}`);
       res.status(404).json();
@@ -39,7 +38,6 @@ const upsertFileHandler: RequestHandler<RouteParameters<'/*'>> = (req, res) => {
     return;
   }
 
-  // TODO normalize move vs other upsert
   if (content) {
     api.write(content);
     res
