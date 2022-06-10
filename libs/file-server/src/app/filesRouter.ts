@@ -1,18 +1,15 @@
 import { RequestHandler, Router } from 'express';
 import * as fs from 'fs-extra';
 import * as path from 'path';
-import { FileController } from './FileController';
+import { RouteParameters } from 'express-serve-static-core';
 
 const filesRouter = Router();
-
-// console.log(`Files base folder at ${process.env['FILES_SERVER_BASE_PATH']}`);
 
 const getFilePath = (...pathParts: string[]) =>
   path.join(process.env['FILES_SERVER_BASE_PATH'], ...pathParts);
 
-const api = new FileController();
-
 filesRouter.get('/*', (req, res) => {
+  const api = req.api;
   api.setPath(req.params[0]);
   if (!api.exists()) {
     console.error(`File not found on path ${api.path}`);
@@ -22,7 +19,7 @@ filesRouter.get('/*', (req, res) => {
   return response ? res.status(200).json(response) : res.status(401).json();
 });
 
-const upsertFileHandler: RequestHandler = (req, res) => {
+const upsertFileHandler: RequestHandler<RouteParameters<'/*'>> = (req, res) => {
   const content = req.body.content;
 
   const relativeFilePath = req.params[0];
