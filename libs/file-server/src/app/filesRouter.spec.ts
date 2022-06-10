@@ -171,25 +171,30 @@ describe('Delete files', () => {
     expect(response.statusCode).toBe(200);
   });
 
-  it('should move file location', async () => {
-    const indexFilePath = path.join(
-      process.env['FILES_SERVER_BASE_PATH'],
-      'index.md'
-    );
-    const postFilePath = path.join(
-      process.env['FILES_SERVER_BASE_PATH'],
-      'new-index-location.md'
-    );
-    expect(fs.existsSync(postFilePath)).toBeFalsy();
+  const getFilePath = (...pathParts: string[]) =>
+    path.join(process.env['FILES_SERVER_BASE_PATH'], ...pathParts);
+
+  const moveFile = async (source: string, dest: string) => {
+    const sourceFilePath = getFilePath(source);
+    const destFilePath = getFilePath(dest);
+
+    expect(fs.existsSync(destFilePath)).toBeFalsy();
     const response = await request(app)
-      .put('/api/files/index.md')
-      .send({ filePath: 'new-index-location.md' });
+      .put(`/api/files/${source}`)
+      .send({ filePath: dest });
 
     expect(response.statusCode).toBe(200);
-    expect(fs.existsSync(indexFilePath)).toBeFalsy();
-    expect(fs.existsSync(postFilePath)).toBeTruthy();
-    expect(fs.readFileSync(postFilePath).toString()).toEqual(
+    expect(fs.existsSync(sourceFilePath)).toBeFalsy();
+    expect(fs.existsSync(destFilePath)).toBeTruthy();
+    expect(fs.readFileSync(destFilePath).toString()).toEqual(
       '# Im the index\n'
     );
+  };
+  it('should move file location', async () => {
+    await moveFile('index.md', 'new-index-location.md');
+    await moveFile('new-index-location.md', 'second-new-index-location.md');
+    await moveFile('second-new-index-location.md', 'index.md');
+
+    await moveFile('index.md', 'subfolder/new-index-location.md');
   });
 });
