@@ -36,7 +36,6 @@ export function NewFileView() {
       <FilePathTitle
         path={path}
         onChange={(value) => {
-          // dispatch(editorSlice.actions.update({ path: value }));
           setPath(value);
         }}
         onSave={() => {
