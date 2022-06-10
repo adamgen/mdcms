@@ -9,6 +9,8 @@ import {
 import { Provider } from 'react-redux';
 import React from 'react';
 import { makeStore } from './reducer';
+import { UseMutation } from '@reduxjs/toolkit/dist/query/react/buildHooks';
+import { BaseQueryFn, MutationDefinition } from '@reduxjs/toolkit/query';
 
 const wrapper: React.FC = ({ children }) => {
   const store = makeStore();
@@ -21,12 +23,13 @@ const filesMock = {
   [indexMd]: `# This is the index file`,
   [blogMd]: `# This is the blog`,
 };
+fetchMock.enableMocks();
 
-describe('fsTree reducer', () => {
+describe('filesApi reducer', () => {
   it('should call fetch when called', async () => {
     const store = makeStore();
     await store.dispatch(filesApi.endpoints.getFileByName.initiate(indexMd));
-    expect(fetch).toBeCalledTimes(1);
+    expect(fetchMock).toBeCalledTimes(1);
     const { method, headers, url } = fetchMock.mock.calls[0][0] as Request;
 
     const accept = headers.get('accept');
@@ -67,6 +70,24 @@ describe('fsTree reducer', () => {
     const { url } = fetchMock.mock.calls[2][0] as Request;
 
     expect(url).toBe(`/api/files/${indexMd}`);
+
+    await act(() => promise);
+  });
+
+  it('should request a subfolder from a hook', async () => {
+    const promise = Promise.resolve();
+    fetchMock.mockResponse('111');
+    const { waitForNextUpdate } = renderHook(
+      () => useGetFileByNameQuery('subfolder/index.md'),
+      {
+        wrapper,
+      }
+    );
+    await waitForNextUpdate();
+
+    const { url } = fetchMock.mock.calls[3][0] as Request;
+
+    expect(url).toBe(`/api/files/subfolder/index.md`);
 
     await act(() => promise);
   });
@@ -154,6 +175,38 @@ describe('fsTree reducer', () => {
     act(() => {
       updateFile({
         filename: '',
+        content: '',
+      });
+    });
+
+    const loadingResponse = result.current[1];
+    expect(loadingResponse.data).toBeUndefined();
+    expect(loadingResponse.isLoading).toBe(true);
+
+    await waitForNextUpdate({ timeout: 100 });
+
+    const loadedResponse = result.current[1];
+    expect(loadedResponse.data).not.toBeUndefined();
+    expect(loadedResponse.isLoading).toBe(false);
+    expect(loadedResponse.isSuccess).toBe(true);
+  });
+
+  it('should make requests from subfolders', async () => {
+    fetchMock.mockResponse('null', { status: 201 });
+    const { result, waitForNextUpdate } = renderHook(
+      () => useCreateFileMutation(),
+      {
+        wrapper,
+      }
+    );
+
+    const [updateFile, initialResponse] = result.current;
+    expect(initialResponse.data).toBeUndefined();
+    expect(initialResponse.isLoading).toBe(false);
+
+    act(() => {
+      updateFile({
+        filename: 'subfolder/index.md',
         content: '',
       });
     });

@@ -26,7 +26,9 @@ export const filesApi = createApi({
       providesTags: () => [{ type: 'Files', id: 'LIST' }],
     }),
     getFileByName: builder.query<string, string>({
-      query: (name) => `files/${name}`,
+      query: (name) => {
+        return `files/${name}`;
+      },
       providesTags: (result, error, id) => {
         return [{ type: 'Files', id }];
       },
