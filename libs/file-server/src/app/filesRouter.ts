@@ -13,12 +13,12 @@ const getFilePath = (...pathParts: string[]) =>
 const api = new FileController();
 
 filesRouter.get('/*', (req, res) => {
-  const filePath = getFilePath(req.params[0]);
-  if (!api.exists(filePath)) {
-    console.error(`File not found on path ${filePath}`);
+  api.setPath(req.params[0]);
+  if (!api.exists()) {
+    console.error(`File not found on path ${api.path}`);
     return res.status(404).json();
   }
-  const response = api.getPathDirOrFile(filePath);
+  const response = api.getPathDirOrFile();
   return response ? res.status(200).json(response) : res.status(401).json();
 });
 

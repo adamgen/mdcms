@@ -6,7 +6,11 @@ import * as path from 'path';
 const stat = _.memoize(fs.statSync);
 
 export class FileController {
-  getPathDirOrFile(existingPath: string) {
+  path: string;
+  setPath(...pathParts: string[]) {
+    this.path = path.join(process.env['FILES_SERVER_BASE_PATH'], ...pathParts);
+  }
+  getPathDirOrFile(existingPath: string = this.path) {
     if (this.isFile(existingPath)) {
       return this.getFileContents(existingPath);
     }
@@ -14,7 +18,7 @@ export class FileController {
       return this.getDirectoryListing(existingPath);
     }
   }
-  getDirectoryListing(directoryPath: string) {
+  getDirectoryListing(directoryPath: string = this.path) {
     return fs
       .readdirSync(directoryPath)
       .reduce<File[]>((accumulator, filePath) => {
@@ -33,16 +37,16 @@ export class FileController {
         ];
       }, []);
   }
-  getFileContents(filePath: string) {
+  getFileContents(filePath: string = this.path) {
     return fs.readFileSync(filePath).toString();
   }
-  isDirectory(filePath: string) {
+  isDirectory(filePath: string = this.path) {
     return stat(filePath).isDirectory();
   }
-  isFile(filePath: string) {
+  isFile(filePath: string = this.path) {
     return stat(filePath).isFile();
   }
-  exists(filePath: string) {
+  exists(filePath: string = this.path) {
     return fs.existsSync(filePath);
   }
 }
