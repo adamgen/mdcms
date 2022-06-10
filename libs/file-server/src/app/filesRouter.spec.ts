@@ -7,6 +7,8 @@ import { initFilesTest } from './init-files-test';
 const getFilePath = (...pathParts: string[]) =>
   path.join(process.env['FILES_SERVER_BASE_PATH'], ...pathParts);
 
+// TODO make sure that tests can run in parallel
+
 describe('GET files', () => {
   initFilesTest(__dirname);
 
