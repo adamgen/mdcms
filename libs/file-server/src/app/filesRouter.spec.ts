@@ -170,4 +170,26 @@ describe('Delete files', () => {
 
     expect(response.statusCode).toBe(200);
   });
+
+  it('should move file location', async () => {
+    const indexFilePath = path.join(
+      process.env['FILES_SERVER_BASE_PATH'],
+      'index.md'
+    );
+    const postFilePath = path.join(
+      process.env['FILES_SERVER_BASE_PATH'],
+      'new-index-location.md'
+    );
+    expect(fs.existsSync(postFilePath)).toBeFalsy();
+    const response = await request(app)
+      .put('/api/files/index.md')
+      .send({ filePath: 'new-index-location.md' });
+
+    expect(response.statusCode).toBe(200);
+    expect(fs.existsSync(indexFilePath)).toBeFalsy();
+    expect(fs.existsSync(postFilePath)).toBeTruthy();
+    expect(fs.readFileSync(postFilePath).toString()).toEqual(
+      '# Im the index\n'
+    );
+  });
 });

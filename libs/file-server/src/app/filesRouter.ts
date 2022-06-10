@@ -62,6 +62,24 @@ const upsertFileHandler: RequestHandler = (req, res) => {
 
   const absoluteFilePath = path.join(basePath, relativeFilePath);
 
+  if (req.body.filePath) {
+    if (!fs.existsSync(path.dirname(absoluteFilePath))) {
+      res.status(400).json();
+      return;
+    }
+
+    const newFileAbsolutePath = path.join(basePath, req.body.filePath);
+    console.log('absoluteFilePath');
+    try {
+      fs.moveSync(absoluteFilePath, newFileAbsolutePath);
+    } catch (e) {
+      console.error(e);
+    }
+
+    res.status(200).json();
+    return;
+  }
+
   if (!content) {
     res.status(400).json('Required body not provided.');
     return;
