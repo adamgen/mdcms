@@ -16,7 +16,11 @@ export class FileController {
     return path.join(process.env['FILES_SERVER_BASE_PATH'], ...pathParts);
   }
 
-  // Upsert
+  // Upsert & Delete
+
+  delete(filePath: string = this.path) {
+    return fs.removeSync(filePath);
+  }
 
   moveTo(newFilePath: string) {
     const newFileAbsolutePath = this.getFilePath(newFilePath);

@@ -1,12 +1,7 @@
 import { RequestHandler, Router } from 'express';
-import * as fs from 'fs-extra';
-import * as path from 'path';
 import { RouteParameters } from 'express-serve-static-core';
 
 const filesRouter = Router();
-
-const getFilePath = (...pathParts: string[]) =>
-  path.join(process.env['FILES_SERVER_BASE_PATH'], ...pathParts);
 
 filesRouter.get('/*', (req, res) => {
   const api = req.api;
@@ -62,13 +57,14 @@ filesRouter.post('/*', upsertFileHandler);
 filesRouter.put('/*', upsertFileHandler);
 
 filesRouter.delete('/*', (req, res) => {
-  const filePath = getFilePath(req.params[0]);
+  const api = req.api;
+  api.setPath(req.params[0]);
 
-  if (!fs.existsSync(filePath)) {
+  if (!api.exists()) {
     return res.status(400).json('Delete on non existing files.');
   }
 
-  fs.removeSync(filePath);
+  api.delete();
 
   res.json('Deleted');
 });
