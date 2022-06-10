@@ -15,13 +15,9 @@ export class FileController {
     }
   }
   getDirectoryListing(directoryPath: string) {
-    // TODO remove support for reading non existing directories
-    if (!fs.existsSync(directoryPath)) {
-      fs.mkdirsSync(directoryPath);
-    }
-    const filesList: File[] = fs
+    return fs
       .readdirSync(directoryPath)
-      .reduce((accumulator, filePath) => {
+      .reduce<File[]>((accumulator, filePath) => {
         const absoluteFilePath = path.join(directoryPath, filePath);
         const stat = fs.statSync(absoluteFilePath);
         const type = stat.isFile() ? 'file' : stat.isDirectory() && 'directory';
@@ -35,9 +31,7 @@ export class FileController {
             type: type,
           },
         ];
-      }, [] as File[]);
-
-    return filesList;
+      }, []);
   }
   getFileContents(filePath: string) {
     return fs.readFileSync(filePath).toString();
