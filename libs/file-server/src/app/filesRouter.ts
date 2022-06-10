@@ -36,11 +36,7 @@ const upsertFileHandler: RequestHandler = (req, res) => {
     }
 
     const newFileAbsolutePath = getFilePath(req.body.filePath);
-    try {
-      fs.moveSync(absoluteFilePath, newFileAbsolutePath);
-    } catch (e) {
-      console.error(e);
-    }
+    fs.moveSync(absoluteFilePath, newFileAbsolutePath);
 
     res.status(200).json();
     return;
