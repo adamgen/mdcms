@@ -6,10 +6,34 @@ import * as path from 'path';
 const stat = _.memoize(fs.statSync);
 
 export class FileController {
+  // Basic
   path: string;
   setPath(...pathParts: string[]) {
-    this.path = path.join(process.env['FILES_SERVER_BASE_PATH'], ...pathParts);
+    this.path = this.getFilePath(...pathParts);
   }
+
+  getFilePath(...pathParts: string[]) {
+    return path.join(process.env['FILES_SERVER_BASE_PATH'], ...pathParts);
+  }
+
+  // Upsert
+
+  move(newFilePath: string) {
+    const newFileAbsolutePath = this.getFilePath(newFilePath);
+    fs.moveSync(this.path, newFileAbsolutePath);
+    this.setPath(newFilePath);
+  }
+
+  write(content: string) {
+    const dirname = path.dirname(this.path);
+    if (!fs.existsSync(dirname)) {
+      fs.mkdirsSync(dirname);
+    }
+    fs.writeFileSync(this.path, content);
+  }
+
+  // Get
+
   getPathDirOrFile(existingPath: string = this.path) {
     if (this.isFile(existingPath)) {
       return this.getFileContents(existingPath);

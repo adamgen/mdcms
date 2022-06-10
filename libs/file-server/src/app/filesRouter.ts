@@ -20,45 +20,34 @@ filesRouter.get('/*', (req, res) => {
 });
 
 const upsertFileHandler: RequestHandler<RouteParameters<'/*'>> = (req, res) => {
+  const api = req.api;
   const content = req.body.content;
 
-  const relativeFilePath = req.params[0];
-
-  const absoluteFilePath = getFilePath(relativeFilePath);
+  api.setPath(req.params[0]);
 
   if (req.body.filePath) {
-    if (!fs.existsSync(path.dirname(absoluteFilePath))) {
-      res.status(400).json();
+    // TODO normalize setPath & exists
+    if (!api.exists()) {
+      console.error(`File not found on path ${api.path}`);
+      res.status(404).json();
       return;
     }
-
-    const newFileAbsolutePath = getFilePath(req.body.filePath);
-    fs.moveSync(absoluteFilePath, newFileAbsolutePath);
-
+    api.move(req.body.filePath);
     res.status(200).json();
     return;
   }
 
-  if (!content) {
-    res.status(400).json('Required body not provided.');
+  // TODO normalize move vs other upsert
+  if (content) {
+    api.write(content);
+    res
+      .status(201)
+      .json(
+        `Stored file to process.env['FILES_SERVER_BASE_PATH']/${req.params[0]}`
+      );
     return;
   }
-
-  try {
-    if (!fs.existsSync(path.dirname(absoluteFilePath))) {
-      fs.mkdirsSync(path.dirname(absoluteFilePath));
-    }
-    fs.writeFileSync(absoluteFilePath, content);
-  } catch (e) {
-    console.error(e);
-    res.status(500).json(e);
-    return;
-  }
-  res
-    .status(201)
-    .json(
-      `Stored file to process.env['FILES_SERVER_BASE_PATH']/${relativeFilePath}`
-    );
+  res.status(400).json('Required body not provided.');
 };
 
 filesRouter.post('/*', upsertFileHandler);
