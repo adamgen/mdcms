@@ -7,11 +7,11 @@ const filesRouter = Router();
 
 console.log(`Files base folder at ${process.env['FILES_SERVER_BASE_PATH']}`);
 
+const getFilePath = (...pathParts: string[]) =>
+  path.join(process.env['FILES_SERVER_BASE_PATH'], ...pathParts);
+
 filesRouter.get('/*', (req, res) => {
-  const filePath = path.join(
-    process.env['FILES_SERVER_BASE_PATH'],
-    req.params[0]
-  );
+  const filePath = getFilePath(req.params[0]);
   if (!fs.existsSync(filePath)) {
     console.error(`File not found on path ${filePath}`);
     return res.status(404).json();
@@ -56,11 +56,9 @@ const readFiles = (filesPath) => {
 const upsertFileHandler: RequestHandler = (req, res) => {
   const content = req.body.content;
 
-  const basePath = process.env['FILES_SERVER_BASE_PATH'];
-
   const relativeFilePath = req.params[0];
 
-  const absoluteFilePath = path.join(basePath, relativeFilePath);
+  const absoluteFilePath = getFilePath(relativeFilePath);
 
   if (req.body.filePath) {
     if (!fs.existsSync(path.dirname(absoluteFilePath))) {
@@ -68,7 +66,7 @@ const upsertFileHandler: RequestHandler = (req, res) => {
       return;
     }
 
-    const newFileAbsolutePath = path.join(basePath, req.body.filePath);
+    const newFileAbsolutePath = getFilePath(req.body.filePath);
     console.log('absoluteFilePath');
     try {
       fs.moveSync(absoluteFilePath, newFileAbsolutePath);
@@ -107,10 +105,7 @@ filesRouter.post('/*', upsertFileHandler);
 filesRouter.put('/*', upsertFileHandler);
 
 filesRouter.delete('/*', (req, res) => {
-  const filePath = path.join(
-    process.env['FILES_SERVER_BASE_PATH'],
-    req.params[0]
-  );
+  const filePath = getFilePath(req.params[0]);
 
   if (!fs.existsSync(filePath)) {
     return res.status(400).json('Delete on non existing files.');
@@ -122,6 +117,5 @@ filesRouter.delete('/*', (req, res) => {
 });
 
 // TODO add file upload support
-// TODO add rename / move directory support using batch POST+DELETE
 
 export { filesRouter };
