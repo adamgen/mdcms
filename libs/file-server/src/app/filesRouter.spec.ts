@@ -49,6 +49,20 @@ const getfilePath = (filePath: string) => {
   return fs.readFileSync(getFilePath(filePath)).toString();
 };
 
+const moveFile = async (source: string, dest: string) => {
+  const sourceFilePath = getFilePath(source);
+  const destFilePath = getFilePath(dest);
+
+  expect(fs.existsSync(destFilePath)).toBeFalsy();
+  await request(app)
+    .put(`/api/files/${source}`)
+    .send({ filePath: dest })
+    .expect(200);
+  expect(fs.existsSync(sourceFilePath)).toBeFalsy();
+  expect(fs.existsSync(destFilePath)).toBeTruthy();
+  expect(fs.readFileSync(destFilePath).toString()).toEqual('# Im the index\n');
+};
+
 describe('Upsert post/put files', () => {
   initFilesTest(__dirname);
   it('should fail to write to a file with missing body', async () => {
@@ -113,6 +127,14 @@ describe('Upsert post/put files', () => {
       '# new random file header!'
     );
   });
+
+  it('should move file location', async () => {
+    await moveFile('index.md', 'new-index-location.md');
+    await moveFile('new-index-location.md', 'second-new-index-location.md');
+    await moveFile('second-new-index-location.md', 'index.md');
+
+    await moveFile('index.md', 'subfolder/new-index-location.md');
+  });
 });
 
 describe('Delete files', () => {
@@ -149,28 +171,5 @@ describe('Delete files', () => {
       .set('Accept', 'multipart/form-data')
       .attach('', buf)
       .expect(200);
-  });
-
-  const moveFile = async (source: string, dest: string) => {
-    const sourceFilePath = getFilePath(source);
-    const destFilePath = getFilePath(dest);
-
-    expect(fs.existsSync(destFilePath)).toBeFalsy();
-    await request(app)
-      .put(`/api/files/${source}`)
-      .send({ filePath: dest })
-      .expect(200);
-    expect(fs.existsSync(sourceFilePath)).toBeFalsy();
-    expect(fs.existsSync(destFilePath)).toBeTruthy();
-    expect(fs.readFileSync(destFilePath).toString()).toEqual(
-      '# Im the index\n'
-    );
-  };
-  it('should move file location', async () => {
-    await moveFile('index.md', 'new-index-location.md');
-    await moveFile('new-index-location.md', 'second-new-index-location.md');
-    await moveFile('second-new-index-location.md', 'index.md');
-
-    await moveFile('index.md', 'subfolder/new-index-location.md');
   });
 });
