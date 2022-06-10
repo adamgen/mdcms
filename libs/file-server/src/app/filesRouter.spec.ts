@@ -135,6 +135,20 @@ describe('Upsert post/put files', () => {
 
     await moveFile('index.md', 'subfolder/new-index-location.md');
   });
+
+  it('should fail moving file to conflicted location', async () => {
+    const source = 'index.md';
+    const dest = 'my-post.md';
+    const sourceFilePath = getFilePath(source);
+    const destFilePath = getFilePath(dest);
+
+    expect(fs.existsSync(destFilePath)).toBeTruthy();
+    expect(fs.existsSync(sourceFilePath)).toBeTruthy();
+    await request(app)
+      .put(`/api/files/${source}`)
+      .send({ filePath: dest })
+      .expect(401);
+  });
 });
 
 describe('Delete files', () => {

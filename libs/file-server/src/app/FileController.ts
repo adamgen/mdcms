@@ -18,7 +18,7 @@ export class FileController {
 
   // Upsert
 
-  move(newFilePath: string) {
+  moveTo(newFilePath: string) {
     const newFileAbsolutePath = this.getFilePath(newFilePath);
     fs.moveSync(this.path, newFileAbsolutePath);
     this.setPath(newFilePath);
@@ -70,7 +70,10 @@ export class FileController {
   isFile(filePath: string = this.path) {
     return stat(filePath).isFile();
   }
-  exists(filePath: string = this.path) {
+  exists(filePath: string = this.path, appendAbsolutePath = false) {
+    if (appendAbsolutePath) {
+      filePath = this.getFilePath(filePath);
+    }
     return fs.existsSync(filePath);
   }
 }
