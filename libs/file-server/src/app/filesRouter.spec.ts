@@ -158,4 +158,16 @@ describe('Delete files', () => {
     expect(response.body).toBe('Deleted');
     expect(fs.existsSync(indexFilePath)).toBeFalsy();
   });
+
+  // TODO add multer to support file uploads
+  it.skip('should post files', async () => {
+    const buf = Buffer.from('');
+    //
+    const response = await request(app)
+      .post('/api/files/my.jpg')
+      .set('Accept', 'multipart/form-data')
+      .attach('', buf);
+
+    expect(response.statusCode).toBe(200);
+  });
 });

@@ -103,4 +103,7 @@ filesRouter.delete('/*', (req, res) => {
   res.json('Deleted');
 });
 
+// TODO add file upload support
+// TODO add rename / move directory support using batch POST+DELETE
+
 export { filesRouter };
