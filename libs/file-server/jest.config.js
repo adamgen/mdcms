@@ -12,4 +12,20 @@ module.exports = {
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../../coverage/libs/file-server',
+  watchPlugins: [
+    [
+      'jest-watch-typeahead/filename',
+      {
+        key: 'F',
+        prompt: 'do something with my custom prompt',
+      },
+    ],
+    [
+      'jest-watch-typeahead/testname',
+      {
+        key: 'T',
+        prompt: 'do something with my custom prompt',
+      },
+    ],
+  ],
 };
