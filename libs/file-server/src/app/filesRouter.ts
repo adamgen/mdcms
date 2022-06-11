@@ -35,6 +35,10 @@ const upsertFileHandler: RequestHandler<RouteParameters<'/*'>> = async (
 
   const fileNames = Object.keys(files);
 
+  if (fileNames.length > 1) {
+    res.status(401).json();
+    return;
+  }
   if (fileNames.length) {
     for (let i = 0; i < fileNames.length; i++) {
       const fileName = fileNames[i];

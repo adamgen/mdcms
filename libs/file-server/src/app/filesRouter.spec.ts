@@ -160,7 +160,18 @@ describe('Upsert post/put files', () => {
     expect(fs.existsSync(getFilePath('my.jpg'))).toBeTruthy();
   });
 
-  // TODO fail on attempt to upload many at once
+  it('should fail posting many files', async () => {
+    const buf = Buffer.from('That a text form file');
+    const buf2 = Buffer.from('That a text form file');
+    await request(app)
+      .post('/api/files/my.jpg')
+      .set('Accept', 'multipart/form-data')
+      .attach('filename1.txt', buf)
+      .attach('filename2.txt', buf2)
+      .expect(401);
+    expect(fs.existsSync(getFilePath('my.jpg'))).toBeFalsy();
+  });
+
   // TODO fail on attempt to upload file and non file at once
 });
 
