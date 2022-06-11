@@ -20,64 +20,67 @@ const upsertFileHandler: RequestHandler<RouteParameters<'/*'>> = async (
   res
 ) => {
   const api = req.api;
-  const content = req.body.content;
-  const form = formidable({ multiples: true });
 
-  const { files } = await new Promise((resolve, reject) =>
-    form.parse(req, (err, fields, files) => {
-      if (err) {
-        reject(err);
+  const contentType = req.get('content-type');
+  if (contentType === 'application/json') {
+    const content = req.body.content;
+    api.setPath(req.params[0]);
+
+    const destFilePath = req.body.filePath;
+
+    if (destFilePath) {
+      if (!api.exists()) {
+        console.error(`File not found on path ${api.path}`);
+        res.status(404).json();
         return;
       }
-      resolve({ files });
-    })
-  );
-
-  const fileNames = Object.keys(files);
-
-  if (fileNames.length > 1) {
-    res.status(401).json();
-    return;
-  }
-  if (fileNames.length) {
-    for (let i = 0; i < fileNames.length; i++) {
-      const fileName = fileNames[i];
-      const file = files[fileName];
-      api.path = file.filepath;
-      api.moveTo(req.params[0]);
-    }
-    res.status(200).json();
-    return;
-  }
-
-  api.setPath(req.params[0]);
-
-  const destFilePath = req.body.filePath;
-
-  if (destFilePath) {
-    if (!api.exists()) {
-      console.error(`File not found on path ${api.path}`);
-      res.status(404).json();
+      if (api.exists(destFilePath, true)) {
+        // console.error(`Destination file exists ${api.path}`);
+        res.status(401).json();
+        return;
+      }
+      api.moveTo(destFilePath);
+      res.status(200).json();
       return;
     }
-    if (api.exists(destFilePath, true)) {
-      console.error(`Destination file exists ${api.path}`);
+
+    if (content) {
+      api.write(content);
+      res
+        .status(201)
+        .json(
+          `Stored file to process.env['FILES_SERVER_BASE_PATH']/${req.params[0]}`
+        );
+      return;
+    }
+  } else if (contentType?.indexOf('multipart/form-data') === 0) {
+    const form = formidable({ multiples: true });
+    const { files } = await new Promise((resolve, reject) =>
+      form.parse(req, (err, fields, files) => {
+        if (err) {
+          reject(err);
+          return;
+        }
+        resolve({ files });
+      })
+    );
+
+    const fileNames = Object.keys(files);
+
+    if (fileNames.length > 1) {
       res.status(401).json();
       return;
     }
-    api.moveTo(destFilePath);
-    res.status(200).json();
-    return;
-  }
-
-  if (content) {
-    api.write(content);
-    res
-      .status(201)
-      .json(
-        `Stored file to process.env['FILES_SERVER_BASE_PATH']/${req.params[0]}`
-      );
-    return;
+    if (fileNames.length) {
+      for (let i = 0; i < fileNames.length; i++) {
+        const fileName = fileNames[i];
+        const file = files[fileName];
+        api.path = file.filepath;
+        api.moveTo(req.params[0]);
+      }
+      res.status(200).json();
+      return;
+    }
   }
   res.status(400).json('Required body not provided.');
 };
