@@ -4,6 +4,8 @@ import * as path from 'path';
 import * as fs from 'fs';
 import { initFilesTest } from './init-files-test';
 
+jest.setTimeout(500);
+
 const getFilePath = (...pathParts: string[]) =>
   path.join(process.env['FILES_SERVER_BASE_PATH'], ...pathParts);
 

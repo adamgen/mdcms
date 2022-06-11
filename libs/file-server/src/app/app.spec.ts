@@ -1,6 +1,7 @@
 import * as request from 'supertest';
 import { app } from './app';
 import { initFilesTest } from './init-files-test';
+jest.setTimeout(500);
 
 const testRoute = async (
   route: string,
