@@ -1,5 +1,6 @@
 import { RequestHandler, Router } from 'express';
 import { RouteParameters } from 'express-serve-static-core';
+import * as formidable from 'formidable';
 
 const filesRouter = Router();
 
@@ -14,9 +15,36 @@ filesRouter.get('/*', (req, res) => {
   return response ? res.status(200).json(response) : res.status(401).json();
 });
 
-const upsertFileHandler: RequestHandler<RouteParameters<'/*'>> = (req, res) => {
+const upsertFileHandler: RequestHandler<RouteParameters<'/*'>> = async (
+  req,
+  res
+) => {
   const api = req.api;
   const content = req.body.content;
+  const form = formidable({ multiples: true });
+
+  const { files } = await new Promise((resolve, reject) =>
+    form.parse(req, (err, fields, files) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve({ files });
+    })
+  );
+
+  const fileNames = Object.keys(files);
+
+  if (fileNames.length) {
+    for (let i = 0; i < fileNames.length; i++) {
+      const fileName = fileNames[i];
+      const file = files[fileName];
+      api.path = file.filepath;
+      api.moveTo(req.params[0]);
+    }
+    res.status(200).json();
+    return;
+  }
 
   api.setPath(req.params[0]);
 

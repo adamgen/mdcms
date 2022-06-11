@@ -149,6 +149,19 @@ describe('Upsert post/put files', () => {
       .send({ filePath: dest })
       .expect(401);
   });
+
+  it('should post files', async () => {
+    const buf = Buffer.from('That a text form file');
+    await request(app)
+      .post('/api/files/my.jpg')
+      .set('Accept', 'multipart/form-data')
+      .attach('filename1.txt', buf)
+      .expect(200);
+    expect(fs.existsSync(getFilePath('my.jpg'))).toBeTruthy();
+  });
+
+  // TODO fail on attempt to upload many at once
+  // TODO fail on attempt to upload file and non file at once
 });
 
 describe('Delete files', () => {
@@ -175,15 +188,5 @@ describe('Delete files', () => {
       .delete('/api/files/category/index.md')
       .expect(200, '"Deleted"');
     expect(fs.existsSync(indexFilePath)).toBeFalsy();
-  });
-
-  // TODO add multer to support file uploads
-  it.skip('should post files', async () => {
-    const buf = Buffer.from('');
-    await request(app)
-      .post('/api/files/my.jpg')
-      .set('Accept', 'multipart/form-data')
-      .attach('', buf)
-      .expect(200);
   });
 });
