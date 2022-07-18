@@ -1,15 +1,32 @@
-// TODO install axios
-const axios = require('axios');
+const fetch = require('node-fetch');
+const logUpdate = require('log-update');
+
+process.env['BASE_URL'] = 'http://localhost:4200/api';
+
+const frames = ['-', '\\', '|', '/'];
+let index = 0;
 
 export default async function () {
   let res;
-  while (res?.data.message !== 'Welcome to file-server!') {
+  // These 2 lines make the spinner not delete nx's message
+  console.log('');
+  logUpdate.done();
+  while (res?.message !== 'Welcome to file-server!') {
     try {
-      res = await axios('http://localhost:4200/api');
+      res = await fetch('http://localhost:4200/api').then((response) =>
+        response.json()
+      );
     } catch (e) {
-      // TODO make single prompt instead of the infinite messages
-      console.log('\n\ncant connect, make sure to run the server first.');
+      const frame = frames[(index = ++index % frames.length)];
+
+      logUpdate(`
+
+      ${frame} cant connect, make sure to run the server first...
+
+      `);
+
       await new Promise((resolve) => setTimeout(resolve, 1000));
     }
+    logUpdate.clear();
   }
 }
