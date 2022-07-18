@@ -9,8 +9,6 @@ jest.setTimeout(500);
 const getFilePath = (...pathParts: string[]) =>
   path.join(process.env['FILES_SERVER_BASE_PATH'], ...pathParts);
 
-// TODO make sure that tests can run in parallel
-
 describe('GET files', () => {
   initFilesTest(__dirname);
 
@@ -173,8 +171,6 @@ describe('Upsert post/put files', () => {
       .expect(401);
     expect(fs.existsSync(getFilePath('my.jpg'))).toBeFalsy();
   });
-
-  // TODO fail on attempt to upload file and non file at once
 });
 
 describe('Delete files', () => {
