@@ -15,6 +15,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/libs/ui/store"],
       "options": {
+        "devServerTarget": "dev-server:serve",
         "jestConfig": "libs/ui/store/jest.config.js",
         "passWithNoTests": true
       }

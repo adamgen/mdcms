@@ -3,7 +3,7 @@ import './styles.css';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { EDITOR_FEATURE_KEY, editorReducer, filesApi } from '@md-cms/ui-store';
-import { AppLayout } from '@md-cms/ui-react/src/app/app-layout/app-layout';
+import { AppLayout } from '@md-cms/ui-react';
 
 const store = configureStore({
   reducer: {
