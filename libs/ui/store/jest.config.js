@@ -7,4 +7,5 @@ module.exports = {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../../../coverage/libs/ui/store',
   globalSetup: './jest.setup.js',
+  setupFilesAfterEnv: ['./jest-after-env.setup.js'],
 };
