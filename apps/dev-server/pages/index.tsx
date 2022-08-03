@@ -1,4 +1,4 @@
-import { EmptyView } from '@md-cms/ui-react/src/app/views/empty-view/empty-view';
+import { EmptyView } from '@md-cms/ui-react';
 
 export function Index() {
   return <EmptyView />;
